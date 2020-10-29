@@ -1,6 +1,6 @@
 <template>
-  <li v-on:click.stop="changenodestate">
-    <span>{{ node.text }}</span>
+  <li v-on:click.stop="togglenode">
+    <span>{{ text }}</span>
 
     <TreeLevel
       v-if="createNodes"
@@ -31,8 +31,6 @@ export default class TreeNode extends Vue {
   @Prop({ type: Object, default: {}, required: true })
   public node!: INode;
 
-  public model: INode = this.node;
-
   public createNodes: boolean = false;
 
   @Watch("opened")
@@ -42,18 +40,16 @@ export default class TreeNode extends Vue {
     }
   }
 
-  @Watch("model")
-  public onModelChanged(nv: INode[]): void {
-    this.$emit("model-changed", nv);
-  }
-
   public get opened(): boolean {
     return this.node.opened || false;
   }
 
-  public changenodestate(e: Event): void {
-    this.model.opened = !this.model.opened;
-    this.$emit("toggle-node", this.model);
+  public get text(): string {
+    return this.node.text || "";
+  }
+
+  public togglenode(e: Event): void {
+    this.$emit("toggle-node", this.node);
   }
 
   public beforeCreate(): void {

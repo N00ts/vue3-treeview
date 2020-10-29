@@ -1,34 +1,33 @@
 <template>
   <ul class="tree" v-bind:id="id">
     <TreeNode 
-      v-for="item in model"
+      v-for="item in nodes"
       v-bind:key="item.id"
       v-bind:node="item"
-      v-on:toggle-node="nodeToggle">
+      v-on:toggle-node="toggle">
     </TreeNode>
   </ul>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options, Vue, setup } from "vue-class-component";
 import TreeNode from './TreeNode.vue';
 import { INode } from '@/structure/INode';
 import { Prop, Watch } from "vue-property-decorator"
+import { ref, watch } from 'vue';
 
 @Options({
   components: {
     TreeNode
   },
   emits: [
-    "model-changed"
+    "level-changed"
   ]
 })
 export default class TreeLevel extends Vue {
 
   @Prop({ type: Array, required: true, default: null })
   public nodes!: INode[];
-
-  public model: INode[] = this.nodes;
 
   public get id(): number {
     return new Date().valueOf();
@@ -40,18 +39,13 @@ export default class TreeLevel extends Vue {
     }
   }
 
-  public nodeToggle(n: INode): void {
-    for (const node of this.model) {
-      if (node.id === n.id) {
-        Object.assign({}, node, n);
-        break;
-      }
-    }
+  public toggle(node: INode): void {
+    node.opened = !node.opened;
   }
 
-  @Watch("model")
-  public onModelChanged(nv: INode[]): void {
-    this.$emit("model-changed", nv);
-  }
+  @Watch("nodes", { deep: true })
+  public onmodelchanged(nv: INode[]): void {
+    this.$emit("nodes-updated", nv)
+  } 
 }
 </script>
