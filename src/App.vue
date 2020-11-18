@@ -1,9 +1,9 @@
 <template>
-  <TreeLevel 
+  <Tree 
     ref="Tree" 
-    v-bind:nodes="nodes"
-    v-on:nodes-updated="changecode">
-  </TreeLevel>
+    :nodes="nodes"
+    @nodes-updated="changecode">
+  </Tree>
 
   <textarea 
     style="margin-top: 50px; width: 100%; height: 500px" 
@@ -15,14 +15,14 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import TreeLevel from "./components/TreeLevel.vue";
 import { Watch } from "vue-property-decorator";
 import { INode } from "@/structure/INode";
 import { ref, reactive } from 'vue';
+import Tree from './components/Tree.vue';
 
 @Options({
   components: {
-    TreeLevel,
+    Tree,
   },
 })
 export default class App extends Vue {
@@ -64,7 +64,7 @@ export default class App extends Vue {
   ];
 
   public $refs!: {
-    Tree: TreeLevel;
+    Tree: Tree;
   };
 
   private code: string = "";

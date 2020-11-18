@@ -1,10 +1,10 @@
 <template>
-  <ul class="tree" v-bind:id="id">
+  <ul class="tree-level" v-bind:id="id">
     <TreeNode 
       v-for="item in nodes"
-      v-bind:key="item.id"
-      v-bind:node="item"
-      v-on:toggle-node="toggle">
+      :key="item.id"
+      :node="item"
+      @toggle-node="toggle">
     </TreeNode>
   </ul>
 </template>
@@ -21,13 +21,17 @@ import { ref, watch } from 'vue';
     TreeNode
   },
   emits: [
-    "level-changed"
+    "level-changed",
+    "nodes-updated"
   ]
 })
 export default class TreeLevel extends Vue {
 
   @Prop({ type: Array, required: true, default: null })
   public nodes!: INode[];
+
+  @Prop({ default: null })
+  public depth!: number;
 
   public get id(): number {
     return new Date().valueOf();

@@ -5,7 +5,7 @@
     <TreeLevel
       v-if="createNodes"
       v-show="opened"
-      v-bind:nodes="node.children">
+      :nodes="node.children">
     </TreeLevel>
   </li>
 </template>
@@ -22,8 +22,7 @@ import { Prop, Watch, Emit } from "vue-property-decorator"
     TreeLevel
   },
   emits: [
-    "toggle-node",
-    "model-changed"
+    "toggle-node"
   ]
 })
 export default class TreeNode extends Vue {
