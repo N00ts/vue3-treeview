@@ -1,11 +1,15 @@
 <template>
   <li v-on:click.stop="togglenode">
-    <span>{{ text }}</span>
+    <slot name="node" :node="node"></slot>
 
     <TreeLevel
       v-if="createNodes"
       v-show="opened"
-      :nodes="node.children">
+      :nodes="node.children">      
+      
+      <template v-slot:node="props">
+        <slot name="node" :node="props.node"></slot>
+      </template>
     </TreeLevel>
   </li>
 </template>

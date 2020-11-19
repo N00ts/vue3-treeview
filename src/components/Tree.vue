@@ -2,8 +2,11 @@
     <div class="tree" v-bind="$attrs">
         <TreeLevel 
             :nodes="nodes"
-            @nodes-updated="onNodeUpdated"
-        ></TreeLevel>
+            @nodes-updated="onNodeUpdated">
+            <template v-slot:node="props">
+              <slot name="node" :node="props.node"></slot>
+            </template>
+        </TreeLevel>
     </div>
 </template>
 

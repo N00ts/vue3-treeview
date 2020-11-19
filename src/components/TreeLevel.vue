@@ -5,6 +5,10 @@
       :key="item.id"
       :node="item"
       @toggle-node="toggle">
+  
+      <template v-slot:node="props">
+        <slot name="node" :node="props.node"></slot>
+      </template>
     </TreeNode>
   </ul>
 </template>

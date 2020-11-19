@@ -3,6 +3,10 @@
     ref="Tree" 
     :nodes="nodes"
     @nodes-updated="changecode">
+  
+    <template v-slot:node="props">
+      {{ props.node.text }}
+    </template>
   </Tree>
 
   <textarea 
@@ -35,16 +39,17 @@ export default class App extends Vue {
         {
           id: "id1.1",
           text: "text1.1",
-          opened: false,
+          opened: false
         },
         {
           id: "id1.2",
           text: "text1.2",
           opened: false,
+          draggable: true,
           children: [
             {
               id: "id1.2.1",
-              text: "text1.2.1",
+              text: "text1.2.1"
             },
           ],
         },
