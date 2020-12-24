@@ -16,6 +16,16 @@ import { Prop, Watch } from "vue-property-decorator"
 import TreeLevel from './TreeLevel.vue';
 import { INode } from '@/structure/INode';
 
+/**
+  FEATURE to implement:
+  - Drag and drop
+  - Drop outside vue
+  - Customize nodes
+  - keyboard navigation
+  - Checkable
+  - emit events
+*/
+
 @Options({
   components: {
     TreeLevel

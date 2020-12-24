@@ -4,4 +4,12 @@ export interface INode {
     draggable?: boolean;
     opened?: boolean;
     children?: INode[] | null;
+    checkbox?: ICheckBox;
+    customProps?: {};
+}
+
+export interface ICheckBox {
+    checked: boolean;
+    indeterminate: boolean;
+    class: string | [];
 }
