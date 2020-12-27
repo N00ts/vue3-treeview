@@ -31,7 +31,7 @@ import { ref, watch } from 'vue';
 })
 export default class TreeLevel extends Vue {
 
-  @Prop({ type: Array, required: true, default: null })
+  @Prop({ type: Array, required: true, default: [] })
   public nodes!: INode[];
 
   @Prop({ default: null })

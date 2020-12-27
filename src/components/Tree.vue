@@ -36,7 +36,7 @@ import { INode } from '@/structure/INode';
   ]
 })
 export default class Tree extends Vue {
-  @Prop({ type: Array, required: true, default: null })
+  @Prop({ type: Array, required: true, default: [] })
   public nodes!: INode[];
 
   public onNodeUpdated(nv: INode[]): void {
