@@ -25,7 +25,6 @@ import { ref, watch } from 'vue';
     TreeNode
   },
   emits: [
-    "level-changed",
     "nodes-updated"
   ]
 })

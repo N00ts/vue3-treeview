@@ -26,7 +26,7 @@ import { Prop, Watch, Emit } from "vue-property-decorator"
     TreeLevel
   },
   emits: [
-    "toggle-node"
+    "node-toggle"
   ]
 })
 export default class TreeNode extends Vue {
@@ -52,7 +52,7 @@ export default class TreeNode extends Vue {
   }
 
   public togglenode(e: Event): void {
-    this.$emit("toggle-node", this.node);
+    this.$emit("node-toggle", this.node);
   }
 
   public beforeCreate(): void {

@@ -31,7 +31,6 @@ import { INode } from '@/structure/INode';
     TreeLevel
   },
   emits: [
-    "level-changed",
     "nodes-updated"
   ]
 })
