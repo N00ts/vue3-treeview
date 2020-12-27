@@ -4,7 +4,7 @@
       v-for="item in nodes"
       :key="item.id"
       :node="item"
-      @toggle-node="toggle">
+      @node-toggle="toggle">
   
       <template v-slot:node="props">
         <slot name="node" :node="props.node"></slot>
