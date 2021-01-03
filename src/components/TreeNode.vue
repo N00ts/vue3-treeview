@@ -1,5 +1,12 @@
 <template>
   <li v-on:click.stop="togglenode">
+    <icon v-if="opened" :viewbox="'0 0 451.847 451.847'">
+      <icon-opened/>
+    </icon>
+    <icon v-else :viewbox="'0 0 451.847 451.847'">
+      <icon-closed/>
+    </icon>
+
     <slot name="node" :node="node"></slot>
 
     <TreeLevel
@@ -20,10 +27,16 @@ import { INode } from "@/structure/INode";
 import TreeLevel from './TreeLevel.vue';
 import { SetupContext } from 'vue';
 import { Prop, Watch, Emit } from "vue-property-decorator" 
+import Icon from './Icon.vue';
+import IconOpened from "./IconOpened.vue";
+import IconClosed from "./IconClosed.vue";
 
 @Options({
   components: {
-    TreeLevel
+    TreeLevel,
+    Icon,
+    IconOpened,
+    IconClosed
   },
   emits: [
     "node-toggle"
