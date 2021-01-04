@@ -1,5 +1,9 @@
 <template>
-  <ul class="tree-level" v-bind:id="id">
+  <ul 
+    class="tree-level" 
+    :id="id"
+    :style="levelStyle">
+
     <TreeNode 
       v-for="item in nodes"
       :key="item.id"
@@ -33,11 +37,17 @@ export default class TreeLevel extends Vue {
   @Prop({ type: Array, required: true, default: [] })
   public nodes!: INode[];
 
-  @Prop({ default: null })
-  public depth!: number;
+  @Prop({ default: 25, type: Number })
+  public padding!: number;
 
   public get id(): number {
     return new Date().valueOf();
+  }
+
+  public get levelStyle(): {} {
+    return {
+      "padding-left": `${this.padding}px`
+    };
   }
 
   public beforeCreate(): void {
@@ -56,3 +66,8 @@ export default class TreeLevel extends Vue {
   } 
 }
 </script>
+<style scoped>
+  .tree-level {
+    list-style: none;
+  }
+</style>

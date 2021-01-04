@@ -2,6 +2,7 @@
     <div class="tree" v-bind="$attrs">
         <TreeLevel 
             :nodes="nodes"
+            :padding="padding"
             @nodes-updated="onNodeUpdated">
             <template v-slot:node="props">
               <slot name="node" :node="props.node"></slot>
@@ -37,6 +38,9 @@ import { INode } from '@/structure/INode';
 export default class Tree extends Vue {
   @Prop({ type: Array, required: true, default: [] })
   public nodes!: INode[];
+
+  @Prop({ default: 25, type: Number })
+  public padding!: number;
 
   public onNodeUpdated(nv: INode[]): void {
       this.$emit("nodes-updated", nv);
