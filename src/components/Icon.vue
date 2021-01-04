@@ -18,10 +18,10 @@ import { Vue } from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
 export default class Icon extends Vue {
-    @Prop({ default: 18, required: false, type: Number })
+    @Prop({ default: 16, required: false, type: Number })
     public width!: number;
 
-    @Prop({ default: 18, required: false, type: Number })
+    @Prop({ default: 16, required: false, type: Number })
     public height!: number;
 
     @Prop({ default: "", reuqired: true, type: String })
