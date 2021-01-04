@@ -1,11 +1,15 @@
 <template>
-  <li v-on:click.stop="togglenode">
-    <icon v-if="opened" :viewbox="'0 0 451.847 451.847'">
-      <icon-opened/>
-    </icon>
-    <icon v-else :viewbox="'0 0 451.847 451.847'">
-      <icon-closed/>
-    </icon>
+  <li>
+    <div class="icon-wrapper" v-on:click.stop="togglenode">
+      <icon v-if="opened" :viewbox="'0 0 451.847 451.847'">
+        <icon-opened/>
+      </icon>
+      <icon v-else :viewbox="'0 0 451.847 451.847'">
+        <icon-closed/>
+      </icon>
+    </div>
+
+    <input v-if="hasCheckbox" type="checkbox" v-model="checked" indeterminate.prop="false">
 
     <slot name="node" :node="node"></slot>
 
@@ -64,6 +68,20 @@ export default class TreeNode extends Vue {
     return this.node.text || "";
   }
 
+  public get hasCheckbox(): boolean {
+    return this.node.checkbox != undefined || false;
+  } 
+
+  public get checked(): boolean {
+    return this.node.checkbox && this.node.checkbox.checked || false;
+  }
+
+  public set checked(value: boolean) {
+    if (this.node.checkbox) {
+      this.node.checkbox.checked = value;
+    }
+  }
+
   public togglenode(e: Event): void {
     this.$emit("node-toggle", this.node);
   }
@@ -75,3 +93,8 @@ export default class TreeNode extends Vue {
   }
 }
 </script>
+<style>
+.icon-wrapper {
+  display: inline-flex;
+}
+</style>

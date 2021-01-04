@@ -10,6 +10,6 @@ export interface INode {
 
 export interface ICheckBox {
     checked: boolean;
-    indeterminate: boolean;
-    class: string | [];
+    indeterminate?: boolean;
+    class?: string | [];
 }

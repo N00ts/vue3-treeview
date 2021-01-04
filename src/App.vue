@@ -35,6 +35,9 @@ export default class App extends Vue {
       id: "id1",
       text: "test",
       opened: false,
+      checkbox: {
+        checked: false
+      },
       children: [
         {
           id: "id1.1",
