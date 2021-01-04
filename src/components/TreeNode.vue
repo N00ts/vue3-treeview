@@ -30,10 +30,11 @@ import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import TreeLevel from './TreeLevel.vue';
 import { SetupContext } from 'vue';
-import { Prop, Watch, Emit } from "vue-property-decorator" 
+import { Prop, Watch, Emit, Inject } from "vue-property-decorator" 
 import Icon from './Icon.vue';
 import IconOpened from "./IconOpened.vue";
 import IconClosed from "./IconClosed.vue";
+import Tree from "./Tree.vue";
 
 @Options({
   components: {
@@ -50,6 +51,9 @@ export default class TreeNode extends Vue {
 
   @Prop({ type: Object, default: {}, required: true })
   public node!: INode;
+
+  @Inject("root")
+  private root!: Tree;
 
   public createNodes: boolean = false;
 

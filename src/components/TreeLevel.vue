@@ -21,8 +21,9 @@
 import { Options, Vue, setup } from "vue-class-component";
 import TreeNode from './TreeNode.vue';
 import { INode } from '@/structure/INode';
-import { Prop, Watch } from "vue-property-decorator"
+import { Inject, Prop, Watch } from "vue-property-decorator"
 import { ref, watch } from 'vue';
+import Tree from "./Tree.vue";
 
 @Options({
   components: {
@@ -39,6 +40,9 @@ export default class TreeLevel extends Vue {
 
   @Prop({ default: 25, type: Number })
   public padding!: number;
+
+  @Inject("root")
+  private root!: Tree;
 
   public get id(): number {
     return new Date().valueOf();

@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Options, Vue, setup } from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator"
+import { Prop, Provide, Watch } from "vue-property-decorator"
 import TreeLevel from './TreeLevel.vue';
 import { INode } from '@/structure/INode';
 
@@ -41,6 +41,9 @@ export default class Tree extends Vue {
 
   @Prop({ default: 25, type: Number })
   public padding!: number;
+
+  @Provide("root")
+  private root: Tree = this;
 
   public onNodeUpdated(nv: INode[]): void {
       this.$emit("nodes-updated", nv);
