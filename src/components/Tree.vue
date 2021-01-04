@@ -50,3 +50,9 @@ export default class Tree extends Vue {
   }
 }
 </script>
+<style scoped>
+.tree {
+  display: flex;
+  align-items: center;
+}
+</style>
