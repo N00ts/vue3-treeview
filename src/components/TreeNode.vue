@@ -97,8 +97,8 @@ export default class TreeNode extends Vue {
   }
 
   public set checked(value: boolean) {
-    if (this.hasCheckbox) {
-      this.node.checkbox.checked = value;
+    if (!this.node.checkbox) {
+      this.node.checkbox = {};
     }
 
     this.node.checkbox = {

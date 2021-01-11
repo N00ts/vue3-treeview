@@ -1,5 +1,5 @@
 export default interface ICheckBox {
-    checked: boolean;
+    checked?: boolean;
     indeterminate?: boolean;
     class?: string | [];
 }
