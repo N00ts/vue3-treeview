@@ -1,15 +1,17 @@
+import ICheckBox from "./ICheckbox";
+
 export interface INode {
     id: string;
     text: string;
-    draggable?: boolean;
     opened?: boolean;
-    children?: INode[] | null;
+    disabled?: boolean;
+    editable?: boolean;
+    focusable?: boolean;
+    selectable?: boolean;
+    selected?: boolean;
+    draggable?: boolean;
+    dropable?: boolean;
+    children?: INode[];
     checkbox?: ICheckBox;
-    customProps?: {};
-}
-
-export interface ICheckBox {
-    checked: boolean;
-    indeterminate?: boolean;
-    class?: string | [];
+    customAttributes?: {};
 }

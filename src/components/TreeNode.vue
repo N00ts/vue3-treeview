@@ -16,7 +16,8 @@
     <TreeLevel
       v-if="createNodes"
       v-show="opened"
-      :nodes="node.children">      
+      :nodes="node.children"
+      :checkboxes="checkboxes">      
       
       <template v-slot:node="props">
         <slot name="node" :node="props.node"></slot>
@@ -35,6 +36,7 @@ import Icon from './Icon.vue';
 import IconOpened from "./IconOpened.vue";
 import IconClosed from "./IconClosed.vue";
 import Tree from "./Tree.vue";
+import ICheckBox from "@/structure/ICheckbox";
 
 @Options({
   components: {
@@ -52,10 +54,24 @@ export default class TreeNode extends Vue {
   @Prop({ type: Object, default: {}, required: true })
   public node!: INode;
 
+  @Prop({ default: 25, required: false, type: Number })
+  public padding!: number;
+
+  @Prop({default: false, required: false, type: Boolean })
+  public checkboxes!: boolean;
+
+  @Prop({ default: false, required: false, type: Boolean })
+  public dragAndDrop!: boolean;
+
+  @Prop({ default: false, required: false, type: Boolean })
+  public keyboardNavigation!: boolean;
+
   @Inject("root")
   private root!: Tree;
 
   public createNodes: boolean = false;
+
+  private indeterminate: boolean = false;
 
   @Watch("opened")
   public onOpenValueChanged(nv: boolean, ov: boolean) {
@@ -73,17 +89,21 @@ export default class TreeNode extends Vue {
   }
 
   public get hasCheckbox(): boolean {
-    return this.node.checkbox != undefined || false;
+    return this.checkboxes || (this.node && this.node.checkbox !== undefined) || false;
   } 
 
   public get checked(): boolean {
-    return this.node.checkbox && this.node.checkbox.checked || false;
+    return this.hasCheckbox && this.node.checkbox && this.node.checkbox.checked || false;
   }
 
   public set checked(value: boolean) {
-    if (this.node.checkbox) {
+    if (this.hasCheckbox) {
       this.node.checkbox.checked = value;
     }
+
+    this.node.checkbox = {
+      checked: value
+    };
   }
 
   public togglenode(e: Event): void {

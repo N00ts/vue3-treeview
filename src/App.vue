@@ -2,6 +2,7 @@
   <Tree 
     ref="Tree" 
     :nodes="nodes"
+    :checkboxes="true"
     @nodes-updated="changecode">
   
     <template v-slot:node="props">
