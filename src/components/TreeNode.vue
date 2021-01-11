@@ -16,8 +16,7 @@
     <TreeLevel
       v-if="createNodes"
       v-show="opened"
-      :nodes="node.children"
-      :checkboxes="checkboxes">      
+      :nodes="node.children">      
       
       <template v-slot:node="props">
         <slot name="node" :node="props.node"></slot>
@@ -54,18 +53,6 @@ export default class TreeNode extends Vue {
   @Prop({ type: Object, default: {}, required: true })
   public node!: INode;
 
-  @Prop({ default: 25, required: false, type: Number })
-  public padding!: number;
-
-  @Prop({default: false, required: false, type: Boolean })
-  public checkboxes!: boolean;
-
-  @Prop({ default: false, required: false, type: Boolean })
-  public dragAndDrop!: boolean;
-
-  @Prop({ default: false, required: false, type: Boolean })
-  public keyboardNavigation!: boolean;
-
   @Inject("root")
   private root!: Tree;
 
@@ -89,7 +76,7 @@ export default class TreeNode extends Vue {
   }
 
   public get hasCheckbox(): boolean {
-    return this.checkboxes || (this.node && this.node.checkbox !== undefined) || false;
+    return this.root.checkboxes || (this.node && this.node.checkbox !== undefined) || false;
   } 
 
   public get checked(): boolean {
@@ -101,9 +88,7 @@ export default class TreeNode extends Vue {
       this.node.checkbox = {};
     }
 
-    this.node.checkbox = {
-      checked: value
-    };
+      this.node.checkbox.checked = value;
   }
 
   public togglenode(e: Event): void {

@@ -8,7 +8,6 @@
       v-for="item in nodes"
       :key="item.id"
       :node="item"
-      :checkboxes="checkboxes"
       @node-toggle="toggle">
   
       <template v-slot:node="props">
@@ -39,18 +38,6 @@ export default class TreeLevel extends Vue {
   @Prop({ type: Array, required: true, default: [] })
   public nodes!: INode[];
 
-  @Prop({ default: 25, required: false, type: Number })
-  public padding!: number;
-
-  @Prop({default: false, required: false, type: Boolean })
-  public checkboxes!: boolean;
-
-  @Prop({ default: false, required: false, type: Boolean })
-  public dragAndDrop!: boolean;
-
-  @Prop({ default: false, required: false, type: Boolean })
-  public keyboardNavigation!: boolean;
-
   @Inject("root")
   private root!: Tree;
 
@@ -60,7 +47,7 @@ export default class TreeLevel extends Vue {
 
   public get levelStyle(): {} {
     return {
-      "padding-left": `${this.padding}px`
+      "padding-left": `${this.root.padding}px`
     };
   }
 

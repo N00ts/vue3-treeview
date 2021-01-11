@@ -2,8 +2,6 @@
     <div class="tree" :id="id">
         <TreeLevel 
             :nodes="nodes"
-            :padding="padding"
-            :checkboxes="checkboxes"
             @nodes-updated="onNodeUpdated">
             <template v-slot:node="props">
               <slot name="node" :node="props.node"></slot>
