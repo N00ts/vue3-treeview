@@ -5,8 +5,13 @@
             :depth="0"
             :configuration="configuration"
             @nodes-updated="onNodeUpdated">
-            <template v-slot:node="props">
-              <slot name="node" :node="props.node"></slot>
+            
+            <template v-slot:before-input="props">
+              <slot name="before-input" :node="props.node"></slot>
+            </template>
+
+            <template v-slot:after-input="props">
+              <slot name="after-input" :node="props.node"></slot>
             </template>
         </TreeLevel>
     </div>

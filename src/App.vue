@@ -10,10 +10,6 @@
     :nodes="nodes"
     :configuration="configuration"
     @nodes-updated="changecode">
-  
-    <template v-slot:node="props">
-      {{ props.node.text }}
-    </template>
   </Tree>
 
   <textarea 
@@ -39,7 +35,7 @@ import IConfiguration from "./structure/IConfiguration";
 })
 export default class App extends Vue {
   public configuration: IConfiguration = {
-    checkboxes: false
+    checkboxes: true
   };
 
   public nodes: INode[] = [

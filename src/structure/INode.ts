@@ -5,7 +5,7 @@ export interface INode {
     text: string;
     opened?: boolean;
     disabled?: boolean;
-    editable?: boolean;
+    editing?: boolean;
     focusable?: boolean;
     selectable?: boolean;
     selected?: boolean;

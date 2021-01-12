@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="icon-wrapper" v-on:click.stop="togglenode">
+    <div class="icon-wrapper" @click.stop="togglenode">
       <icon v-if="opened" :viewbox="'0 0 451.847 451.847'">
         <icon-opened/>
       </icon>
@@ -11,7 +11,12 @@
 
     <input v-if="hasCheckbox" type="checkbox" v-model="checked" indeterminate.prop="false">
 
-    <slot name="node" :node="node"></slot>
+    <slot name="before-input" :node="node"></slot>
+
+    <input v-if="editable" @blur="inputBlur" type="text" v-model="text">
+    <span v-else @dblclick="inputDoubleClick"> {{ text }} </span>
+
+    <slot name="after-input" :node="node"></slot>
 
     <TreeLevel
       v-if="createNodes"
@@ -20,9 +25,14 @@
       :depth="depth + 1"
       :configuration="configuration">      
       
-      <template v-slot:node="props">
-        <slot name="node" :node="props.node"></slot>
+      <template v-slot:before-input="props">
+        <slot name="before-input" :node="props.node"></slot>
       </template>
+
+      <template v-slot:after-input="props">
+        <slot name="after-input" :node="props.node"></slot>
+      </template>
+
     </TreeLevel>
   </li>
 </template>
@@ -48,7 +58,9 @@ import IConfiguration from "@/structure/IConfiguration";
     IconClosed
   },
   emits: [
-    "node-toggle"
+    "icon-click",
+    "input-doubleclick",
+    "input-blur"
   ]
 })
 export default class TreeNode extends Vue {
@@ -81,8 +93,28 @@ export default class TreeNode extends Vue {
     return this.node.text || "";
   }
 
+  public set text(value: string) {
+    this.node.text = value;
+  }
+
+  public get editable(): boolean {
+    const editable = this.configuration.editable;
+
+    if (editable !== undefined && editable !== null && !editable) {
+      return false;
+    }
+
+    return editable || this.node.editing || false;
+  }
+
   public get hasCheckbox(): boolean {
-    return this.configuration.checkboxes || (this.node && this.node.checkbox !== undefined) || false;
+    const checkboxes = this.configuration.checkboxes
+
+    if (checkboxes !== undefined && checkboxes !== null && !checkboxes) {
+      return false;
+    }
+
+    return checkboxes || this.node.checkbox !== undefined || false;
   } 
 
   public get checked(): boolean {
@@ -97,8 +129,16 @@ export default class TreeNode extends Vue {
       this.node.checkbox.checked = value;
   }
 
+  public inputDoubleClick(e: MouseEvent): void {
+    this.$emit("input-doubleclick", this.node);
+  }
+
+  public inputBlur(e: MouseEvent): void {
+    this.$emit("input-blur", this.node);
+  }
+
   public togglenode(e: Event): void {
-    this.$emit("node-toggle", this.node);
+    this.$emit("icon-click", this.node);
   }
 
   public beforeCreate(): void {

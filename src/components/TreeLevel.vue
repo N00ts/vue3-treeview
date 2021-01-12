@@ -10,11 +10,18 @@
       :node="item"
       :depth="depth"
       :configuration="configuration"
-      @node-toggle="toggle">
-  
-      <template v-slot:node="props">
-        <slot name="node" :node="props.node"></slot>
+      @icon-click="toggle"
+      @input-doubleclick="edit"
+      @input-blur="blur">
+
+      <template v-slot:before-input="props">
+        <slot name="before-input" :node="props.node"></slot>
       </template>
+
+      <template v-slot:after-input="props">
+        <slot name="after-input" :node="props.node"></slot>
+      </template> 
+  
     </TreeNode>
   </ul>
 </template>
@@ -73,6 +80,14 @@ export default class TreeLevel extends Vue {
 
   public toggle(node: INode): void {
     node.opened = !node.opened;
+  }
+
+  public edit(node: INode): void {
+    node.editing = true;
+  }
+
+  public blur(node: INode): void {
+    node.editing = false;
   }
 
   @Watch("nodes", { deep: true })
