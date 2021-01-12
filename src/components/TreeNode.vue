@@ -13,8 +13,17 @@
 
     <slot name="before-input" :node="node"></slot>
 
-    <input v-if="editable" @blur="inputBlur" type="text" v-model="text">
-    <span v-else @dblclick="inputDoubleClick"> {{ text }} </span>
+    <input 
+      v-if="editable"
+      ref="input"
+      type="text"
+      v-model="text"
+      @blur="inputBlur">
+    <span 
+      v-else 
+      @dblclick="inputDoubleClick">
+      {{ text }}
+    </span>
 
     <slot name="after-input" :node="node"></slot>
 
@@ -41,7 +50,7 @@
 import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import TreeLevel from './TreeLevel.vue';
-import { SetupContext } from 'vue';
+import { SetupContext, watch } from 'vue';
 import { Prop, Watch, Emit, Inject, InjectReactive } from "vue-property-decorator" 
 import Icon from './Icon.vue';
 import IconOpened from "./IconOpened.vue";
@@ -78,10 +87,21 @@ export default class TreeNode extends Vue {
 
   private indeterminate: boolean = false;
 
+  public $refs: {
+    input: HTMLInputElement;
+  };
+
   @Watch("opened")
-  public onOpenValueChanged(nv: boolean, ov: boolean) {
+  public onOpenValueChanged(nv: boolean, ov: boolean): void {
     if (nv && !this.createNodes) {
       this.createNodes = true;
+    }
+  }
+
+  @Watch("editable")
+  public onEditable(nv: boolean, ov: boolean): void {
+    if (nv) {
+      this.$nextTick(() => this.$refs.input.focus());
     }
   }
 
@@ -100,11 +120,11 @@ export default class TreeNode extends Vue {
   public get editable(): boolean {
     const editable = this.configuration.editable;
 
-    if (editable !== undefined && editable !== null && !editable) {
+    if (editable === undefined ||  editable === null || !editable) {
       return false;
     }
 
-    return editable || this.node.editing || false;
+    return editable && this.node.editing || false;
   }
 
   public get hasCheckbox(): boolean {
@@ -129,8 +149,16 @@ export default class TreeNode extends Vue {
       this.node.checkbox.checked = value;
   }
 
+  public beforeCreate(): void {
+    if (this.$options.components) {
+      this.$options.components.TreeLevel = require("./TreeLevel.vue").default;
+    }
+  }
+
   public inputDoubleClick(e: MouseEvent): void {
-    this.$emit("input-doubleclick", this.node);
+    if (this.configuration.editable) {
+      this.$emit("input-doubleclick", this.node);
+    }
   }
 
   public inputBlur(e: MouseEvent): void {
@@ -139,12 +167,6 @@ export default class TreeNode extends Vue {
 
   public togglenode(e: Event): void {
     this.$emit("icon-click", this.node);
-  }
-
-  public beforeCreate(): void {
-    if (this.$options.components) {
-      this.$options.components.TreeLevel = require("./TreeLevel.vue").default;
-    }
   }
 }
 </script>

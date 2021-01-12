@@ -5,6 +5,9 @@
   <label for="padding">padding</label>
   <input id="padding" type="number" v-model="configuration.padding">
 
+  <label for="editable">editable</label>
+  <input id="editable" type="checkbox" v-model="configuration.editable">
+
   <Tree 
     ref="Tree" 
     :nodes="nodes"
