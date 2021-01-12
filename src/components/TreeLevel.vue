@@ -8,6 +8,8 @@
       v-for="item in nodes"
       :key="item.id"
       :node="item"
+      :depth="depth"
+      :configuration="configuration"
       @node-toggle="toggle">
   
       <template v-slot:node="props">
@@ -24,6 +26,7 @@ import { INode } from '@/structure/INode';
 import { Inject, Prop, Watch } from "vue-property-decorator"
 import { ref, watch } from 'vue';
 import Tree from "./Tree.vue";
+import IConfiguration from "@/structure/IConfiguration";
 
 @Options({
   components: {
@@ -35,19 +38,30 @@ import Tree from "./Tree.vue";
 })
 export default class TreeLevel extends Vue {
 
+  @Prop({ default: null, required: true, type: Number })
+  public depth!: Number;
+
   @Prop({ type: Array, required: true, default: [] })
   public nodes!: INode[];
 
-  @Inject("root")
-  private root!: Tree;
+  @Prop({ default: null, required: false, type: Object })
+  public configuration!: IConfiguration;
 
   public get id(): number {
     return new Date().valueOf();
   }
 
+  public get padding(): Number {
+    if (this.depth === 0) {
+      return 0;
+    }
+
+    return this.configuration && this.configuration.padding || 25;
+  }
+
   public get levelStyle(): {} {
     return {
-      "padding-left": `${this.root.padding}px`
+      "padding-left": `${this.padding}px`
     };
   }
 

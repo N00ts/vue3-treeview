@@ -16,7 +16,9 @@
     <TreeLevel
       v-if="createNodes"
       v-show="opened"
-      :nodes="node.children">      
+      :nodes="node.children"
+      :depth="depth + 1"
+      :configuration="configuration">      
       
       <template v-slot:node="props">
         <slot name="node" :node="props.node"></slot>
@@ -30,12 +32,13 @@ import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import TreeLevel from './TreeLevel.vue';
 import { SetupContext } from 'vue';
-import { Prop, Watch, Emit, Inject } from "vue-property-decorator" 
+import { Prop, Watch, Emit, Inject, InjectReactive } from "vue-property-decorator" 
 import Icon from './Icon.vue';
 import IconOpened from "./IconOpened.vue";
 import IconClosed from "./IconClosed.vue";
 import Tree from "./Tree.vue";
 import ICheckBox from "@/structure/ICheckbox";
+import IConfiguration from "@/structure/IConfiguration";
 
 @Options({
   components: {
@@ -50,11 +53,14 @@ import ICheckBox from "@/structure/ICheckbox";
 })
 export default class TreeNode extends Vue {
 
+  @Prop({ default: null, required: true, type: Number })
+  public depth!: Number;
+
   @Prop({ type: Object, default: {}, required: true })
   public node!: INode;
 
-  @Inject("root")
-  private root!: Tree;
+  @Prop({ default: null, required: false, type: Object })
+  public configuration!: IConfiguration;
 
   public createNodes: boolean = false;
 
@@ -76,7 +82,7 @@ export default class TreeNode extends Vue {
   }
 
   public get hasCheckbox(): boolean {
-    return this.root.checkboxes || (this.node && this.node.checkbox !== undefined) || false;
+    return this.configuration.checkboxes || (this.node && this.node.checkbox !== undefined) || false;
   } 
 
   public get checked(): boolean {

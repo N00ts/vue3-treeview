@@ -1,8 +1,14 @@
 <template>
+  <label for="showCheckBoxes">Show checkboxes</label>
+  <input id="showCheckBoxes" type="checkbox" v-model="configuration.checkboxes">
+
+  <label for="padding">padding</label>
+  <input id="padding" type="number" v-model="configuration.padding">
+
   <Tree 
     ref="Tree" 
     :nodes="nodes"
-    :checkboxes="true"
+    :configuration="configuration"
     @nodes-updated="changecode">
   
     <template v-slot:node="props">
@@ -15,7 +21,7 @@
     v-model="code">
   </textarea>
 
-  <button v-on:click.stop="updateTree"></button>
+  <button v-on:click.stop="updateTree">update tree</button>
 </template>
 
 <script lang="ts">
@@ -24,6 +30,7 @@ import { Watch } from "vue-property-decorator";
 import { INode } from "@/structure/INode";
 import { ref, reactive } from 'vue';
 import Tree from './components/Tree.vue';
+import IConfiguration from "./structure/IConfiguration";
 
 @Options({
   components: {
@@ -31,6 +38,10 @@ import Tree from './components/Tree.vue';
   },
 })
 export default class App extends Vue {
+  public configuration: IConfiguration = {
+    checkboxes: false
+  };
+
   public nodes: INode[] = [
     {
       id: "id1",
