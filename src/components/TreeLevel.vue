@@ -11,8 +11,7 @@
       :depth="depth"
       :configuration="configuration"
       @icon-click="toggle"
-      @input-doubleclick="edit"
-      @input-blur="blur">
+      @node-checked="onNodeChecked">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -82,12 +81,8 @@ export default class TreeLevel extends Vue {
     node.opened = !node.opened;
   }
 
-  public edit(node: INode): void {
-    node.editing = true;
-  }
-
-  public blur(node: INode): void {
-    node.editing = false;
+  public onNodeChecked(node: INode, value: boolean): void {
+    node.checked = value;
   }
 
   @Watch("nodes", { deep: true })

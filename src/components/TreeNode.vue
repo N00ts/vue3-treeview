@@ -9,7 +9,8 @@
       </icon>
     </div>
 
-    <input v-if="hasCheckbox" type="checkbox" v-model="checked" indeterminate.prop="false">
+    <input 
+      v-if="hasCheckbox" type="checkbox" v-model="checked" :indeterminate.prop="indeterminate">
 
     <slot name="before-input" :node="node"></slot>
 
@@ -21,7 +22,7 @@
       @blur="inputBlur">
     <span 
       v-else 
-      @dblclick="inputDoubleClick">
+      @dblclick="inputDblClick">
       {{ text }}
     </span>
 
@@ -56,7 +57,6 @@ import Icon from './Icon.vue';
 import IconOpened from "./IconOpened.vue";
 import IconClosed from "./IconClosed.vue";
 import Tree from "./Tree.vue";
-import ICheckBox from "@/structure/ICheckbox";
 import IConfiguration from "@/structure/IConfiguration";
 
 @Options({
@@ -68,8 +68,7 @@ import IConfiguration from "@/structure/IConfiguration";
   },
   emits: [
     "icon-click",
-    "input-doubleclick",
-    "input-blur"
+    "node-checked"
   ]
 })
 export default class TreeNode extends Vue {
@@ -85,7 +84,7 @@ export default class TreeNode extends Vue {
 
   public createNodes: boolean = false;
 
-  private indeterminate: boolean = false;
+  private editing: boolean = false;
 
   public $refs: {
     input: HTMLInputElement;
@@ -117,36 +116,63 @@ export default class TreeNode extends Vue {
     this.node.text = value;
   }
 
+  public get nbChildren(): number {
+    return this.node.children && this.node.children.length || 0;
+  }
+
+  public get hasChildren(): boolean {
+    return this.nbChildren > 0; 
+  }  
+
   public get editable(): boolean {
-    const editable = this.configuration.editable;
-
-    if (editable === undefined ||  editable === null || !editable) {
-      return false;
-    }
-
-    return editable && this.node.editing || false;
+    return this.node.editable || false;
   }
 
   public get hasCheckbox(): boolean {
-    const checkboxes = this.configuration.checkboxes
-
-    if (checkboxes !== undefined && checkboxes !== null && !checkboxes) {
-      return false;
-    }
-
-    return checkboxes || this.node.checkbox !== undefined || false;
+    return this.configuration.checkboxes || false;
   } 
 
   public get checked(): boolean {
-    return this.hasCheckbox && this.node.checkbox && this.node.checkbox.checked || false;
+    console.log(`${this.text} - ${this.node.checked}`);
+    return this.hasCheckbox && this.node.checked;
   }
 
   public set checked(value: boolean) {
-    if (!this.node.checkbox) {
-      this.node.checkbox = {};
+    this.$emit("node-checked", this.node, value);
+  }
+
+  @Watch("checked")
+  public onNodeChecked(nv: boolean, ov: boolean): void {
+    if (ov === undefined && !nv) {
+      return;
     }
 
-      this.node.checkbox.checked = value;
+    if (nv !== ov && this.hasChildren) {
+      for (const node of this.node.children) {
+        node.checked = nv
+      }
+    }
+  }
+
+  public get checkedChildren(): number {
+    if (this.hasChildren) {
+      return this.node.children.filter((x) => x.checked).length;
+    }
+
+    return 0
+  }
+
+  @Watch("checkedChildren")
+  public onCheckedChildrenChanged(nv: number, ov: number): void {
+    this.checked = Number.isFinite(nv) && nv === this.nbChildren; 
+  }
+
+  public get indeterminate(): boolean {
+    if (this.node.children) {
+      return this.checkedChildren > 0 && this.checkedChildren < this.node.children.length;
+    }
+
+    return false;
   }
 
   public beforeCreate(): void {
@@ -155,14 +181,14 @@ export default class TreeNode extends Vue {
     }
   }
 
-  public inputDoubleClick(e: MouseEvent): void {
-    if (this.configuration.editable) {
-      this.$emit("input-doubleclick", this.node);
+  public inputDblClick(e: MouseEvent): void {
+    if (this.editable) {
+      this.editing = true;
     }
   }
 
   public inputBlur(e: MouseEvent): void {
-    this.$emit("input-blur", this.node);
+    this.editing = false;
   }
 
   public togglenode(e: Event): void {
