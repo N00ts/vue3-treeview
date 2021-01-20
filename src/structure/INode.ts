@@ -1,15 +1,8 @@
+import { INodeState } from './INodeState';
+
 export interface INode {
-    id: string;
-    text: string;
-    opened?: boolean;
-    disabled?: boolean;
-    editable?: boolean;
-    focusable?: boolean;
-    selectable?: boolean;
-    selected?: boolean;
-    draggable?: boolean;
-    dropable?: boolean;
-    children?: INode[];
-    checked?: boolean;
-    customAttributes?: {};
+    id?: string;
+    text?: string;
+    children?: string[];
+    state?: INodeState;
 }

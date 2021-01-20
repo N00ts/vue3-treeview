@@ -1,17 +1,11 @@
 <template>
-  <ul 
-    class="tree-level" 
-    :id="id"
-    :style="levelStyle">
+  <ul class="tree-level" id="id" :style="levelStyle">
 
     <TreeNode 
-      v-for="item in nodes"
-      :key="item.id"
-      :node="item"
-      :depth="depth"
-      :configuration="configuration"
-      @icon-click="toggle"
-      @node-checked="onNodeChecked">
+      v-for="id in nodes"
+      :key="id"
+      :id="id"
+      :depth="depth">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -33,6 +27,8 @@ import { Inject, Prop, Watch } from "vue-property-decorator"
 import { ref, watch } from 'vue';
 import Tree from "./Tree.vue";
 import IConfiguration from "@/structure/IConfiguration";
+import _ from "lodash-es";
+import { treeStore } from "@/store/treeStore";
 
 @Options({
   components: {
@@ -47,11 +43,28 @@ export default class TreeLevel extends Vue {
   @Prop({ default: null, required: true, type: Number })
   public depth!: Number;
 
-  @Prop({ type: Array, required: true, default: [] })
-  public nodes!: INode[];
+  @Prop({ default: null, type: String })
+  public parentid!: string;
 
-  @Prop({ default: null, required: false, type: Object })
-  public configuration!: IConfiguration;
+  public get nodes(): string[] {
+    if (!this.parentid && treeStore.hasroot) {
+      return treeStore.config.roots;
+    }
+
+    if (this.parentid && treeStore.hasNodes) {
+      const node = treeStore.nodes[this.parentid];
+
+      if (node) {
+        return node.children || [];
+      }
+    }
+
+    return [];
+  }
+
+  public get config(): IConfiguration {
+    return treeStore.config;
+  }
 
   public get id(): number {
     return new Date().valueOf();
@@ -62,7 +75,12 @@ export default class TreeLevel extends Vue {
       return 0;
     }
 
-    return this.configuration && this.configuration.padding || 25;
+    return this.config && _.toInteger(this.config.padding) || 25;
+  }
+
+  @Watch("config")
+  public onPaddingChanged(nv: number): void {
+    console.log(nv);
   }
 
   public get levelStyle(): {} {
@@ -76,19 +94,6 @@ export default class TreeLevel extends Vue {
       this.$options.components.TreeNode = require("./TreeNode.vue").default;
     }
   }
-
-  public toggle(node: INode): void {
-    node.opened = !node.opened;
-  }
-
-  public onNodeChecked(node: INode, value: boolean): void {
-    node.checked = value;
-  }
-
-  @Watch("nodes", { deep: true })
-  public onmodelchanged(nv: INode[]): void {
-    this.$emit("nodes-updated", nv)
-  } 
 }
 </script>
 <style scoped>

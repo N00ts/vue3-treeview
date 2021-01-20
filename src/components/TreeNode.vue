@@ -15,7 +15,8 @@
     <slot name="before-input" :node="node"></slot>
 
     <input 
-      v-if="editable"
+      v-if="editing"
+      tabindex="0"
       ref="input"
       type="text"
       v-model="text"
@@ -31,9 +32,8 @@
     <TreeLevel
       v-if="createNodes"
       v-show="opened"
-      :nodes="node.children"
       :depth="depth + 1"
-      :configuration="configuration">      
+      :parentid="id">      
       
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -58,6 +58,8 @@ import IconOpened from "./IconOpened.vue";
 import IconClosed from "./IconClosed.vue";
 import Tree from "./Tree.vue";
 import IConfiguration from "@/structure/IConfiguration";
+import _ from "lodash-es";
+import { treeStore } from "@/store/treeStore";
 
 @Options({
   components: {
@@ -76,19 +78,26 @@ export default class TreeNode extends Vue {
   @Prop({ default: null, required: true, type: Number })
   public depth!: Number;
 
-  @Prop({ type: Object, default: {}, required: true })
-  public node!: INode;
-
-  @Prop({ default: null, required: false, type: Object })
-  public configuration!: IConfiguration;
+  @Prop({ type: String, default: null, required: true })
+  public id!: string;
 
   public createNodes: boolean = false;
-
-  private editing: boolean = false;
 
   public $refs: {
     input: HTMLInputElement;
   };
+
+  public get node(): INode {
+    return treeStore.hasNodes && treeStore.nodes[this.id] || null;
+  }
+
+  public get hasNode(): boolean {
+    return _.isNil(this.node);
+  }
+
+  public get config(): IConfiguration {
+    return treeStore.config;
+  }
 
   @Watch("opened")
   public onOpenValueChanged(nv: boolean, ov: boolean): void {
@@ -98,14 +107,14 @@ export default class TreeNode extends Vue {
   }
 
   @Watch("editable")
-  public onEditable(nv: boolean, ov: boolean): void {
+  public onEditable(nv: boolean): void {
     if (nv) {
-      this.$nextTick(() => this.$refs.input.focus());
+      this.$refs.input.focus();
     }
   }
 
   public get opened(): boolean {
-    return this.node.opened || false;
+    return this.hasState && this.node.state.opened || false;
   }
 
   public get text(): string {
@@ -113,7 +122,7 @@ export default class TreeNode extends Vue {
   }
 
   public set text(value: string) {
-    this.node.text = value;
+    treeStore.updateNodePropperty(this.id, "text", value);
   }
 
   public get nbChildren(): number {
@@ -124,55 +133,28 @@ export default class TreeNode extends Vue {
     return this.nbChildren > 0; 
   }  
 
-  public get editable(): boolean {
-    return this.node.editable || false;
+  public get hasState(): boolean {
+    return !_.isNil(this.node.state);
+  }
+
+  public get editing(): boolean {
+    return this.hasState && this.node.state.editing || false;
   }
 
   public get hasCheckbox(): boolean {
-    return this.configuration.checkboxes || false;
+    return this.config.checkboxes || false;
   } 
 
   public get checked(): boolean {
-    console.log(`${this.text} - ${this.node.checked}`);
-    return this.hasCheckbox && this.node.checked;
+    return this.hasCheckbox && this.hasState && this.node.state.checked;
   }
 
   public set checked(value: boolean) {
-    this.$emit("node-checked", this.node, value);
-  }
-
-  @Watch("checked")
-  public onNodeChecked(nv: boolean, ov: boolean): void {
-    if (ov === undefined && !nv) {
-      return;
-    }
-
-    if (nv !== ov && this.hasChildren) {
-      for (const node of this.node.children) {
-        node.checked = nv
-      }
-    }
-  }
-
-  public get checkedChildren(): number {
-    if (this.hasChildren) {
-      return this.node.children.filter((x) => x.checked).length;
-    }
-
-    return 0
-  }
-
-  @Watch("checkedChildren")
-  public onCheckedChildrenChanged(nv: number, ov: number): void {
-    this.checked = Number.isFinite(nv) && nv === this.nbChildren; 
+    treeStore.checkNode(this.id, value);
   }
 
   public get indeterminate(): boolean {
-    if (this.node.children) {
-      return this.checkedChildren > 0 && this.checkedChildren < this.node.children.length;
-    }
-
-    return false;
+    return !_.isNil(this.node.state) && this.node.state.indeterminate;
   }
 
   public beforeCreate(): void {
@@ -182,17 +164,15 @@ export default class TreeNode extends Vue {
   }
 
   public inputDblClick(e: MouseEvent): void {
-    if (this.editable) {
-      this.editing = true;
-    }
+    treeStore.editnode(this.id, true);
   }
 
   public inputBlur(e: MouseEvent): void {
-    this.editing = false;
+    treeStore.editnode(this.id, false);
   }
 
   public togglenode(e: Event): void {
-    this.$emit("icon-click", this.node);
+    treeStore.openNode(this.id, !this.opened);
   }
 }
 </script>
