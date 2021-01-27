@@ -1,11 +1,11 @@
 <template>
   <ul class="tree-level" id="id" :style="levelStyle">
-
-    <TreeNode 
-      v-for="id in nodes"
-      :key="id"
-      :id="id"
-      :depth="depth">
+    <TreeNode
+      v-for="(item, index) in nodes"
+      :key="index"
+      :node="item"
+      :depth="depth"
+      v-bind="$attrs">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -13,57 +13,61 @@
 
       <template v-slot:after-input="props">
         <slot name="after-input" :node="props.node"></slot>
-      </template> 
-  
+      </template>
     </TreeNode>
   </ul>
 </template>
 
 <script lang="ts">
-import { Options, Vue, setup } from "vue-class-component";
-import TreeNode from './TreeNode.vue';
-import { INode } from '@/structure/INode';
-import { Inject, Prop, Watch } from "vue-property-decorator"
-import { ref, watch } from 'vue';
-import Tree from "./Tree.vue";
-import IConfiguration from "@/structure/IConfiguration";
+import { Options, Vue } from "vue-class-component";
+import TreeNode from "./TreeNode.vue";
+import { INode } from "@/structure/INode";
+import { Prop } from "vue-property-decorator";
 import _ from "lodash-es";
-import { treeStore } from "@/store/treeStore";
+import { state } from "../store/store";
 
 @Options({
   components: {
-    TreeNode
+    TreeNode,
   },
-  emits: [
-    "nodes-updated"
-  ]
 })
 export default class TreeLevel extends Vue {
-
   @Prop({ default: null, required: true, type: Number })
   public depth!: Number;
 
   @Prop({ default: null, type: String })
-  public parentid!: string;
+  public parentId!: string;
 
-  public get nodes(): string[] {
-    if (!this.parentid && treeStore.hasroot) {
-      return treeStore.config.roots;
+  public get nodes(): INode[] {
+    const res = [];
+
+    if (_.isNil(this.parentId) && state.config.roots && this.depth === 0) {
+      for (const id of state.config.roots) {
+        if (state.nodes[id]) {
+          state.nodes[id].id = id;
+          res.push(state.nodes[id]);
+        }
+      }
+
+      return res;
     }
 
-    if (this.parentid && treeStore.hasNodes) {
-      const node = treeStore.nodes[this.parentid];
+    if (!_.isNil(this.parentId)) {
+      const node = state.nodes[this.parentId];
 
-      if (node) {
-        return node.children || [];
+      if (node && node.children && node.children.length > 0) {
+        for (const id of node.children) {
+          if (state.nodes[id]) {
+            state.nodes[id].id = id;
+            res.push(state.nodes[id]);
+          }
+        }
       }
+
+      return res;
     }
 
     return [];
-  }
-
-  public get config(): IConfiguration {
-    return treeStore.config;
   }
 
   public get id(): number {
@@ -75,17 +79,12 @@ export default class TreeLevel extends Vue {
       return 0;
     }
 
-    return this.config && _.toInteger(this.config.padding) || 25;
-  }
-
-  @Watch("config")
-  public onPaddingChanged(nv: number): void {
-    console.log(nv);
+    return (state.config && _.toInteger(state.config.padding)) || 25;
   }
 
   public get levelStyle(): {} {
     return {
-      "padding-left": `${this.padding}px`
+      "padding-left": `${this.padding}px`,
     };
   }
 
@@ -97,7 +96,7 @@ export default class TreeLevel extends Vue {
 }
 </script>
 <style scoped>
-  .tree-level {
-    list-style: none;
-  }
+.tree-level {
+  list-style: none;
+}
 </style>

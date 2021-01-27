@@ -2,7 +2,8 @@
     <div class="tree">
         <TreeLevel 
             :depth="0"
-            :parentid="null">
+            :parentid="null"
+            v-bind="$attrs">
             
             <template v-slot:before-input="props">
               <slot name="before-input" :node="props.node"></slot>
@@ -16,13 +17,13 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue, setup } from "vue-class-component";
-import { Prop, Provide, ProvideReactive, Watch } from "vue-property-decorator"
+import { Options, Vue } from "vue-class-component";
+import { Prop, Watch } from "vue-property-decorator"
 import TreeLevel from './TreeLevel.vue';
 import { INode } from '@/structure/INode';
 import IConfiguration, { defaultConfiguration } from '../structure/IConfiguration';
-import { createStore, treeStore, TreeStore } from '../store/treeStore';
 import _ from "lodash-es";
+import { createStore, updateConfig, updateNodes } from '../store/store';
 
 /**
   FEATURE to implement:
@@ -36,11 +37,7 @@ import _ from "lodash-es";
 @Options({
   components: {
     TreeLevel
-  },
-  emits: [
-    "nodes-updated",
-    "config-updated"
-  ]
+  }
 })
 export default class Tree extends Vue {
 
@@ -51,42 +48,20 @@ export default class Tree extends Vue {
   public config!: IConfiguration;
 
   public created(): void {
-    createStore(this.config, this.nodes);
-  }
-
-  public get stateNodes(): {[id: string]: INode} {
-    return treeStore && treeStore.nodes;
-  }
-  
-  public get stateConfig(): IConfiguration {
-    return treeStore && treeStore.config;
+    createStore(this.nodes, this.config);
   }
 
   @Watch("nodes")
-  private onNodesChanged(nv: {[id: string]: INode}, ov: {[id: string]: INode}): void {
-    if (!_.isNil(nv) && !_.eq(nv, ov)) {
-      treeStore.updateNodes(nv);
+  public onNodeChanged(nv: any, ov: any): void {
+    if (!_.eq(nv, ov)) {
+      updateNodes(nv);
     }
   }
 
   @Watch("config")
-  private onConfigurationChanged(nv: IConfiguration, ov: IConfiguration): void {
-    if (!_.isNil(nv) && !_.eq(nv, ov)) {
-      treeStore.updateConfig(nv);
-    }
-  }
-
-  @Watch("stateNodes")
-  public onStateNodeChanged(nv: {[id: string]: INode}, ov: {[id: string]: INode}): void {
+  public onConfigChanged(nv: any, ov: any): void {
     if (!_.eq(nv, ov)) {
-      this.$emit("nodes-updated", nv);
-    }
-  }
-
-  @Watch("stateConfig")
-  public onStateConfigChanged(nv: {[id: string]: INode}, ov: {[id: string]: INode}): void {
-    if (!_.eq(nv, ov)) {
-      this.$emit("config-updated", nv);
+      updateConfig(nv);
     }
   }
 }

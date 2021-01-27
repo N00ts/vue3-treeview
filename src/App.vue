@@ -1,6 +1,10 @@
 <template>
   <label for="showCheckBoxes">Show checkboxes</label>
-  <input id="showCheckBoxes" type="checkbox" v-model="configuration.checkboxes"/>
+  <input
+    id="showCheckBoxes"
+    type="checkbox"
+    v-model="configuration.checkboxes"
+  />
 
   <label for="padding">padding</label>
   <input id="padding" type="number" v-model="configuration.padding" />
@@ -12,7 +16,8 @@
     ref="Tree"
     :nodes="nodes"
     :config="configuration"
-    @nodes-updated="changecode">
+    @nodes-updated="changecode"
+  >
   </Tree>
 
   <textarea style="margin-top: 50px; width: 100%; height: 500px" v-model="code">
@@ -41,65 +46,61 @@ export default class App extends Vue {
     checkboxes: true,
   };
 
-  public nodes: { [id: string]: INode } = {
-    id1: {
-      text: "text1",
-      children: ["id11", "id12"],
-    },
-    id11: {
-      text: "text11",
-      children: ["id111", "id112"],
-    },
-    id111: {
-      text: "id111",
-    },
-    id112: {
-      text: "id112",
-    },
-    id12: {
-      text: "text12",
-      children: [],
-    },
-    id2: {
-      text: "text1",
-      children: ["id21", "id22"],
-    },
-    id21: {
-      text: "text11",
-      children: ["id211", "id212"],
-    },
-    id211: {
-      text: "id211",
-    },
-    id212: {
-      text: "id212",
-    },
-    id22: {
-      text: "text12",
-      children: [],
-    },
-  };
-
-  public $refs!: {
-    Tree: Tree;
-  };
+  public nodes: { [id: string]: INode } = reactive({})  ;
 
   private code: string = "";
 
   public mounted(): void {
+    this.nodes = {
+      id1: {
+        text: "text1",
+        children: ["id11", "id12"],
+        state: {
+          checked: true,
+        },
+      },
+      id11: {
+        text: "text11",
+        children: ["id111", "id112"],
+      },
+      id111: {
+        text: "id111",
+      },
+      id112: {
+        text: "id112",
+      },
+      id12: {
+        text: "text12",
+        children: [],
+      },
+      id2: {
+        text: "text2",
+        children: ["id21", "id22"],
+      },
+      id21: {
+        text: "text21",
+        children: ["id211", "id212"],
+      },
+      id211: {
+        text: "id211",
+      },
+      id212: {
+        text: "id212",
+      },
+      id22: {
+        text: "text12",
+        children: [],
+      },
+    };
     this.code = JSON.stringify(this.nodes, undefined, 4);
   }
 
   public updateTree(): void {
-    this.nodes = JSON.parse(this.code);
-  }
-
-  @Watch("nodes")
-  public onNodeChanged(nv: any): void {
-    this.code = JSON.stringify(nv, undefined, 4);
+    this.nodes = reactive(JSON.parse(this.code));
   }
 
   public changecode(val: any): void {
+    this.code = JSON.stringify(this.nodes, undefined, 4);
   }
 }
-</script>
+</script> 
