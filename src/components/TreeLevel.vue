@@ -79,7 +79,7 @@ export default class TreeLevel extends Vue {
       return 0;
     }
 
-    return (state.config && _.toInteger(state.config.padding)) || 25;
+    return ((state.config as any) && _.toInteger((state.config as any).padding)) || 25;
   }
 
   public get levelStyle(): {} {

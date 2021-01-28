@@ -5,12 +5,12 @@ import _ from "lodash-es";
 import { toRefs, computed, ref, watch } from 'vue';
 
 export function useNode(props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseNode {
-    const node = props.node;
+    const { node } = toRefs(props);
 
     const createNode = ref(false);
 
     const id = computed(() => {
-        return hasNode.value && node.id;
+        return hasNode.value && node.value.id;
     })
 
     const hasNode = computed(() => {
@@ -22,11 +22,11 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
     });
 
     const hasState = computed(() => {
-        return hasNode.value && !_.isNil(node.state);
+        return hasNode.value && !_.isNil(node.value.state);
     });
 
     const children = computed(() => {
-        return _.isNil(node.children) ? [] : node.children;
+        return _.isNil(node.value.children) ? [] : node.value.children;
     });
 
     const nbChildren = computed(() => {
@@ -38,7 +38,7 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
     });
 
     const opened = computed(() => {
-        return hasState.value && node.state.opened;
+        return hasState.value && node.value.state.opened;
     });
 
     watch(opened, (nv: boolean, ov: boolean) => {
@@ -49,13 +49,13 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
 
     const ensureState = (() => {
         if (!hasState.value) {
-            node.state = {};
+            node.value.state = {};
         }         
     });
 
     const toggle = (() => {
         ensureState();
-        node.state.opened = !node.state.opened;
+        node.value.state.opened = !node.value.state.opened;
         emit("node-toggle", node);
     });
 

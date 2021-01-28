@@ -10,7 +10,7 @@
     </div>
 
     <input 
-      v-if="checkboxSetup.hascheckbox" 
+      v-if="checkboxSetup.hasCheckbox" 
       type="checkbox" 
       :checked="checkboxSetup.checked" 
       :indeterminate.prop="checkboxSetup.indeterminate"

@@ -2,7 +2,7 @@ import { ComputedRef, ToRefs, computed, Ref } from 'vue';
 import { INode } from "./INode";
 
 export default interface IUseNode {
-    node: INode;
+    node: Ref<INode>;
     id: ComputedRef<string>;
     opened: ComputedRef<boolean>;
     hasNode: ComputedRef<boolean>;

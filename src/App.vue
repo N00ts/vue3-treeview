@@ -3,8 +3,7 @@
   <input
     id="showCheckBoxes"
     type="checkbox"
-    v-model="configuration.checkboxes"
-  />
+    v-model="configuration.checkboxes"/>
 
   <label for="padding">padding</label>
   <input id="padding" type="number" v-model="configuration.padding" />
@@ -46,7 +45,7 @@ export default class App extends Vue {
     checkboxes: true,
   };
 
-  public nodes: { [id: string]: INode } = reactive({})  ;
+  public nodes: { [id: string]: INode } = {}  ;
 
   private code: string = "";
 
@@ -96,11 +95,11 @@ export default class App extends Vue {
   }
 
   public updateTree(): void {
-    this.nodes = reactive(JSON.parse(this.code));
+    this.nodes = JSON.parse(this.code);
   }
 
   public changecode(val: any): void {
-    this.code = JSON.stringify(this.nodes, undefined, 4);
+    this.code = JSON.stringify(val, undefined, 4);
   }
 }
 </script> 

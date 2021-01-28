@@ -17,13 +17,13 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options, setup, Vue } from "vue-class-component";
 import { Prop, Watch } from "vue-property-decorator"
 import TreeLevel from './TreeLevel.vue';
 import { INode } from '@/structure/INode';
 import IConfiguration, { defaultConfiguration } from '../structure/IConfiguration';
 import _ from "lodash-es";
-import { createStore, updateConfig, updateNodes } from '../store/store';
+import { createStore } from '../store/store';
 
 /**
   FEATURE to implement:
@@ -44,26 +44,13 @@ export default class Tree extends Vue {
   @Prop({ type: Object, required: true, default: [] })
   public nodes!: {[id: string]: INode};
 
-  @Prop({ default: defaultConfiguration ,required: false, type: Object })
+  @Prop({ default: defaultConfiguration, required: false, type: Object })
   public config!: IConfiguration;
 
-  public created(): void {
-    createStore(this.nodes, this.config);
-  }
-
-  @Watch("nodes")
-  public onNodeChanged(nv: any, ov: any): void {
-    if (!_.eq(nv, ov)) {
-      updateNodes(nv);
-    }
-  }
-
-  @Watch("config")
-  public onConfigChanged(nv: any, ov: any): void {
-    if (!_.eq(nv, ov)) {
-      updateConfig(nv);
-    }
-  }
+  private storeSetup = setup(() => {
+    createStore(this.$props as any);
+    return {}; 
+  });
 }
 </script>
 <style scoped>
