@@ -49,7 +49,13 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
             return 0;
         }
       
-        return (config && _.toInteger(config.value.padding)) || 25;      
+        if (_.isNil(config.value.padding)) {
+            return 25;
+        }
+
+        const p = _.toInteger(config.value.padding);
+
+        return p >=0 ? p : 0;      
     });
 
     const style = computed(() => {

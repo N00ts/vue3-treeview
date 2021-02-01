@@ -4,8 +4,8 @@ import INodeProps from '../structure/INodeProps';
 import { useNode } from './useNode';
 import { state } from '@/store/store';
 
-export function useCheckBox(props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useNode(props, emit);
+export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
+    const setup = useNode(props, attrs, emit);
     
     const config = state.config;
 
@@ -14,7 +14,10 @@ export function useCheckBox(props: INodeProps, emit: (event: string, ...args: an
     const clickCheckbox = (): void => {
         setup.ensureState();
         node.value.state.checked = !node.value.state.checked;
-        emit("node-checked", setup.node);
+
+        if (!_.isNil(attrs["node-checked"])) {
+            emit("node-checked", setup.node);
+        }
     }
 
     const checked = computed(() => {

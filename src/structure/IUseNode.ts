@@ -11,6 +11,7 @@ export default interface IUseNode {
     hasChildren: ComputedRef<boolean>;
     nbChildren: ComputedRef<number>;
     createNode: Ref<boolean>;
+    isLeaf: ComputedRef<boolean>;
     ensureState: () => void;
     toggle: (nv: boolean, ov: boolean) => void;
 }

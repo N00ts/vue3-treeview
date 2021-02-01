@@ -4,7 +4,7 @@ import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
 import { toRefs, computed, ref, watch } from 'vue';
 
-export function useNode(props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseNode {
+export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
     const { node } = toRefs(props);
 
     const config = state.config;
@@ -43,6 +43,16 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
         return hasState.value && node.value.state.opened;
     });
 
+    const isLeaf = computed(() => {
+        if (_.isArray(config.value.leaves)) {
+            const arr: string[] = config.value.leaves;
+            const idx = arr.indexOf(id.value);
+            return Number.isFinite(idx) && idx >= 0;
+        }
+
+        return !_.isArray(node.value.children) || node.value.children.length === 0;
+    });
+
     watch(opened, (nv: boolean, ov: boolean) => {
         if (nv && !createNode.value) {
             createNode.value = true;
@@ -58,7 +68,10 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
     const toggle = (() => {
         ensureState();
         node.value.state.opened = !node.value.state.opened;
-        emit("node-toggle", node);
+
+        if (!_.isNil(attrs["node-toggle"])) {
+            emit("node-toggle", node);
+        }
     });
 
     return {
@@ -71,6 +84,7 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
         hasChildren,
         nbChildren,
         createNode,
+        isLeaf,
         toggle,
         ensureState,
     }

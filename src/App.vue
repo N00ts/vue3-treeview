@@ -54,6 +54,7 @@ export default class App extends Vue {
         children: ["id11", "id12"],
         state: {
           checked: true,
+          indeterminate: true
         },
       },
       id11: {

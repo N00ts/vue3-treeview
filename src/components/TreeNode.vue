@@ -1,6 +1,9 @@
 <template>
   <li v-if="nodeSetup.hasNode">
-    <div class="icon-wrapper" @click.stop="nodeSetup.toggle">
+    <div 
+      class="icon-wrapper"
+      v-if="!nodeSetup.isLeaf"
+      @click.stop="nodeSetup.toggle">
       <icon v-if="nodeSetup.opened" :viewbox="'0 0 451.847 451.847'">
         <icon-opened/>
       </icon>
@@ -81,11 +84,11 @@ export default class TreeNode extends Vue {
   @Prop({ type: Object, required: true, })
   public node!: INode;
 
-  public inputSetup = setup(() => useInput(this.$props as any, this.$emit));
+  public inputSetup = setup(() => useInput(this.$props as any, this.$attrs, this.$emit));
 
-  public nodeSetup = setup(() => useNode(this.$props as any, this.$emit));
+  public nodeSetup = setup(() => useNode(this.$props as any, this.$attrs, this.$emit));
 
-  public checkboxSetup = setup(() => useCheckBox(this.$props as any, this.$emit))
+  public checkboxSetup = setup(() => useCheckBox(this.$props as any, this.$attrs, this.$emit))
 
   @Watch("inputSetup.editing")
   public onEditchange(nv: boolean, ov: boolean): void {
