@@ -7,6 +7,8 @@ import { toRefs, computed, ref, watch } from 'vue';
 export function useNode(props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseNode {
     const { node } = toRefs(props);
 
+    const config = state.config;
+
     const createNode = ref(false);
 
     const id = computed(() => {
@@ -18,7 +20,7 @@ export function useNode(props: INodeProps, emit: (event: string, ...args: any[])
     });
 
     const hasConfig = computed(() => {
-        return !_.isNil(state.config);
+        return !_.isNil(config.value);
     });
 
     const hasState = computed(() => {

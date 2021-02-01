@@ -7,24 +7,26 @@ import { state } from '@/store/store';
 export function useCheckBox(props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useNode(props, emit);
     
-    const node = setup.node.value;
+    const config = state.config;
+
+    const node = setup.node;
 
     const clickCheckbox = (): void => {
         setup.ensureState();
-        node.state.checked = !node.state.checked;
+        node.value.state.checked = !node.value.state.checked;
         emit("node-checked", setup.node);
     }
 
     const checked = computed(() => {
-        return setup.hasState.value && node.state.checked;
+        return setup.hasState.value && node.value.state.checked;
     });
 
     const hasCheckbox = computed(() => {
-        return setup.hasConfig.value && state.config.checkboxes;        
+        return setup.hasConfig.value && config.value.checkboxes;        
     });
 
     const indeterminate = computed(() => {
-        return setup.hasState.value && node.state.indeterminate;
+        return setup.hasState.value && node.value.state.indeterminate;
     })
 
     return {

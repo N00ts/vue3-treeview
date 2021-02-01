@@ -1,15 +1,29 @@
 import { INode } from "@/structure/INode";
 import IConfiguration from '../structure/IConfiguration';
-import { reactive, Ref, ToRefs, toRefs } from 'vue';
+import { toRefs, computed, ComputedRef } from 'vue';
 import ITreeProps from '../structure/ITreeProps';
 
-export let state = reactive({
+interface IState {
+    nodes: ComputedRef<{[id: string]: INode}>;
+    config: ComputedRef<IConfiguration>;
+}
+
+export let state: IState = {
     nodes: null,
     config: null
-});
+};
 
 export function createStore(props: ITreeProps): void {
     const { nodes, config } = toRefs(props);
-    state.nodes = nodes;
-    state.config = config;
+
+    const computedNodes = computed(() => {
+        return nodes.value;
+    })
+
+    const comutedConfig = computed(() => {
+        return config.value;
+    })
+
+    state.nodes = computedNodes;
+    state.config = comutedConfig;
 }

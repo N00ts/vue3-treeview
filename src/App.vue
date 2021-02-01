@@ -15,9 +15,7 @@
     ref="Tree"
     :nodes="nodes"
     :config="configuration"
-    @nodes-updated="changecode"
-  >
-  </Tree>
+    @nodes-updated="changecode"/>
 
   <textarea style="margin-top: 50px; width: 100%; height: 500px" v-model="code">
   </textarea>

@@ -23,7 +23,9 @@ import TreeLevel from './TreeLevel.vue';
 import { INode } from '@/structure/INode';
 import IConfiguration, { defaultConfiguration } from '../structure/IConfiguration';
 import _ from "lodash-es";
-import { createStore } from '../store/store';
+import { createStore, state } from '../store/store';
+import ITreeProps from '@/structure/ITreeProps';
+import { computed, toRefs } from 'vue';
 
 /**
   FEATURE to implement:
@@ -34,23 +36,26 @@ import { createStore } from '../store/store';
   - Checkable
   - emit events
 */
-@Options({
+export default {
+  name: "Tree",
   components: {
     TreeLevel
+  },
+  props: {
+    nodes: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    config: {
+      type: Object,
+      required: false,
+      default: () => {}
+    }
+  },
+  setup(props: ITreeProps) {
+    createStore(props);
   }
-})
-export default class Tree extends Vue {
-
-  @Prop({ type: Object, required: true, default: [] })
-  public nodes!: {[id: string]: INode};
-
-  @Prop({ default: defaultConfiguration, required: false, type: Object })
-  public config!: IConfiguration;
-
-  private storeSetup = setup(() => {
-    createStore(this.$props as any);
-    return {}; 
-  });
 }
 </script>
 <style scoped>
