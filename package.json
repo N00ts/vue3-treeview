@@ -45,7 +45,8 @@
       "parser": "@typescript-eslint/parser"
     },
     "rules": {
-      "no-unused-vars": "off"
+      "no-unused-vars": "off",
+      "vue/no-ref-as-operand": "off"
     }
   },
   "browserslist": [
