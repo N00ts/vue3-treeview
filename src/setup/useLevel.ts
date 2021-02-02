@@ -1,6 +1,6 @@
 import { state } from "@/store/store";
 import { computed, ref } from "vue";
-import _ from "lodash-es";
+import _, { xor } from "lodash-es";
 
 export default function useLevel(props: {parentId: string, depth: number}): {} {
     const config = state.config;
@@ -68,6 +68,6 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
         id,
         level,
         padding,
-        style
+        style,
     };
 }

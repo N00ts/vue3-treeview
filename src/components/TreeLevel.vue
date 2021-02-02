@@ -1,11 +1,12 @@
 <template>
-  <ul class="tree-level" id="id" :style="lvlSetup.style">
+  <ul class="tree-level" id="id" :style="setup.style">
     <TreeNode
-      v-for="(item, index) in lvlSetup.level"
+      v-for="(item, index) in setup.level"
+      v-bind="$attrs"
       :key="index"
       :node="item"
       :depth="depth"
-      v-bind="$attrs">
+      :hasChild="setup.hasChild">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -37,7 +38,7 @@ export default class TreeLevel extends Vue {
   @Prop({ default: null, type: String })
   public parentId!: string;
 
-  public lvlSetup = setup(() => {
+  public setup = setup(() => {
     return useLevel(this.$props as any);
   }) 
 

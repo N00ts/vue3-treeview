@@ -1,15 +1,17 @@
 <template>
   <li v-if="nodeSetup.hasNode">
-    <div 
+    <div
       class="icon-wrapper"
-      v-if="!nodeSetup.isLeaf"
       @click.stop="nodeSetup.toggle">
-      <icon v-if="nodeSetup.opened" :viewbox="'0 0 451.847 451.847'">
-        <icon-opened/>
-      </icon>
-      <icon v-else :viewbox="'0 0 451.847 451.847'">
-        <icon-closed/>
-      </icon>
+    
+      <template v-if="!iconSetup.hasNoIcon">
+        <DefaultIcon 
+          v-if="!nodeSetup.isLeaf" 
+          v-model:opened="nodeSetup.opened"/>
+        <div 
+          v-else
+          :style="iconSetup.fakeNodeStyle"/>
+      </template>
     </div>
 
     <input 
@@ -60,20 +62,17 @@ import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import TreeLevel from './TreeLevel.vue';
 import { Prop, Watch } from "vue-property-decorator" 
-import Icon from './Icon.vue';
-import IconOpened from "./IconOpened.vue";
-import IconClosed from "./IconClosed.vue";
 import _ from "lodash-es";
 import { useCheckBox } from '../setup/useCheckBox';
 import { useNode } from "@/setup/useNode";
 import useInput from '../setup/useInput';
+import DefaultIcon from './DefaultIcon.vue';
+import useIcon from '../setup/useIcon';
 
 @Options({
   components: {
     TreeLevel,
-    Icon,
-    IconOpened,
-    IconClosed
+    DefaultIcon
   }
 })
 export default class TreeNode extends Vue {
@@ -89,6 +88,8 @@ export default class TreeNode extends Vue {
   public nodeSetup = setup(() => useNode(this.$props as any, this.$attrs, this.$emit));
 
   public checkboxSetup = setup(() => useCheckBox(this.$props as any, this.$attrs, this.$emit))
+
+  public iconSetup = setup(() => useIcon(this.$props as any, this.$attrs, this.$emit));
 
   @Watch("inputSetup.editing")
   public onEditchange(nv: boolean, ov: boolean): void {

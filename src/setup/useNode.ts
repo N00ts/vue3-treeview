@@ -43,6 +43,10 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         return hasState.value && node.value.state.opened;
     });
 
+    const isRoot = computed(() => {
+        return props.depth === 0;
+    });
+
     const isLeaf = computed(() => {
         if (_.isArray(config.value.leaves)) {
             const arr: string[] = config.value.leaves;
@@ -84,6 +88,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         hasChildren,
         nbChildren,
         createNode,
+        isRoot,
         isLeaf,
         toggle,
         ensureState,

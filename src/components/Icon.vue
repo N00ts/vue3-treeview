@@ -4,11 +4,9 @@
     :width="width"
     :height="height"
     :aria-labelledby="name"
-    :viewBox="viewbox"
-    role="presentation">
+    :viewBox="viewbox">
 
-    <title lang="en">{{ name }} icon</title>
-    <g :fill="color">
+    <g :fill="fill">
       <slot></slot>
     </g>
   </svg>
@@ -18,10 +16,10 @@ import { Vue } from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
 export default class Icon extends Vue {
-    @Prop({ default: 16, required: false, type: Number })
+    @Prop({ required: false, type: Number })
     public width!: number;
 
-    @Prop({ default: 16, required: false, type: Number })
+    @Prop({ required: false, type: Number })
     public height!: number;
 
     @Prop({ default: "", reuqired: true, type: String })
@@ -31,6 +29,9 @@ export default class Icon extends Vue {
     public name!: string;
 
     @Prop({ default: "black", required: false, type: String })
-    public color!: string;
+    public fill!: string;
+
+    @Prop({ default: "black", required: false, type: String })
+    public stroke!: string;
 }
 </script>

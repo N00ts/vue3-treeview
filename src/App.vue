@@ -21,6 +21,7 @@
   </textarea>
 
   <button v-on:click.stop="updateTree">update tree</button>
+  <button v-on:click.stop="changecode">update code</button>
 </template>
 
 <script lang="ts">
@@ -97,8 +98,9 @@ export default class App extends Vue {
     this.nodes = JSON.parse(this.code);
   }
 
-  public changecode(val: any): void {
-    this.code = JSON.stringify(val, undefined, 4);
+  public changecode(): void {
+    this.code = "";
+    this.code = JSON.stringify(this.nodes, undefined, 4);
   }
 }
 </script> 
