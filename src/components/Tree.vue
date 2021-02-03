@@ -33,7 +33,7 @@ import { computed, toRefs } from 'vue';
   - Drop outside vue
   - Customize nodes
   - keyboard navigation
-  - Checkable
+  - Checkable => done
   - emit events
 */
 export default {

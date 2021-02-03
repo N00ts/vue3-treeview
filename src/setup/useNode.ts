@@ -40,11 +40,15 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const opened = computed(() => {
-        return hasState.value && node.value.state.opened;
+        return hasState.value && node.value.state.opened || false;
     });
 
     const isRoot = computed(() => {
         return props.depth === 0;
+    });
+
+    const hideIcons = computed(() => {
+        return isRoot.value && isLeaf.value
     });
 
     const isLeaf = computed(() => {
@@ -85,6 +89,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         hasNode,
         hasState,
         hasConfig,
+        hideIcons,
         hasChildren,
         nbChildren,
         createNode,

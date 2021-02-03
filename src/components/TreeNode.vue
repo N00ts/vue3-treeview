@@ -1,38 +1,36 @@
 <template>
   <li v-if="nodeSetup.hasNode">
-    <div
-      class="icon-wrapper"
+    <div 
+      class="icon-wrapper" 
+      v-if="!nodeSetup.hideIcons"
       @click.stop="nodeSetup.toggle">
-    
-      <template v-if="!iconSetup.hasNoIcon">
-        <DefaultIcon 
-          v-if="!nodeSetup.isLeaf" 
-          v-model:opened="nodeSetup.opened"/>
-        <div 
-          v-else
-          :style="iconSetup.fakeNodeStyle"/>
-      </template>
+
+      <TreeIcons 
+        :isLeaf="nodeSetup.isLeaf"
+        :opened="nodeSetup.opened">
+      </TreeIcons>
     </div>
 
-    <input 
-      v-if="checkboxSetup.hasCheckbox" 
-      type="checkbox" 
-      :checked="checkboxSetup.checked" 
+    <input
+      type="checkbox"
+      v-if="checkboxSetup.hasCheckbox"
+      :checked="checkboxSetup.checked"
       :indeterminate.prop="checkboxSetup.indeterminate"
-      @click="checkboxSetup.clickCheckbox">
+      @click="checkboxSetup.clickCheckbox"
+    />
 
     <slot name="before-input" :node="nodeSetup.node"></slot>
 
-    <input 
-      v-if="inputSetup.editing"
+    <input
       tabindex="0"
       ref="input"
       type="text"
+      v-if="inputSetup.editing"
       v-model="inputSetup.text"
-      @blur="inputSetup.blur">
-    <span 
-      v-else 
-      @dblclick="inputSetup.dblclick">
+      @blur="inputSetup.blur"
+    />
+
+    <span v-else @dblclick="inputSetup.dblclick">
       {{ inputSetup.text }}
     </span>
 
@@ -43,8 +41,8 @@
       v-show="nodeSetup.opened"
       :parentId="nodeSetup.id"
       :depth="depth + 1"
-      v-bind="$attrs">      
-      
+      v-bind="$attrs">
+
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
       </template>
@@ -52,7 +50,6 @@
       <template v-slot:after-input="props">
         <slot name="after-input" :node="props.node"></slot>
       </template>
-
     </TreeLevel>
   </li>
 </template>
@@ -60,36 +57,43 @@
 <script lang="ts">
 import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
-import TreeLevel from './TreeLevel.vue';
-import { Prop, Watch } from "vue-property-decorator" 
+import TreeLevel from "./TreeLevel.vue";
+import { Prop, Watch } from "vue-property-decorator";
 import _ from "lodash-es";
-import { useCheckBox } from '../setup/useCheckBox';
+import { useCheckBox } from "../setup/useCheckBox";
 import { useNode } from "@/setup/useNode";
-import useInput from '../setup/useInput';
-import DefaultIcon from './DefaultIcon.vue';
-import useIcon from '../setup/useIcon';
+import useInput from "../setup/useInput";
+import useIcon from "../setup/useIcon"
+import TreeIcons from './TreeIcons.vue';
 
 @Options({
   components: {
     TreeLevel,
-    DefaultIcon
-  }
+    TreeIcons,
+  },
 })
 export default class TreeNode extends Vue {
-
   @Prop({ required: true, type: Number })
   public depth!: Number;
 
-  @Prop({ type: Object, required: true, })
+  @Prop({ type: Object, required: true })
   public node!: INode;
 
-  public inputSetup = setup(() => useInput(this.$props as any, this.$attrs, this.$emit));
+  public inputSetup = setup(() => {
+    return useInput(this.$props as any, this.$attrs, this.$emit);
+  });
 
-  public nodeSetup = setup(() => useNode(this.$props as any, this.$attrs, this.$emit));
+  public nodeSetup = setup(() => {
+    return useNode(this.$props as any, this.$attrs, this.$emit);
+  });
 
-  public checkboxSetup = setup(() => useCheckBox(this.$props as any, this.$attrs, this.$emit))
+  public checkboxSetup = setup(() => {
+    return useCheckBox(this.$props as any, this.$attrs, this.$emit);
+  });
 
-  public iconSetup = setup(() => useIcon(this.$props as any, this.$attrs, this.$emit));
+  public iconSetup = setup(() => {
+    return useIcon(this.$props as any, this.$attrs, this.$emit);
+  });
 
   @Watch("inputSetup.editing")
   public onEditchange(nv: boolean, ov: boolean): void {

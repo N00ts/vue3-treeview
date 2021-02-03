@@ -1,12 +1,10 @@
 import { state } from '../store/store';
-import { computed } from 'vue';
+import { computed, toRefs } from 'vue';
 import { defaultHeight, defaultWidth } from '@/structure/IIcon';
-import { useNode } from './useNode';
-import INodeProps from '@/structure/INodeProps';
 
-export default function useIcon(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useNode(props, attrs, emit);
-    
+export default function useIcon(props: Record<string, unknown>, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
+    const { isLeaf } = toRefs(props); 
+        
     const config = state.config;
 
     const openedIcon = computed(() => {
@@ -17,12 +15,12 @@ export default function useIcon(props: INodeProps, attrs: Record<string, unknown
         return config.value.closedIcon;
     });
 
-    const hasIcon = computed(() => {
+    const hasIcons = computed(() => {
         return closedIcon.value && openedIcon.value;
     });
 
-    const hasNoIcon = computed(() => {
-        return setup.isRoot.value && setup.isLeaf.value
+    const useIcons = computed(() => {
+        return !isLeaf.value && hasIcons.value;
     });
 
     const fakeNodeStyle = computed(() => {
@@ -33,10 +31,10 @@ export default function useIcon(props: INodeProps, attrs: Record<string, unknown
     })
 
     return {
-        hasIcon,
-        hasNoIcon,
+        hasIcons,
         openedIcon,
         closedIcon,
+        useIcons,
         fakeNodeStyle
     }
 }
