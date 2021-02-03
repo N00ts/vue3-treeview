@@ -17,23 +17,18 @@
 </template>
 
 <script lang="ts">
-import { Options, setup, Vue } from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator"
 import TreeLevel from './TreeLevel.vue';
-import { INode } from '@/structure/INode';
-import IConfiguration, { defaultConfiguration } from '../structure/IConfiguration';
-import _ from "lodash-es";
-import { createStore, state } from '../store/store';
 import ITreeProps from '@/structure/ITreeProps';
-import { computed, toRefs } from 'vue';
+import { createStore } from '../store/store';
+import _ from "lodash-es";
 
 /**
   FEATURE to implement:
   - Drag and drop
   - Drop outside vue
-  - Customize nodes
+  - Customize icons       => done
   - keyboard navigation
-  - Checkable => done
+  - Checkable             => done
   - emit events
 */
 export default {

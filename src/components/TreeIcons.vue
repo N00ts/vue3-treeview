@@ -15,9 +15,9 @@
 </template>
 <script lang="ts">
 import useIcon from "@/setup/useIcon";
-import { Options, setup, Vue } from "vue-class-component";
-import { Prop } from "vue-property-decorator";
 import Icon from './Icon.vue';
+import { Prop } from "vue-property-decorator";
+import { Options, setup, Vue } from "vue-class-component";
 
 @Options({
     components: {
@@ -34,9 +34,5 @@ export default class TreeIcons extends Vue {
     public setup = setup(() => {
         return useIcon(this.$props as any, this.$attrs, this.$emit);
     });
-
-    public created(): void {
-        console.log("created");
-    }
 }
 </script>

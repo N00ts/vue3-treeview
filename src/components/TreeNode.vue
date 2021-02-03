@@ -55,16 +55,16 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue, setup } from "vue-class-component";
-import { INode } from "@/structure/INode";
-import TreeLevel from "./TreeLevel.vue";
-import { Prop, Watch } from "vue-property-decorator";
-import _ from "lodash-es";
-import { useCheckBox } from "../setup/useCheckBox";
-import { useNode } from "@/setup/useNode";
 import useInput from "../setup/useInput";
 import useIcon from "../setup/useIcon"
+import TreeLevel from "./TreeLevel.vue";
 import TreeIcons from './TreeIcons.vue';
+import { useNode } from "@/setup/useNode";
+import { useCheckBox } from "../setup/useCheckBox";
+import { Prop, Watch } from "vue-property-decorator";
+import { Options, Vue, setup } from "vue-class-component";
+import { INode } from "@/structure/INode";
+import _ from "lodash-es";
 
 @Options({
   components: {

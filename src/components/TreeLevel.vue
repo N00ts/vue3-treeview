@@ -20,11 +20,11 @@
 </template>
 
 <script lang="ts">
-import { Options, setup, Vue } from "vue-class-component";
+import useLevel from '../setup/useLevel';
 import TreeNode from "./TreeNode.vue";
 import { Prop } from "vue-property-decorator";
+import { Options, setup, Vue } from "vue-class-component";
 import _ from "lodash-es";
-import useLevel from '../setup/useLevel';
 
 @Options({
   components: {
