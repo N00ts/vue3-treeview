@@ -1,6 +1,6 @@
 import { INode } from "@/structure/INode";
 import IConfiguration from '../structure/IConfiguration';
-import { toRefs, computed, ComputedRef } from 'vue';
+import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
 import ITreeProps from '../structure/ITreeProps';
 import { defaultConfiguration } from '../structure/IConfiguration';
 import _ from "lodash";
@@ -8,11 +8,13 @@ import _ from "lodash";
 interface IState {
     nodes: ComputedRef<{[id: string]: INode}>;
     config: ComputedRef<IConfiguration>;
+    selected: Ref<string>;
 }
 
 export let state: IState = {
     nodes: null,
-    config: null
+    config: null,
+    selected: ref(null),
 };
 
 export function createStore(props: ITreeProps): void {
@@ -28,4 +30,5 @@ export function createStore(props: ITreeProps): void {
 
     state.nodes = computedNodes;
     state.config = computedConfig;
+    state.selected = ref(null);
 }

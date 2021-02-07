@@ -1,4 +1,4 @@
-import { computed, SetupContext } from 'vue';
+import { computed, SetupContext, watch } from 'vue';
 import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { useNode } from './useNode';
@@ -10,15 +10,6 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     const config = state.config;
 
     const node = setup.node;
-
-    const clickCheckbox = (): void => {
-        setup.ensureState();
-        node.value.state.checked = !node.value.state.checked;
-
-        if (!_.isNil(attrs["node-checked"])) {
-            emit("node-checked", setup.node);
-        }
-    }
 
     const checked = computed(() => {
         return setup.hasState.value && node.value.state.checked;
@@ -32,10 +23,27 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
         return setup.hasState.value && node.value.state.indeterminate;
     })
 
+    const checkedClass = computed(() => {
+        if (!node.value.state.checked) {
+            return null;
+        }
+
+        return config.value.checkedClass ? config.value.checkedClass : "checked";
+    })
+
+    const clickCheckbox = (): void => {
+        node.value.state.checked = !node.value.state.checked;
+
+        if (!_.isNil(attrs["node-checked"])) {
+            emit("node-checked", setup.node);
+        }
+    }
+
     return {
         checked,
         hasCheckbox,
         indeterminate,
+        checkedClass,
         clickCheckbox
     };
 } 

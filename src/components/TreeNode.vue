@@ -1,5 +1,8 @@
 <template>
-  <li v-if="nodeSetup.hasNode">
+  <li 
+    v-if="nodeSetup.hasNode"
+    :class="nodeClass"
+    @click.stop="nodeSetup.selectNode">
     <div 
       class="icon-wrapper" 
       v-if="!nodeSetup.hideIcons"
@@ -65,6 +68,8 @@ import { Prop, Watch } from "vue-property-decorator";
 import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import _ from "lodash-es";
+import { ShallowUnwrapRef } from "vue";
+import IUseNode from "@/structure/IUseNode";
 
 @Options({
   components: {
@@ -83,17 +88,21 @@ export default class TreeNode extends Vue {
     return useInput(this.$props as any, this.$attrs, this.$emit);
   });
 
-  public nodeSetup = setup(() => {
+  public nodeSetup: ShallowUnwrapRef<IUseNode> = setup(() => {
     return useNode(this.$props as any, this.$attrs, this.$emit);
   });
 
-  public checkboxSetup = setup(() => {
+  public checkboxSetup : ShallowUnwrapRef<any> = setup(() => {
     return useCheckBox(this.$props as any, this.$attrs, this.$emit);
   });
 
   public iconSetup = setup(() => {
     return useIcon(this.$props as any, this.$attrs, this.$emit);
   });
+
+  public get nodeClass(): string[] {
+    return [ this.nodeSetup.selectionClass, this.checkboxSetup.checkedClass ];
+  }
 
   @Watch("inputSetup.editing")
   public onEditchange(nv: boolean, ov: boolean): void {

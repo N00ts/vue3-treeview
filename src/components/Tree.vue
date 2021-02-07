@@ -26,10 +26,13 @@ import _ from "lodash-es";
   FEATURE to implement:
   - Drag and drop
   - Drop outside vue
-  - Customize icons       => done
+  - Customize icons         => à tester
   - keyboard navigation
-  - Checkable             => done
+  - Checkable               => done
+  - autoCheck
+  - customizable effects
   - emit events
+  - unit tests
 */
 export default {
   name: "Tree",

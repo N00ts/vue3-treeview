@@ -11,6 +11,8 @@ export default interface IConfiguration {
     disabled?: boolean;
     openedIcon?: IIcon;
     closedIcon?: IIcon;
+    selectedClass?: string;
+    checkedClass?: string; 
 }
 
 const defaultSize = 16;

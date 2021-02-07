@@ -23,7 +23,6 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const blur = (() => {
-        setup.ensureState();
         setup.node.value.state.editing = false;
 
         if (!_.isNil(attrs["node-blur"])) {
@@ -32,7 +31,6 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const dblclick = (() => {
-        setup.ensureState();
         setup.node.value.state.editing = true;
 
         if (!_.isNil(attrs["node-edit"])) {

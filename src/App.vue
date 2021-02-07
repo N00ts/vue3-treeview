@@ -25,12 +25,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { Watch } from "vue-property-decorator";
-import { INode } from "@/structure/INode";
-import { ref, reactive } from "vue";
 import Tree from "./components/Tree.vue";
 import IConfiguration from "./structure/IConfiguration";
+import { Options, Vue } from "vue-class-component";
+import { INode } from "@/structure/INode";
 import _ from "lodash-es";
 
 @Options({
