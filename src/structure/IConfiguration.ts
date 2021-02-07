@@ -11,6 +11,7 @@ export default interface IConfiguration {
     disabled?: boolean;
     openedIcon?: IIcon;
     closedIcon?: IIcon;
+    selected?: string;
     selectedClass?: string;
     checkedClass?: string; 
 }

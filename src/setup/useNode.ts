@@ -66,8 +66,12 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         return !_.isArray(node.value.children) || node.value.children.length === 0;
     });
 
+    const isSelected = computed(() => {
+        return config.value.selected === node.value.id;
+    });
+
     const selectionClass = computed(() =>  {
-        if (state.selected.value !== node.value.id) {
+        if (!isSelected.value) {
             return null;
         } 
 
@@ -89,7 +93,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const selectNode = (() => {
-        state.selected.value = node.value.id;
+        config.value.selected = node.value.id;
 
         if (!_.isNil(attrs["node-select"])) {
             emit("node-select", node);

@@ -8,13 +8,11 @@ import _ from "lodash";
 interface IState {
     nodes: ComputedRef<{[id: string]: INode}>;
     config: ComputedRef<IConfiguration>;
-    selected: Ref<string>;
 }
 
 export let state: IState = {
     nodes: null,
-    config: null,
-    selected: ref(null),
+    config: null
 };
 
 export function createStore(props: ITreeProps): void {
@@ -28,7 +26,10 @@ export function createStore(props: ITreeProps): void {
         return _.assign(defaultConfiguration, config.value);
     })
 
+    if (!config.value.selected && config.value.roots.length > 0) {
+        config.value.selected = config.value.roots[0];
+    }
+
     state.nodes = computedNodes;
     state.config = computedConfig;
-    state.selected = ref(null);
 }

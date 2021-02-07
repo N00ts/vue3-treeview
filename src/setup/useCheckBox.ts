@@ -24,7 +24,7 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     })
 
     const checkedClass = computed(() => {
-        if (!node.value.state.checked) {
+        if (!checked.value) {
             return null;
         }
 

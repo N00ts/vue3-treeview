@@ -19,7 +19,7 @@
       v-if="checkboxSetup.hasCheckbox"
       :checked="checkboxSetup.checked"
       :indeterminate.prop="checkboxSetup.indeterminate"
-      @click="checkboxSetup.clickCheckbox"
+      @click.stop="checkboxSetup.clickCheckbox"
     />
 
     <slot name="before-input" :node="nodeSetup.node"></slot>
