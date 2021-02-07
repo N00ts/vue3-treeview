@@ -23,12 +23,14 @@ export function createStore(props: ITreeProps): void {
     })
 
     const computedConfig = computed(() => {
-        return _.assign(defaultConfiguration, config.value);
+        return config.value;
     })
 
     if (!config.value.selected && config.value.roots.length > 0) {
         config.value.selected = config.value.roots[0];
     }
+
+    _.assign(defaultConfiguration, config.value);
 
     state.nodes = computedNodes;
     state.config = computedConfig;

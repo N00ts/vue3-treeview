@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import IIcon from './IIcon';
 
 export default interface IConfiguration {
@@ -48,9 +49,10 @@ function createDefaultIcon(draw: string): IIcon {
     };
 }
 
-export const defaultConfiguration : IConfiguration= {
+export const defaultConfiguration : IConfiguration = {
     roots: [],
     padding: 25,
+    selected: null,
     editable: false,
     checkboxes: false,
     dragAndDrop: false,

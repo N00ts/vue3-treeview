@@ -6,7 +6,7 @@
     <div 
       class="icon-wrapper" 
       v-if="!nodeSetup.hideIcons"
-      @click.stop="nodeSetup.toggle">
+      @click="nodeSetup.toggle">
 
       <TreeIcons 
         :isLeaf="nodeSetup.isLeaf"
@@ -19,7 +19,7 @@
       v-if="checkboxSetup.hasCheckbox"
       :checked="checkboxSetup.checked"
       :indeterminate.prop="checkboxSetup.indeterminate"
-      @click.stop="checkboxSetup.clickCheckbox"
+      @click="checkboxSetup.clickCheckbox"
     />
 
     <slot name="before-input" :node="nodeSetup.node"></slot>
