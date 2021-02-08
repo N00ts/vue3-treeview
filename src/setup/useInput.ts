@@ -3,12 +3,15 @@ import INodeProps from '../structure/INodeProps';
 import { computed, watch } from 'vue';
 import { state } from '@/store/store';
 import _ from 'lodash';
-import { defaultConfig } from '../structure/default';
+import { defaultConfig } from '../misc/default';
+import Emitter from '../misc/emitter';
 
 export default function useInput(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useNode(props, attrs, emit);
 
     const config = state.config;
+
+    const emitter = new Emitter(attrs, emit);
 
     const text = computed({
         get: () => setup.node.value.text,
@@ -25,18 +28,12 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
 
     const blur = (() => {
         setup.node.value.state.editing = false;
-
-        if (!_.isNil(attrs["node-blur"])) {
-            emit("node-blur", setup.node);
-        }
+        emitter.emit("node-blur", setup.node);
     });
 
     const dblclick = (() => {
         setup.node.value.state.editing = true;
-
-        if (!_.isNil(attrs["node-edit"])) {
-            emit("node-edit", setup.node);
-        }
+        emitter.emit("node-edit", setup.node);
     });
 
     return {

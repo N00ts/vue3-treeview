@@ -1,7 +1,7 @@
 import { state } from "@/store/store";
 import { computed, ref } from "vue";
 import _, { xor } from "lodash-es";
-import { defaultConfig } from '../structure/default';
+import { defaultConfig } from '../misc/default';
 
 export default function useLevel(props: {parentId: string, depth: number}): {} {
     const config = state.config;

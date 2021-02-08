@@ -6,6 +6,7 @@
       :key="index"
       :node="item"
       :depth="depth"
+      :parentId="parentId"
       :hasChild="setup.hasChild">
 
       <template v-slot:before-input="props">

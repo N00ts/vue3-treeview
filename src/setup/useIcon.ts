@@ -1,6 +1,6 @@
 import { state } from '../store/store';
 import { computed, toRefs } from 'vue';
-import { defaultConfig, defaultSize } from '../structure/default';
+import { defaultConfig, defaultSize } from '../misc/default';
 
 export default function useIcon(props: Record<string, unknown>, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const { isLeaf } = toRefs(props); 

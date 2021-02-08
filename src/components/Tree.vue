@@ -33,6 +33,7 @@ import _ from "lodash-es";
   - customizable effects
   - emit events
   - unit tests
+  - default css
 */
 export default {
   name: "Tree",

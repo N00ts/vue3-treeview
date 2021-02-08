@@ -3,7 +3,14 @@
     v-if="nodeSetup.hasNode"
     class="tree-node"
     :class="nodeClass"
-    @click.stop="nodeSetup.selectNode">
+    :draggable="dragSetup.draggable"
+    @click.stop="nodeSetup.selectNode"
+    @dragstart.stop="dragSetup.dragstart"
+    @dragend.stop="dragSetup.dragend"
+    @dragenter.prevent.stop="dragSetup.dragenter"
+    @dragleave.prevent.stop="dragSetup.dragleave"
+    @dragover.prevent.stop="dragSetup.dragover"
+    @drop.stop="dragSetup.drop">
 
     <div 
       class="icon-wrapper" 
@@ -72,6 +79,7 @@ import { INode } from "@/structure/INode";
 import _ from "lodash-es";
 import { ShallowUnwrapRef } from "vue";
 import IUseNode from "@/structure/IUseNode";
+import useDragAndDrop from '../setup/useDragAndDrop';
 
 @Options({
   components: {
@@ -85,6 +93,9 @@ export default class TreeNode extends Vue {
 
   @Prop({ type: Object, required: true })
   public node!: INode;
+
+  @Prop({ default: null, type: String })
+  public parentId!: string;
 
   public inputSetup = setup(() => {
     return useInput(this.$props as any, this.$attrs, this.$emit);
@@ -100,6 +111,10 @@ export default class TreeNode extends Vue {
 
   public iconSetup = setup(() => {
     return useIcon(this.$props as any, this.$attrs, this.$emit);
+  });
+
+  public dragSetup = setup(() => {
+    return useDragAndDrop(this.$props as any, this.$attrs, this.$emit);
   });
 
   public get nodeClass(): string[] {

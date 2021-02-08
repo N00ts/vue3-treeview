@@ -3,6 +3,7 @@ import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
 import { toRefs, computed, ref, watch } from 'vue';
+import Emitter from '../misc/emitter';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
     const { node } = toRefs(props);
@@ -10,6 +11,8 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const config = state.config;
 
     const createNode = ref(false);
+
+    const emitter = new Emitter(attrs, emit);
 
     // ensure state exist
     if (_.isNil(node.value.state)) {
@@ -86,18 +89,12 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
 
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
-
-        if (!_.isNil(attrs["node-toggle"])) {
-            emit("node-toggle", node);
-        }
+        emitter.emit("node-toggle", node);
     });
 
     const selectNode = (() => {
         config.value.selected = node.value.id;
-
-        if (!_.isNil(attrs["node-select"])) {
-            emit("node-select", node);
-        }
+        emitter.emit("node-select", node);
     })
 
     return {

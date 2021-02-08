@@ -40,6 +40,7 @@ export default class App extends Vue {
   public configuration: IConfiguration = {
     roots: ["id1", "id2"],
     checkboxes: true,
+    dragAndDrop: true
   };
 
   public nodes: { [id: string]: INode } = {}  ;
@@ -53,7 +54,8 @@ export default class App extends Vue {
         children: ["id11", "id12"],
         state: {
           checked: true,
-          indeterminate: true
+          indeterminate: true,
+          draggable: true
         },
       },
       id11: {

@@ -1,5 +1,5 @@
-import IConfiguration from "./IConfiguration";
-import IIcon from "./IIcon";
+import IConfiguration from "../structure/IConfiguration";
+import IIcon from "../structure/IIcon";
 
 export const defaultSize = 8;
 
