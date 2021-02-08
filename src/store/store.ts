@@ -1,8 +1,7 @@
 import { INode } from "@/structure/INode";
 import IConfiguration from '../structure/IConfiguration';
-import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
+import { toRefs, computed, ComputedRef, Ref, ref, reactive } from 'vue';
 import ITreeProps from '../structure/ITreeProps';
-import { defaultConfiguration } from '../structure/IConfiguration';
 import _ from "lodash";
 
 interface IState {
@@ -25,12 +24,6 @@ export function createStore(props: ITreeProps): void {
     const computedConfig = computed(() => {
         return config.value;
     })
-
-    if (!config.value.selected && config.value.roots.length > 0) {
-        config.value.selected = config.value.roots[0];
-    }
-
-    _.assign(defaultConfiguration, config.value);
 
     state.nodes = computedNodes;
     state.config = computedConfig;
