@@ -1,8 +1,10 @@
 <template>
-  <li 
+  <li
     v-if="nodeSetup.hasNode"
+    class="tree-node"
     :class="nodeClass"
     @click.stop="nodeSetup.selectNode">
+
     <div 
       class="icon-wrapper" 
       v-if="!nodeSetup.hideIcons"
