@@ -3,6 +3,7 @@ import INodeProps from '../structure/INodeProps';
 import { computed, watch } from 'vue';
 import { state } from '@/store/store';
 import _ from 'lodash';
+import { defaultConfig } from '../structure/default';
 
 export default function useInput(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useNode(props, attrs, emit);
@@ -19,7 +20,7 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const editable = computed(() => {
-        return setup.hasConfig.value && config.value.editable;
+        return setup.hasConfig.value && config.value.editable || defaultConfig.editable;
     });
 
     const blur = (() => {

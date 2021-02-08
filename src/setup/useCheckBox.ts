@@ -3,6 +3,7 @@ import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { useNode } from './useNode';
 import { state } from '@/store/store';
+import { defaultConfig } from '../structure/default';
 
 export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useNode(props, attrs, emit);
@@ -16,7 +17,7 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     });
 
     const hasCheckbox = computed(() => {
-        return setup.hasConfig.value && config.value.checkboxes;        
+        return setup.hasConfig.value && config.value.checkboxes || defaultConfig.checkboxes;        
     });
 
     const indeterminate = computed(() => {

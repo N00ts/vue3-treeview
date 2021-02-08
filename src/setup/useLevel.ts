@@ -1,6 +1,7 @@
 import { state } from "@/store/store";
 import { computed, ref } from "vue";
 import _, { xor } from "lodash-es";
+import { defaultConfig } from '../structure/default';
 
 export default function useLevel(props: {parentId: string, depth: number}): {} {
     const config = state.config;
@@ -50,7 +51,7 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
         }
       
         if (_.isNil(config.value.padding)) {
-            return 25;
+            return defaultConfig.padding;
         }
 
         const p = _.toInteger(config.value.padding);
