@@ -32,8 +32,10 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const dblclick = (() => {
-        setup.node.value.state.editing = true;
-        emitter.emit("node-edit", setup.node);
+        if (editable.value) {
+            setup.node.value.state.editing = true;
+            emitter.emit("node-edit", setup.node);
+        }
     });
 
     return {
