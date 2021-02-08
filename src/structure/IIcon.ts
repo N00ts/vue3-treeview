@@ -14,5 +14,3 @@ export default interface IIcon {
 }
 
 export type IconType = "shape" | "class" | "img"; 
-export const defaultHeight = 16;
-export const defaultWidth = 16;
