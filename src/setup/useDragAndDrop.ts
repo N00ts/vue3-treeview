@@ -37,12 +37,15 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             node: node.value,
             parentId: parentId.value
         }
+        context.value.target = {
+            node: null,
+            parentId: null
+        };
         emitter.emit("node-dragstart", context.value);
     };
 
     const dragend = (evt: DragEvent): void => {
         emitter.emit("node-dragend", context.value);
-        /*
         context.value.dragged = {
             node: null,
             parentId: null
@@ -51,7 +54,6 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             node: null,
             parentId: null
         };
-        */
     }
 
     const dragenter = (evt: DragEvent): void => {
@@ -63,16 +65,12 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     const dragleave = (evt: DragEvent): void => {
-        console.log(`dragleave: ${node.value.id}`);
     }
 
     const dragover = (evt: DragEvent): void => {
-        console.log(`dragover: ${node.value.id}`);
     }
 
     const drop = (evt: DragEvent): void => {
-        console.log(`drop: ${node.value.id}`);
-
         if (_.isNil(context.value) || _.isNil(context.value.dragged)) {
             return;
         }
