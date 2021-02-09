@@ -3,6 +3,7 @@
     v-if="nodeSetup.hasNode"
     class="tree-node"
     :class="nodeClass"
+    :ref="el => {dragSetup.element = el}"
     :draggable="dragSetup.draggable"
     @click.stop="nodeSetup.selectNode"
     @dragstart.stop="dragSetup.dragstart"
@@ -35,10 +36,10 @@
 
     <input
       tabindex="0"
-      ref="input"
       type="text"
       v-if="inputSetup.editing"
       v-model="inputSetup.text"
+      :ref="el => {inputSetup.input = el}"
       @blur="inputSetup.blur"
     />
 
@@ -120,19 +121,6 @@ export default class TreeNode extends Vue {
   public get nodeClass(): string[] {
     return [ this.nodeSetup.selectionClass, this.checkboxSetup.checkedClass ];
   }
-
-  @Watch("inputSetup.editing")
-  public onEditchange(nv: boolean, ov: boolean): void {
-    if (!_.eq(nv, ov) && nv) {
-      this.$nextTick(() => {
-        this.$refs.input.focus();
-      });
-    }
-  }
-
-  public $refs: {
-    input: HTMLInputElement;
-  };
 
   public beforeCreate(): void {
     if (this.$options.components) {

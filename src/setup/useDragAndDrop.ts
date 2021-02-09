@@ -1,7 +1,7 @@
 import INodeProps from "@/structure/INodeProps";
 import { state } from '../store/store';
 import { useNode } from './useNode';
-import { computed, ref, watch } from 'vue';
+import { computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
 import _ from "lodash";
 import Emitter from '../misc/emitter';
 
@@ -17,6 +17,8 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     const node = setup.node;
 
     const context = ref(state.dragContext);
+
+    const element = ref<HTMLElement>(null);
 
     const emitter = new Emitter(attrs, emit);
 
@@ -68,10 +70,17 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     const dragover = (evt: DragEvent): void => {
+        const target = evt.target as HTMLElement;
+        const parent = target.closest(".tree-node");
+
+        if (parent) {
+            const factor = .25;
+            console.log("dragover" + node.value.id);
+        }
     }
 
     const drop = (evt: DragEvent): void => {
-        if (_.isNil(context.value) || _.isNil(context.value.dragged)) {
+        if (!droppable.value || _.isNil(context.value) || _.isNil(context.value.dragged)) {
             return;
         }
 
@@ -87,6 +96,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     return {
+        element,
         draggable,
         dragstart,
         dragend,
