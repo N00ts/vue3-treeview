@@ -97,7 +97,6 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             node: null,
             parentId: null
         };
-        console.log(`${node.value.id} - ${pos.value}`);
     }
 
     const dragenter = (evt: DragEvent): void => {
@@ -129,9 +128,13 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             const idx = draggedLvl.value.indexOf(node.value.id);
             const idxDrag = draggedLvl.value.indexOf(dragged.value.node.id);
 
-            if (y < midRange[0] && (!isSameParent.value || (isSameParent.value && idx !== idxDrag + 1))) {
+            if (y < midRange[0] && 
+                (!isSameParent.value || 
+                    (isSameParent.value && idx !== idxDrag + 1))) {
                 pos.value = DragPosition.over;
-            } else if (y > midRange[1] && (!isSameParent.value || (isSameParent.value && idx !== idxDrag - 1))) {
+            } else if (y > midRange[1] && 
+                (!isSameParent.value || 
+                    (isSameParent.value && idx !== idxDrag - 1))) {
                 pos.value = DragPosition.under;
             } else {
                 pos.value = DragPosition.in;
@@ -145,32 +148,37 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         }
 
         if (pos.value === DragPosition.over) {
-            // remove element from parent
-            const dragIdx = draggedLvl.value.indexOf(dragged.value.node.id);
-            draggedLvl.value.splice(dragIdx, 1);
-
-            const idx = targetLvl.value.indexOf(node.value.id);
-            targetLvl.value.splice(idx, 0, dragged.value.node.id);
+            insertAt(0);
         } else if (pos.value === DragPosition.under) {
-            // remove element from parent
-            const dragIdx = draggedLvl.value.indexOf(dragged.value.node.id);
-            draggedLvl.value.splice(dragIdx, 1);
-
-            const idx = targetLvl.value.indexOf(node.value.id);
-            targetLvl.value.splice(idx + 1, 0, dragged.value.node.id);
+            insertAt(1);
         } else {
-            if (!_.isNil(draggedParent.value)) {
-                _.remove(draggedParent.value.children, (x) => x === dragged.value.node.id)
-            }
-    
-            if (!node.value.children) {
-                node.value.children = [];
-            }
-    
-            node.value.children.unshift(dragged.value.node.id);    
+            insertIn();
         }
         pos.value = null;
         emitter.emit("node-drop", dragged.value);
+    }
+
+    const insertAt = (i: 0 | 1) => {
+        const dragId = dragged.value.node.id;
+        const dragIdx = draggedLvl.value.indexOf(dragId);
+        draggedLvl.value.splice(dragIdx, 1);
+
+        const targetId = node.value.id;
+        const idx = targetLvl.value.indexOf(targetId);
+        targetLvl.value.splice(idx + i, 0, dragId);
+    }
+
+    const insertIn = () => {
+        if (!_.isNil(draggedParent.value)) {
+            _.remove(draggedParent.value.children, 
+                (x) => x === dragged.value.node.id);
+        }
+
+        if (!node.value.children) {
+            node.value.children = [];
+        }
+
+        node.value.children.unshift(dragged.value.node.id);  
     }
 
     return {
