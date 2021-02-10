@@ -1,9 +1,10 @@
 import INodeProps from "@/structure/INodeProps";
 import { state } from '../store/store';
 import { useNode } from './useNode';
-import { computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
-import _ from "lodash";
+import { compile, computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
+import _, { isNil } from "lodash";
 import Emitter from '../misc/emitter';
+import { INode } from '../structure/INode';
 
 enum DragPosition {
     over,
@@ -22,7 +23,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const node = setup.node;
 
-    const context = ref(state.dragContext);
+    const dragged = ref(state.dragged);
 
     const element = ref<HTMLElement>(null);
 
@@ -36,11 +37,35 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const droppable = computed(() => {
         return true; //config.value.dragAndDrop && node.value.state.dropable;
-    })
+    });
 
     const isDragging = computed(() => {
-        return context.value.dragged.node && context.value.dragged.node.id === node.value.id;
-    })
+        return !_.isNil(dragged.value.node); 
+    });
+
+    const isSameNode = computed(() => {
+        return isDragging.value && dragged.value.node.id === node.value.id;
+    });
+
+    const isSameParent = computed(() => {
+        return targetParent.value === draggedParent.value;
+    });
+
+    const draggedParent = computed(() => {
+        return !isDragging.value || !dragged.value.parentId ? null : getParent(dragged.value.parentId);
+    });
+
+    const draggedLvl = computed(() => {
+        return getLevel(draggedParent.value);
+    });
+
+    const targetParent = computed(() => {
+        return !_.isNil(parentId.value) ? getParent(parentId.value) : null; 
+    });
+
+    const targetLvl = computed(() => {
+        return getLevel(targetParent.value);
+    });
 
     const dragClass = computed(() => {
         return [
@@ -50,42 +75,45 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         ];
     })
 
+    const getParent = ((id: string) => {
+        return !_.isNil(id) ? nodes.value[id] : null;
+    });
+
+    const getLevel = ((node: INode) => {
+        return !_.isNil(node) ? node.children : config.value.roots;
+    })
+
     const dragstart = (evt: DragEvent): void => {
-        context.value.dragged = {
+        dragged.value = {
             node: node.value,
             parentId: parentId.value
         }
-        context.value.target = {
-            node: null,
-            parentId: null
-        };
-        emitter.emit("node-dragstart", context.value);
+        emitter.emit("node-dragstart", dragged.value);
     };
 
     const dragend = (evt: DragEvent): void => {
-        emitter.emit("node-dragend", context.value);
-        context.value.dragged = {
-            node: null,
-            parentId: null
-        };
-        context.value.target = {
+        emitter.emit("node-dragend", dragged.value);
+        dragged.value = {
             node: null,
             parentId: null
         };
     }
 
     const dragenter = (evt: DragEvent): void => {
-        emitter.emit("node-dragenter", context.value);
-        context.value.target = {
-            node: node.value,
-            parentId: parentId.value
-        };
+        emitter.emit("node-dragenter", dragged.value);
     }
 
     const dragleave = (evt: DragEvent): void => {
+        pos.value = null;
     }
 
     const dragover = (evt: DragEvent): void => {
+        if (isSameNode.value) {
+            return;
+        }
+
+        emitter.emit("node-over", dragged.value);
+
         if (element.value) {
             const factor = .3;
             const y = evt.pageY;
@@ -95,10 +123,13 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
                 midPoint - r.height * factor,
                 midPoint + r.height * factor
             ];
-            
-            if (y < midRange[0]) {
+
+            const idx = draggedLvl.value.indexOf(node.value.id);
+            const idxDrag = draggedLvl.value.indexOf(dragged.value.node.id);
+
+            if (y < midRange[0] && (!isSameParent.value || (isSameParent.value && idx !== idxDrag + 1))) {
                 pos.value = DragPosition.over;
-            } else if (y > midRange[1]) {
+            } else if (y > midRange[1] && (!isSameParent.value || (isSameParent.value && idx !== idxDrag - 1))) {
                 pos.value = DragPosition.under;
             } else {
                 pos.value = DragPosition.in;
@@ -107,19 +138,37 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     const drop = (evt: DragEvent): void => {
-        if (!droppable.value || _.isNil(context.value) || _.isNil(context.value.dragged)) {
+        if (isSameNode.value || !droppable.value) {
             return;
         }
 
-        // remove child from parent
-        const parent = nodes.value[context.value.dragged.parentId];
+        if (pos.value === DragPosition.over) {
+            // remove element from parent
+            const dragIdx = draggedLvl.value.indexOf(dragged.value.parentId);
+            draggedLvl.value.splice(dragIdx, 1);
 
-        if (!_.isNil(parent)) {
-            _.remove(parent.children, (x) => x === context.value.dragged.node.id)
+            const idx = targetLvl.value.indexOf(node.value.id);
+            targetLvl.value.splice(idx, 0, dragged.value.node.id);
+        } else if (pos.value === DragPosition.under) {
+            // remove element from parent
+            const dragIdx = draggedLvl.value.indexOf(dragged.value.parentId);
+            draggedLvl.value.splice(dragIdx, 1);
+
+            const idx = targetLvl.value.indexOf(node.value.id);
+            targetLvl.value.splice(idx + 1, 0, dragged.value.node.id);
+        } else {
+            if (!_.isNil(draggedParent.value)) {
+                _.remove(draggedParent.value.children, (x) => x === dragged.value.node.id)
+            }
+    
+            if (!node.value.children) {
+                node.value.children = [];
+            }
+    
+            node.value.children.unshift(dragged.value.node.id);    
         }
 
-        // add child to targeted node
-        node.value.children.unshift(context.value.dragged.node.id);
+        emitter.emit("node-drop", dragged.value);
     }
 
     return {

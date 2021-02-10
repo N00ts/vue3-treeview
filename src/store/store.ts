@@ -8,13 +8,13 @@ import IDragContext from '../structure/IDragContext';
 interface IState {
     nodes: ComputedRef<{[id: string]: INode}>;
     config: ComputedRef<IConfiguration>;
-    dragContext: IDragContext;
+    dragged: IDragContext;
 }
 
 export let state: IState = {
     nodes: null,
     config: null,
-    dragContext: null,
+    dragged: null,
 };
 
 export function createStore(props: ITreeProps): void {
@@ -30,14 +30,8 @@ export function createStore(props: ITreeProps): void {
 
     state.nodes = computedNodes;
     state.config = computedConfig;
-    state.dragContext = reactive({
-            dragged: {
-                node: null,
-                parentId: null
-            },
-            target: {
-                node: null,
-                parentId: null
-            }
+    state.dragged = reactive({
+            node: null,
+            parentId: null
         });
 }

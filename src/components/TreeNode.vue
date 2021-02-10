@@ -15,6 +15,7 @@
       @dragleave.prevent.stop="dragSetup.dragleave"
       @dragover.prevent.stop="dragSetup.dragover"
       @drop.stop="dragSetup.drop">
+
       <div 
         class="icon-wrapper" 
         v-if="!nodeSetup.hideIcons"
@@ -124,7 +125,7 @@ export default class TreeNode extends Vue {
   public get nodeClass(): string[] {
     return [ 
       this.nodeSetup.selectionClass, 
-      this.checkboxSetup.checkedClass ,
+      this.checkboxSetup.checkedClass,
       this.dragSetup.dragClass
     ];
   }
