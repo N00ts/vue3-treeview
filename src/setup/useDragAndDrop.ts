@@ -87,21 +87,20 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         dragged.value = {
             node: node.value,
             parentId: parentId.value
-        }
-        console.log(`dragstart: ${JSON.stringify(dragged.value, undefined, 4)}`);
+        };
         emitter.emit("node-dragstart", dragged.value);
     };
 
     const dragend = (evt: DragEvent): void => {
         emitter.emit("node-dragend", dragged.value);
-        /*dragged.value = {
+        dragged.value = {
             node: null,
             parentId: null
-        };*/
+        };
+        console.log(`${node.value.id} - ${pos.value}`);
     }
 
     const dragenter = (evt: DragEvent): void => {
-        console.log(`dragenter: ${JSON.stringify(dragged.value, undefined, 4)}`);
         emitter.emit("node-dragenter", dragged.value);
     }
 
@@ -114,8 +113,6 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         if (isSameNode.value || !isDragging.value) {
             return;
         }
-
-        console.log(`dragstart: ${JSON.stringify(dragged.value, undefined, 4)}`);
 
         emitter.emit("node-over", dragged.value);
 
@@ -147,8 +144,6 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             return;
         }
 
-        console.log(`dragstart: ${JSON.stringify(dragged.value, undefined, 4)}`);
-
         if (pos.value === DragPosition.over) {
             // remove element from parent
             const dragIdx = draggedLvl.value.indexOf(dragged.value.node.id);
@@ -174,7 +169,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     
             node.value.children.unshift(dragged.value.node.id);    
         }
-
+        pos.value = null;
         emitter.emit("node-drop", dragged.value);
     }
 
