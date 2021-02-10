@@ -88,29 +88,34 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             node: node.value,
             parentId: parentId.value
         }
+        console.log(`dragstart: ${JSON.stringify(dragged.value, undefined, 4)}`);
         emitter.emit("node-dragstart", dragged.value);
     };
 
     const dragend = (evt: DragEvent): void => {
         emitter.emit("node-dragend", dragged.value);
-        dragged.value = {
+        /*dragged.value = {
             node: null,
             parentId: null
-        };
+        };*/
     }
 
     const dragenter = (evt: DragEvent): void => {
+        console.log(`dragenter: ${JSON.stringify(dragged.value, undefined, 4)}`);
         emitter.emit("node-dragenter", dragged.value);
     }
 
     const dragleave = (evt: DragEvent): void => {
         pos.value = null;
+        emitter.emit("node-dragleave", dragged.value);
     }
 
     const dragover = (evt: DragEvent): void => {
-        if (isSameNode.value) {
+        if (isSameNode.value || !isDragging.value) {
             return;
         }
+
+        console.log(`dragstart: ${JSON.stringify(dragged.value, undefined, 4)}`);
 
         emitter.emit("node-over", dragged.value);
 
@@ -142,16 +147,18 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             return;
         }
 
+        console.log(`dragstart: ${JSON.stringify(dragged.value, undefined, 4)}`);
+
         if (pos.value === DragPosition.over) {
             // remove element from parent
-            const dragIdx = draggedLvl.value.indexOf(dragged.value.parentId);
+            const dragIdx = draggedLvl.value.indexOf(dragged.value.node.id);
             draggedLvl.value.splice(dragIdx, 1);
 
             const idx = targetLvl.value.indexOf(node.value.id);
             targetLvl.value.splice(idx, 0, dragged.value.node.id);
         } else if (pos.value === DragPosition.under) {
             // remove element from parent
-            const dragIdx = draggedLvl.value.indexOf(dragged.value.parentId);
+            const dragIdx = draggedLvl.value.indexOf(dragged.value.node.id);
             draggedLvl.value.splice(dragIdx, 1);
 
             const idx = targetLvl.value.indexOf(node.value.id);
