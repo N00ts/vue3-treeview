@@ -56,7 +56,15 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const hideIcons = computed(() => {
-        return isRoot.value && isLeaf.value
+        for (const id of config.value.roots) {
+            const node = state.nodes.value[id];
+
+            if (node.children && node.children.length > 0) {
+                return false;
+            }
+        }
+
+        return false;
     });
 
     const isLeaf = computed(() => {
