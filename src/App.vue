@@ -38,7 +38,7 @@ import _ from "lodash-es";
 })
 export default class App extends Vue {
   public configuration: IConfiguration = {
-    roots: ["id1", "id2"],
+    roots: ["id1", "id2", "id3"],
     checkboxes: true,
     dragAndDrop: true
   };
@@ -90,6 +90,9 @@ export default class App extends Vue {
         text: "text12",
         children: [],
       },
+      id3: {
+        text: "text3"
+      }
     };
     this.code = JSON.stringify(this.nodes, undefined, 4);
   }

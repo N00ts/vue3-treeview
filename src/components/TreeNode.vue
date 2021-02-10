@@ -141,4 +141,16 @@ export default class TreeNode extends Vue {
 .icon-wrapper {
   display: inline-flex;
 }
+
+.node-over {
+  border-top: solid 1px red;
+}
+
+.node-in {
+  background-color: gray;
+}
+
+.node-under {
+  border-bottom: solid 1px blue;
+}
 </style>
