@@ -67,6 +67,16 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         return getLevel(targetParent.value);
     });
 
+    const context = computed(() => {
+        return {
+            dragged: dragged.value,
+            target: {
+                node: node.value.id,
+                parentId: parentId.value
+            }
+        }
+    })
+
     const dragClass = computed(() => {
         return [
             pos.value === DragPosition.over ? "node-over" : null,
@@ -88,11 +98,11 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             node: node.value,
             parentId: parentId.value
         };
-        emitter.emit("node-dragstart", dragged.value);
+        emitter.emit("node-dragstart", context.value);
     };
 
     const dragend = (evt: DragEvent): void => {
-        emitter.emit("node-dragend", dragged.value);
+        emitter.emit("node-dragend", context.value);
         dragged.value = {
             node: null,
             parentId: null
@@ -100,12 +110,12 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     const dragenter = (evt: DragEvent): void => {
-        emitter.emit("node-dragenter", dragged.value);
+        emitter.emit("node-dragenter", context.value);
     }
 
     const dragleave = (evt: DragEvent): void => {
         pos.value = null;
-        emitter.emit("node-dragleave", dragged.value);
+        emitter.emit("node-dragleave", context.value);
     }
 
     const dragover = (evt: DragEvent): void => {
@@ -113,7 +123,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             return;
         }
 
-        emitter.emit("node-over", dragged.value);
+        emitter.emit("node-over", context.value);
 
         if (element.value) {
             const factor = .3;
@@ -143,19 +153,25 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     const drop = (evt: DragEvent): void => {
-        if (isSameNode.value || !droppable.value) {
-            return;
-        }
+        if (!isSameNode.value && droppable.value) {
+            emitter.emit("node-drop", context.value);
 
-        if (pos.value === DragPosition.over) {
-            insertAt(0);
-        } else if (pos.value === DragPosition.under) {
-            insertAt(1);
-        } else {
-            insertIn();
+            switch(pos.value) {
+                case DragPosition.over: {
+                    insertAt(0);
+                    break;
+                }
+                case DragPosition.under: {
+                    insertAt(1);
+                    break;
+                }
+                case DragPosition.in: {
+                    insertIn();
+                }
+            }
+    
+            pos.value = null;
         }
-        pos.value = null;
-        emitter.emit("node-drop", dragged.value);
     }
 
     const insertAt = (i: 0 | 1) => {
