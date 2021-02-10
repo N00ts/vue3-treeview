@@ -5,6 +5,12 @@ import { computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
 import _ from "lodash";
 import Emitter from '../misc/emitter';
 
+enum DragPosition {
+    over,
+    in,
+    under
+}
+
 export default function useDragAndDrop(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useNode(props, attrs, emit);
     
@@ -22,6 +28,8 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const emitter = new Emitter(attrs, emit);
 
+    const pos = ref<DragPosition>(null);
+
     const draggable = computed(() => {
         return true; // config.value.dragAndDrop && node.value.state.draggable;
     });
@@ -32,6 +40,14 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const isDragging = computed(() => {
         return context.value.dragged.node && context.value.dragged.node.id === node.value.id;
+    })
+
+    const dragClass = computed(() => {
+        return [
+            pos.value === DragPosition.over ? "node-over" : null,
+            pos.value === DragPosition.in ? "node-in" : null,
+            pos.value === DragPosition.under ? "node-under" : null
+        ];
     })
 
     const dragstart = (evt: DragEvent): void => {
@@ -70,12 +86,23 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     }
 
     const dragover = (evt: DragEvent): void => {
-        const target = evt.target as HTMLElement;
-        const parent = target.closest(".tree-node");
-
-        if (parent) {
-            const factor = .25;
-            console.log("dragover" + node.value.id);
+        if (element.value) {
+            const factor = .3;
+            const y = evt.pageY;
+            const r = element.value.getBoundingClientRect();
+            const midPoint = r.top + (r.height / 2);
+            const midRange = [
+                midPoint - r.height * factor,
+                midPoint + r.height * factor
+            ];
+            
+            if (y < midRange[0]) {
+                pos.value = DragPosition.over;
+            } else if (y > midRange[1]) {
+                pos.value = DragPosition.under;
+            } else {
+                pos.value = DragPosition.in;
+            }
         }
     }
 
@@ -97,6 +124,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     return {
         element,
+        dragClass,
         draggable,
         dragstart,
         dragend,

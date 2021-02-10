@@ -1,53 +1,56 @@
 <template>
   <li
     v-if="nodeSetup.hasNode"
-    class="tree-node"
-    :class="nodeClass"
-    :ref="el => {dragSetup.element = el}"
-    :draggable="dragSetup.draggable"
-    @click.stop="nodeSetup.selectNode"
-    @dragstart.stop="dragSetup.dragstart"
-    @dragend.stop="dragSetup.dragend"
-    @dragenter.prevent.stop="dragSetup.dragenter"
-    @dragleave.prevent.stop="dragSetup.dragleave"
-    @dragover.prevent.stop="dragSetup.dragover"
-    @drop.stop="dragSetup.drop">
+    class="tree-node">
 
     <div 
-      class="icon-wrapper" 
-      v-if="!nodeSetup.hideIcons"
-      @click="nodeSetup.toggle">
+      class="node-wrapper"  
+      :class="nodeClass"
+      :ref="el => {dragSetup.element = el}"
+      :draggable="dragSetup.draggable"
+      @click.stop="nodeSetup.selectNode"
+      @dragstart.stop="dragSetup.dragstart"
+      @dragend.stop="dragSetup.dragend"
+      @dragenter.prevent.stop="dragSetup.dragenter"
+      @dragleave.prevent.stop="dragSetup.dragleave"
+      @dragover.prevent.stop="dragSetup.dragover"
+      @drop.stop="dragSetup.drop">
+      <div 
+        class="icon-wrapper" 
+        v-if="!nodeSetup.hideIcons"
+        @click="nodeSetup.toggle">
 
-      <TreeIcons 
-        :isLeaf="nodeSetup.isLeaf"
-        :opened="nodeSetup.opened">
-      </TreeIcons>
+        <TreeIcons 
+          :isLeaf="nodeSetup.isLeaf"
+          :opened="nodeSetup.opened">
+        </TreeIcons>
+      </div>
+
+      <input
+        type="checkbox"
+        v-if="checkboxSetup.hasCheckbox"
+        :checked="checkboxSetup.checked"
+        :indeterminate.prop="checkboxSetup.indeterminate"
+        @click="checkboxSetup.clickCheckbox"
+      />
+
+      <slot name="before-input" :node="nodeSetup.node"></slot>
+
+      <input
+        tabindex="0"
+        type="text"
+        v-if="inputSetup.editing"
+        v-model="inputSetup.text"
+        :ref="el => {inputSetup.input = el}"
+        @blur="inputSetup.blur"
+      />
+
+      <span v-else @dblclick="inputSetup.dblclick">
+        {{ inputSetup.text }}
+      </span>
+
+      <slot name="after-input" :node="nodeSetup.node"></slot>
     </div>
-
-    <input
-      type="checkbox"
-      v-if="checkboxSetup.hasCheckbox"
-      :checked="checkboxSetup.checked"
-      :indeterminate.prop="checkboxSetup.indeterminate"
-      @click="checkboxSetup.clickCheckbox"
-    />
-
-    <slot name="before-input" :node="nodeSetup.node"></slot>
-
-    <input
-      tabindex="0"
-      type="text"
-      v-if="inputSetup.editing"
-      v-model="inputSetup.text"
-      :ref="el => {inputSetup.input = el}"
-      @blur="inputSetup.blur"
-    />
-
-    <span v-else @dblclick="inputSetup.dblclick">
-      {{ inputSetup.text }}
-    </span>
-
-    <slot name="after-input" :node="nodeSetup.node"></slot>
 
     <TreeLevel
       v-if="nodeSetup.createNode"
@@ -74,7 +77,7 @@ import TreeLevel from "./TreeLevel.vue";
 import TreeIcons from './TreeIcons.vue';
 import { useNode } from "@/setup/useNode";
 import { useCheckBox } from "../setup/useCheckBox";
-import { Prop, Watch } from "vue-property-decorator";
+import { Prop } from "vue-property-decorator";
 import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import _ from "lodash-es";
@@ -114,12 +117,16 @@ export default class TreeNode extends Vue {
     return useIcon(this.$props as any, this.$attrs, this.$emit);
   });
 
-  public dragSetup = setup(() => {
+  public dragSetup: ShallowUnwrapRef<any> = setup(() => {
     return useDragAndDrop(this.$props as any, this.$attrs, this.$emit);
   });
 
   public get nodeClass(): string[] {
-    return [ this.nodeSetup.selectionClass, this.checkboxSetup.checkedClass ];
+    return [ 
+      this.nodeSetup.selectionClass, 
+      this.checkboxSetup.checkedClass ,
+      this.dragSetup.dragClass
+    ];
   }
 
   public beforeCreate(): void {
