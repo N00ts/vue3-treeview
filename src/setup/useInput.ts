@@ -1,7 +1,7 @@
 import { useNode } from './useNode';
 import INodeProps from '../structure/INodeProps';
 import { computed, nextTick, ref, watch, onMounted } from 'vue';
-import { state } from '@/store/store';
+import { state } from '@/setup/store';
 import _ from 'lodash';
 import { defaultConfig } from '../misc/default';
 import Emitter from '../misc/emitter';

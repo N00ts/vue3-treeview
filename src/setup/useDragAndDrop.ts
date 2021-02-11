@@ -1,5 +1,5 @@
 import INodeProps from "@/structure/INodeProps";
-import { state } from '../store/store';
+import { state } from './store';
 import { useNode } from './useNode';
 import { compile, computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
 import _, { isNil } from "lodash";
@@ -183,32 +183,39 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
                     insertIn();
                 }
             }
-    
+
             pos.value = null;
         }
     }
 
     const insertAt = (i: 0 | 1) => {
-        const dragId = dragged.value.node.id;
-        const dragIdx = draggedLvl.value.indexOf(dragId);
-        draggedLvl.value.splice(dragIdx, 1);
+        if (isDragging.value) {
+            const dragId = dragged.value.node.id;
+            const dragIdx = draggedLvl.value.indexOf(dragId);
+            draggedLvl.value.splice(dragIdx, 1);
+    
+            const targetId = node.value.id;
+            const idx = targetLvl.value.indexOf(targetId);
+            targetLvl.value.splice(idx + i, 0, dragId);
+        }
 
-        const targetId = node.value.id;
-        const idx = targetLvl.value.indexOf(targetId);
-        targetLvl.value.splice(idx + i, 0, dragId);
     }
 
     const insertIn = () => {
-        if (!_.isNil(draggedParent.value)) {
-            _.remove(draggedParent.value.children, 
-                (x) => x === dragged.value.node.id);
-        }
+        if (isDragging.value) {
+            const dragId = dragged.value.node.id;
 
-        if (!node.value.children) {
-            node.value.children = [];
+            if (draggedLvl.value) {
+                const idx = draggedLvl.value.indexOf(dragId);
+                draggedLvl.value.splice(idx, 1);
+            }
+    
+            if (!node.value.children) {
+                node.value.children = [];
+            }
+    
+            node.value.children.unshift(dragId);  
         }
-
-        node.value.children.unshift(dragged.value.node.id);  
     }
 
     return {

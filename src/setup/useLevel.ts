@@ -1,4 +1,4 @@
-import { state } from "@/store/store";
+import { state } from "@/setup/store";
 import { computed, ref } from "vue";
 import _, { xor } from "lodash-es";
 import { defaultConfig } from '../misc/default';

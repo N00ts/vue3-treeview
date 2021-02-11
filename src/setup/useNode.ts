@@ -1,4 +1,4 @@
-import { state } from "@/store/store";
+import { state } from "@/setup/store";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";

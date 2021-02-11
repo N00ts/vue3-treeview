@@ -19,8 +19,8 @@
 <script lang="ts">
 import TreeLevel from './TreeLevel.vue';
 import ITreeProps from '@/structure/ITreeProps';
-import { createStore } from '../store/store';
 import _ from "lodash-es";
+import { createStore } from '@/setup/store';
 
 /**
   FEATURE to implement:

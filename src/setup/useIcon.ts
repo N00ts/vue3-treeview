@@ -1,4 +1,4 @@
-import { state } from '../store/store';
+import { state } from './store';
 import { computed, toRefs } from 'vue';
 import { defaultConfig, defaultSize } from '../misc/default';
 

@@ -2,7 +2,7 @@ import { computed, SetupContext, watch } from 'vue';
 import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { useNode } from './useNode';
-import { state } from '@/store/store';
+import { state } from '@/setup/store';
 import { defaultConfig } from '../misc/default';
 import Emitter from '../misc/emitter';
 
