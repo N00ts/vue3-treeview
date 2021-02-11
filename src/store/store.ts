@@ -14,7 +14,7 @@ interface IState {
 export let state: IState = {
     nodes: null,
     config: null,
-    dragged: null,
+    dragged: ref(null),
 };
 
 export function createStore(props: ITreeProps): void {
@@ -32,6 +32,8 @@ export function createStore(props: ITreeProps): void {
     state.config = computedConfig;
     state.dragged = ref({
         node: null,
+        element: null,
+        wrapper: null,
         parentId: null
     });
 }

@@ -1,12 +1,13 @@
 <template>
   <li
     v-if="nodeSetup.hasNode"
-    class="tree-node">
+    class="tree-node"
+    :ref="el => {dragSetup.element = el}">
 
     <div 
       class="node-wrapper"  
       :class="nodeClass"
-      :ref="el => {dragSetup.element = el}"
+      :ref="el => {dragSetup.nodeWrapper = el}"
       :draggable="dragSetup.draggable"
       @click.stop="nodeSetup.selectNode"
       @dragstart.stop="dragSetup.dragstart"
