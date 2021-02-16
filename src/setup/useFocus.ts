@@ -1,7 +1,7 @@
 import Emitter from "@/misc/emitter";
 import INodeProps from "@/structure/INodeProps";
 import _ from "lodash";
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref, HtmlHTMLAttributes, watch, nextTick } from 'vue';
 import { state } from "./store";
 import { useNode } from "./useNode";
 
@@ -13,6 +13,8 @@ export default function useFocus(props: INodeProps, attrs: Record<string, unknow
     const config = state.config;
 
     const emitter = new Emitter(attrs, emit);
+
+    const nodeWrapper = ref<HTMLElement>(null);
 
     const focusAble = computed(() => {
         return config.value.focusAble === node.value.id;
@@ -32,7 +34,11 @@ export default function useFocus(props: INodeProps, attrs: Record<string, unknow
 
     const focusNode = (() => {
         config.value.focusAble = node.value.id;
-        emitter.emit("node-focus", node);
+
+        nextTick(() => {
+            nodeWrapper.value.focus();
+            emitter.emit("node-focus", node);
+        })
     })
 
     onMounted(() => {
@@ -42,6 +48,7 @@ export default function useFocus(props: INodeProps, attrs: Record<string, unknow
     });
 
     return {
+        nodeWrapper,
         tabIndex,
         focusClass,
         focusNode

@@ -7,21 +7,21 @@
     <div  
       class="node-wrapper"
       :class="nodeClass"
-      :ref="el => {dragSetup.nodeWrapper = el}"
+      :ref="setupElements"
       :draggable="dragSetup.draggable"
       :tabindex="focusSetup.tabIndex"
       @click.stop="focusSetup.focusNode"
-      @dragstart.prevent.stop="dragSetup.dragstart"
-      @dragend.prevent.stop="dragSetup.dragend"
+      @dragstart.stop="dragSetup.dragstart"
+      @dragend.stop="dragSetup.dragend"
       @dragenter.prevent.stop="dragSetup.dragenter"
       @dragleave.prevent.stop="dragSetup.dragleave"
       @dragover.prevent.stop="dragSetup.dragover"
-      @drop.prevent.stop="dragSetup.drop">
+      @drop.stop="dragSetup.drop">
 
-      <div 
+      <div
         class="icon-wrapper"
         v-if="!nodeSetup.hideIcons"
-        @click="nodeSetup.toggle">
+        @click.stop="nodeSetup.toggle">
 
         <TreeIcons
           :isLeaf="nodeSetup.isLeaf"
@@ -35,7 +35,7 @@
         v-if="checkboxSetup.hasCheckbox"
         :checked="checkboxSetup.checked"
         :indeterminate.prop="checkboxSetup.indeterminate"
-        @click="checkboxSetup.clickCheckbox"
+        @click.stop="checkboxSetup.clickCheckbox"
       />
 
       <slot name="before-input" :node="nodeSetup.node"></slot>
@@ -87,7 +87,7 @@ import { Prop } from "vue-property-decorator";
 import { Options, Vue, setup } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import _ from "lodash-es";
-import { ShallowUnwrapRef } from "vue";
+import { Ref, ShallowUnwrapRef } from "vue";
 import IUseNode from "@/structure/IUseNode";
 import useDragAndDrop from '../setup/useDragAndDrop';
 import useFocus from "@/setup/useFocus";
@@ -145,6 +145,11 @@ export default class TreeNode extends Vue {
       this.$options.components.TreeLevel = require("./TreeLevel.vue").default;
     }
   }
+
+  public setupElements(e: Ref<HTMLElement>): void {
+    this.focusSetup.nodeWrapper = e;
+    this.dragSetup.nodeWrapper = e;
+  }
 }
 </script>
 <style>
@@ -164,7 +169,7 @@ export default class TreeNode extends Vue {
   border-bottom: solid 1px blue;
 }
 
-.tree-node:focus {
+.node-wrapper:focus {
   outline-style: none !important;
   outline: none !important;
   outline: 0 !important;
