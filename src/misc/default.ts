@@ -33,7 +33,7 @@ function createDefaultIcon(draw: string): IIcon {
 export const defaultConfig : IConfiguration = {
     roots: [],
     padding: 16,
-    selected: null,
+    focusAble: null,
     editable: false,
     checkboxes: false,
     dragAndDrop: false,

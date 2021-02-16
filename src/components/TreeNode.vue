@@ -1,28 +1,29 @@
 <template>
   <li
-    v-if="nodeSetup.hasNode"
     class="tree-node"
+    v-if="nodeSetup.hasNode"
     :ref="el => {dragSetup.element = el}">
 
-    <div 
-      class="node-wrapper"  
+    <div  
+      class="node-wrapper"
       :class="nodeClass"
       :ref="el => {dragSetup.nodeWrapper = el}"
       :draggable="dragSetup.draggable"
-      @click.stop="nodeSetup.selectNode"
-      @dragstart.stop="dragSetup.dragstart"
-      @dragend.stop="dragSetup.dragend"
+      :tabindex="focusSetup.tabIndex"
+      @click.stop="focusSetup.focusNode"
+      @dragstart.prevent.stop="dragSetup.dragstart"
+      @dragend.prevent.stop="dragSetup.dragend"
       @dragenter.prevent.stop="dragSetup.dragenter"
       @dragleave.prevent.stop="dragSetup.dragleave"
       @dragover.prevent.stop="dragSetup.dragover"
-      @drop.stop="dragSetup.drop">
+      @drop.prevent.stop="dragSetup.drop">
 
       <div 
-        class="icon-wrapper" 
+        class="icon-wrapper"
         v-if="!nodeSetup.hideIcons"
         @click="nodeSetup.toggle">
 
-        <TreeIcons 
+        <TreeIcons
           :isLeaf="nodeSetup.isLeaf"
           :opened="nodeSetup.opened">
         </TreeIcons>
@@ -30,6 +31,7 @@
 
       <input
         type="checkbox"
+        tabindex="-1"
         v-if="checkboxSetup.hasCheckbox"
         :checked="checkboxSetup.checked"
         :indeterminate.prop="checkboxSetup.indeterminate"
@@ -39,15 +41,17 @@
       <slot name="before-input" :node="nodeSetup.node"></slot>
 
       <input
-        tabindex="0"
         type="text"
+        tabindex="0"
         v-if="inputSetup.editing"
         v-model="inputSetup.text"
         :ref="el => {inputSetup.input = el}"
         @blur="inputSetup.blur"
       />
 
-      <span v-else @dblclick="inputSetup.dblclick">
+      <span 
+        v-else
+        @dblclick.stop="inputSetup.dblclick">
         {{ inputSetup.text }}
       </span>
 
@@ -86,6 +90,7 @@ import _ from "lodash-es";
 import { ShallowUnwrapRef } from "vue";
 import IUseNode from "@/structure/IUseNode";
 import useDragAndDrop from '../setup/useDragAndDrop';
+import useFocus from "@/setup/useFocus";
 
 @Options({
   components: {
@@ -123,9 +128,13 @@ export default class TreeNode extends Vue {
     return useDragAndDrop(this.$props as any, this.$attrs, this.$emit);
   });
 
+  public focusSetup: ShallowUnwrapRef<any> = setup(() => {
+    return useFocus(this.$props as any, this.$attrs, this.$emit);
+  })
+
   public get nodeClass(): string[] {
     return [ 
-      this.nodeSetup.selectionClass, 
+      this.focusSetup.focusClass, 
       this.checkboxSetup.checkedClass,
       this.dragSetup.dragClass
     ];
@@ -153,5 +162,12 @@ export default class TreeNode extends Vue {
 
 .node-under {
   border-bottom: solid 1px blue;
+}
+
+.tree-node:focus {
+  outline-style: none !important;
+  outline: none !important;
+  outline: 0 !important;
+  border: 1px solid #17a2b8; /* Turquoise color */
 }
 </style>

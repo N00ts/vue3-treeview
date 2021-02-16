@@ -33,6 +33,7 @@ import { createStore } from '@/setup/store';
   - customizable effects
   - emit events
   - unit tests
+  - ARIA
   - default css
 */
 export default {

@@ -14,7 +14,5 @@ export default interface IUseNode {
     createNode: Ref<boolean>;
     isRoot: ComputedRef<Boolean>;
     isLeaf: ComputedRef<boolean>;
-    selectionClass: ComputedRef<string>;
     toggle: (nv: boolean, ov: boolean) => void;
-    selectNode: () => void;
 }

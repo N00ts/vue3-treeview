@@ -77,18 +77,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         return !_.isArray(node.value.children) || node.value.children.length === 0;
     });
 
-    const isSelected = computed(() => {
-        return config.value.selected === node.value.id;
-    });
-
-    const selectionClass = computed(() =>  {
-        if (!isSelected.value) {
-            return null;
-        } 
-
-        return config.value.selectedClass ? config.value.selectedClass : "selected";
-    })
-
     watch(opened, (nv: boolean, ov: boolean) => {
         if (nv && !createNode.value) {
             createNode.value = true;
@@ -99,11 +87,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         node.value.state.opened = !node.value.state.opened;
         emitter.emit("node-toggle", node);
     });
-
-    const selectNode = (() => {
-        config.value.selected = node.value.id;
-        emitter.emit("node-select", node);
-    })
 
     return {
         id,
@@ -118,8 +101,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         createNode,
         isRoot,
         isLeaf,
-        selectionClass,
         toggle,
-        selectNode
     }
 }   
