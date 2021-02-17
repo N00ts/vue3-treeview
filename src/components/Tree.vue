@@ -24,17 +24,17 @@ import { createStore } from '@/setup/store';
 
 /**
   FEATURE to implement:
-  - Drag and drop
-  - Drop outside vue
-  - Customize icons         => à tester
-  - keyboard navigation
+  - Drag and drop           => done
+  - Drop outside vue        => done with dragend event
+  - Customize icons         => need more tests
+  - keyboard navigation     => in construction
   - Checkable               => done
   - autoCheck
   - customizable effects
   - emit events
-  - unit tests
   - ARIA
   - default css
+  - unit tests
 */
 export default {
   name: "Tree",
