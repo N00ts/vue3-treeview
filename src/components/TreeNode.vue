@@ -175,6 +175,12 @@ export default class TreeNode extends Vue {
   border-bottom: solid 1px blue;
 }
 
+.icon-wrapper {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 .node-wrapper:focus {
   outline-style: none !important;
   outline: none !important;
