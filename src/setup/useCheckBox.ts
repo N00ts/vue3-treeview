@@ -41,7 +41,9 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     }
 
     const space = (() => {
-        node.value.state.checked = !node.value.state.checked;
+        if (!node.value.state.editing) {
+            node.value.state.checked = !node.value.state.checked;
+        }
     });
 
     return {
