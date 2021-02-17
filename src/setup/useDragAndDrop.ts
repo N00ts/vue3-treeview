@@ -28,7 +28,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const element = ref<HTMLElement>(null);
 
-    const nodeWrapper = ref<HTMLElement>(null);
+    const wrapper = ref<HTMLElement>(null);
 
     const emitter = new Emitter(attrs, emit);
 
@@ -84,7 +84,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             target: {
                 node: node.value.id,
                 element: element.value,
-                wrapper: nodeWrapper.value,
+                wrapper: wrapper.value,
                 parentId: parentId.value
             }
         }
@@ -110,7 +110,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         dragged.value = {
             node: node.value,
             element: element.value,
-            wrapper: nodeWrapper.value,
+            wrapper: wrapper.value,
             parentId: parentId.value
         };
         emitter.emit("node-dragstart", context.value);
@@ -139,10 +139,10 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
         if (!isSameNode.value && isDragging.value && !dragContain.value) {
             emitter.emit("node-over", context.value);
 
-            if (nodeWrapper.value) {
+            if (wrapper.value) {
                 const factor = .3;
                 const y = evt.pageY;
-                const r = nodeWrapper.value.getBoundingClientRect();
+                const r = wrapper.value.getBoundingClientRect();
                 const midPoint = r.top + (r.height / 2);
                 const midRange = [
                     midPoint - r.height * factor,
@@ -221,7 +221,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     return {
         element,
-        nodeWrapper,
+        wrapper,
         dragClass,
         draggable,
         dragstart,

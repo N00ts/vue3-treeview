@@ -40,11 +40,16 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
         emitter.emit("node-checked", setup.node);
     }
 
+    const space = (() => {
+        node.value.state.checked = !node.value.state.checked;
+    });
+
     return {
         checked,
         hasCheckbox,
         indeterminate,
         checkedClass,
+        space,
         clickCheckbox
     };
 } 

@@ -2,7 +2,7 @@ import { useNode } from './useNode';
 import INodeProps from '../structure/INodeProps';
 import { computed, nextTick, ref, watch, onMounted } from 'vue';
 import { state } from '@/setup/store';
-import _ from 'lodash';
+import _, { wrap } from 'lodash';
 import { defaultConfig } from '../misc/default';
 import Emitter from '../misc/emitter';
 
@@ -14,6 +14,8 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     const emitter = new Emitter(attrs, emit);
 
     const input = ref<HTMLInputElement>(null);
+
+    const wrapper = ref<HTMLElement>(null);
 
     const text = computed({
         get: () => setup.node.value.text,
@@ -41,10 +43,23 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
         emitter.emit("node-blur", setup.node);
     });
 
-    const dblclick = (() => {
+    const focusInputs = (() => {
         if (editable.value) {
             setup.node.value.state.editing = true;
             emitter.emit("node-edit", setup.node);
+        }
+    });
+
+    const esc = (() => {
+        if (editable.value) {
+            blur();
+            wrapper.value.focus();
+        }
+    });
+
+    const enter = (() => {
+        if (editable.value) {
+            focusInputs();
         }
     });
 
@@ -53,7 +68,10 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
         input,
         editing,
         editable,
+        wrapper,
         blur,
-        dblclick
+        focusInputs,
+        esc,
+        enter
     };
 }

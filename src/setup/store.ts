@@ -9,12 +9,14 @@ interface IState {
     nodes: ComputedRef<{[id: string]: INode}>;
     config: ComputedRef<IConfiguration>;
     dragged: Ref<IDragContext>;
+    opened: Ref<Array<string>>;
 }
 
 export let state: IState = {
     nodes: null,
     config: null,
     dragged: ref(null),
+    opened: ref([])
 };
 
 export function createStore(props: ITreeProps): void {
@@ -30,6 +32,7 @@ export function createStore(props: ITreeProps): void {
 
     state.nodes = computedNodes;
     state.config = computedConfig;
+    state.opened = ref(config.value.roots);
     state.dragged = ref({
         node: null,
         element: null,

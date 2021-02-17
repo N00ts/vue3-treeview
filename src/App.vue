@@ -60,13 +60,16 @@ export default class App extends Vue {
       },
       id11: {
         text: "text11",
-        children: ["id111", "id112"],
+        children: ["id111", "id112", "id113"],
       },
       id111: {
         text: "id111",
       },
       id112: {
         text: "id112",
+      },
+      id113: {
+        text: "id113",
       },
       id12: {
         text: "text12",

@@ -1,8 +1,9 @@
 import { state } from "@/setup/store";
+import { INode } from "@/structure/INode";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
-import { toRefs, computed, ref, watch, nextTick } from 'vue';
+import { toRefs, computed, ref, watch, nextTick, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue';
 import Emitter from '../misc/emitter';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
@@ -14,7 +15,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
 
     const emitter = new Emitter(attrs, emit);
 
-    const nodeWrapper = ref<HTMLElement>(null);
+    const wrapper = ref<HTMLElement>(null);
 
     // ensure state exist
     if (_.isNil(node.value.state)) {
@@ -84,6 +85,10 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const tabIndex = computed(() => {
+        if (props.depth === 0 && props.index === 0 && _.isNil(config.value.focusAble)) {
+            return 0; 
+        }
+
         return focusAble.value ? 0 : -1;
     })
 
@@ -99,6 +104,35 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         if (nv && !createNode.value) {
             createNode.value = true;
         }
+
+        // added to opened nodes 
+        if (nv) {
+            const idx = state.opened.value.indexOf(node.value.id);
+            const children = node.value.children;
+
+            if (idx >= 0 && !state.opened.value.some((x) => children.includes(x))) {
+                state.opened.value.splice(idx + 1, 0, ...children);
+            }
+        } else {
+            for (const id of node.value.children) {
+                const idx = state.opened.value.indexOf(id);
+
+                if (idx >= 0) {
+                    state.opened.value.splice(idx, 1);
+                }
+            }
+        }
+
+        nv ? emitter.emit("node-opened") : emitter.emit("node-close");
+    });
+
+    watch(focusAble, (nv: boolean, ov: boolean) => {
+        if (!_.eq(nv, ov) && nv && wrapper.value) {
+            nextTick(() => {
+                wrapper.value.focus();
+                emitter.emit("node-focus", node);
+            });
+        }
     });
 
     const toggle = (() => {
@@ -108,11 +142,32 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
 
     const focusNode = (() => {
         config.value.focusAble = node.value.id;
+    });
 
-        nextTick(() => {
-            nodeWrapper.value.focus();
-            emitter.emit("node-focus", node);
-        })
+    const right = (() => {
+        node.value.state.opened = true;
+    });
+
+    const left = (() => {
+        node.value.state.opened = false;
+    });
+
+    const up = (() => {
+        const idx = state.opened.value.indexOf(node.value.id);
+        const prev = state.opened.value[idx - 1];
+
+        if (!_.isNil(prev)) {
+            config.value.focusAble = prev;
+        }
+    });
+
+    const down = (() => {
+        const idx = state.opened.value.indexOf(node.value.id);
+        const next = state.opened.value[idx + 1];
+
+        if (!_.isNil(next)) {
+            config.value.focusAble = next;
+        }
     });
 
     return {
@@ -127,10 +182,15 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         nbChildren,
         createNode,
         tabIndex,
+        focusAble,
         focusClass,
-        nodeWrapper,
+        wrapper,
         isRoot,
         isLeaf,
+        right,
+        left,
+        up,
+        down,
         toggle,
         focusNode
     }

@@ -3,13 +3,13 @@
     class="tree-node"
     v-if="nodeSetup.hasNode"
     :ref="el => {dragSetup.element = el}"
-    @keydown.enter="keyboardSetup.enter"
-    @keydown.esc="keyboardSetup.esc"
-    @keydown.space="keyboardSetup.space"
-    @keydown.left="keyboardSetup.left"
-    @keydown.right="keyboardSetup.right"
-    @keydown.up="keyboardSetup.up"
-    @keydown.down="keyboardSetup.down">
+    @keydown.enter="inputSetup.enter"
+    @keydown.esc="inputSetup.esc"
+    @keydown.space="checkboxSetup.space"
+    @keydown.left="nodeSetup.left"
+    @keydown.right="nodeSetup.right"
+    @keydown.up="nodeSetup.up"
+    @keydown.down="nodeSetup.down">
 
     <div  
       class="node-wrapper"
@@ -58,7 +58,7 @@
 
       <span 
         v-else
-        @dblclick.stop="inputSetup.dblclick">
+        @dblclick.stop="inputSetup.focusInputs">
         {{ inputSetup.text }}
       </span>
 
@@ -97,7 +97,6 @@ import _ from "lodash-es";
 import { Ref, ShallowUnwrapRef } from "vue";
 import IUseNode from "@/structure/IUseNode";
 import useDragAndDrop from '../setup/useDragAndDrop';
-import useKeyboard from '../setup/useKeyboard';
 
 @Options({
   components: {
@@ -109,13 +108,16 @@ export default class TreeNode extends Vue {
   @Prop({ required: true, type: Number })
   public depth!: Number;
 
-  @Prop({ type: Object, required: true })
+  @Prop({ required: true, type: Number })
+  public index: number;
+
+  @Prop({ required: true, type: Object })
   public node!: INode;
 
   @Prop({ default: null, type: String })
   public parentId!: string;
 
-  public inputSetup = setup(() => {
+  public inputSetup: ShallowUnwrapRef<any>  = setup(() => {
     return useInput(this.$props as any, this.$attrs, this.$emit);
   });
 
@@ -135,13 +137,9 @@ export default class TreeNode extends Vue {
     return useDragAndDrop(this.$props as any, this.$attrs, this.$emit);
   });
 
-  public keyboardSetup: ShallowUnwrapRef<any> = setup(() => {
-    return useKeyboard(this.$props as any, this.$attrs, this.$emit);
-  })
-
   public get nodeClass(): string[] {
     return [ 
-      this.keyboardSetup.focusClass, 
+      this.nodeSetup.focusClass, 
       this.checkboxSetup.checkedClass,
       this.dragSetup.dragClass
     ];
@@ -154,8 +152,9 @@ export default class TreeNode extends Vue {
   }
 
   public setupElements(e: any): void {
-    this.nodeSetup.nodeWrapper = e;
-    this.dragSetup.nodeWrapper = e;
+    this.nodeSetup.wrapper = e;
+    this.dragSetup.wrapper = e;
+    this.inputSetup.wrapper = e;
   }
 }
 </script>

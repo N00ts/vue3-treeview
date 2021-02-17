@@ -6,6 +6,7 @@
       :key="index"
       :node="item"
       :depth="depth"
+      :index="index"
       :parentId="parentId"
       :hasChild="setup.hasChild">
 
