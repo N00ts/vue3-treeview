@@ -106,19 +106,22 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         }
 
         // added to opened nodes 
-        if (nv) {
-            const idx = state.opened.value.indexOf(node.value.id);
-            const children = node.value.children;
+        if (hasChildren) {
+            const opened = state.opened.value;
+            const idx = opened.indexOf(node.value.id);
+            const length = children.value.length;
+            
+            for (let i = 0; i < length; i++) {
+                const child = children.value[i];
 
-            if (idx >= 0 && !state.opened.value.some((x) => children.includes(x))) {
-                state.opened.value.splice(idx + 1, 0, ...children);
-            }
-        } else {
-            for (const id of node.value.children) {
-                const idx = state.opened.value.indexOf(id);
+                if (nv && idx >= 0 && !opened.includes(child)) {
+                    opened.splice(idx + i + 1, 0, child);
+                } else if (!nv) {
+                    const childIdx = opened.indexOf(child);
 
-                if (idx >= 0) {
-                    state.opened.value.splice(idx, 1);
+                    if (childIdx >= 0) {
+                        opened.splice(childIdx, 1);
+                    }
                 }
             }
         }
@@ -145,11 +148,15 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const right = (() => {
-        node.value.state.opened = true;
+        if (!node.value.state.editing) {
+            node.value.state.opened = true;
+        }
     });
 
     const left = (() => {
-        node.value.state.opened = false;
+        if (!node.value.state.editing) {
+            node.value.state.opened = false;
+        }
     });
 
     const up = (() => {
