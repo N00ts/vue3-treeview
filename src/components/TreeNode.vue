@@ -5,6 +5,7 @@
     :ref="el => {dragSetup.element = el}"
     @keydown.enter="keyboardSetup.enter"
     @keydown.esc="keyboardSetup.esc"
+    @keydown.space="keyboardSetup.space"
     @keydown.left="keyboardSetup.left"
     @keydown.right="keyboardSetup.right"
     @keydown.up="keyboardSetup.up"

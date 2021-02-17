@@ -49,6 +49,7 @@ export default function useKeyboard(props: INodeProps, attrs: Record<string, unk
     return {
         esc,
         enter,
+        space,
         left,
         right,
         down,
