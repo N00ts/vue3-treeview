@@ -24,11 +24,12 @@ import { createStore } from '@/setup/store';
 
 /**
   FEATURE to implement:
-  - Drag and drop           => done
+  - Drag and drop           => need more tess
   - Drop outside vue        => done with dragend event
   - Customize icons         => need more tests
   - keyboard navigation     => in construction
   - Checkable               => done
+  - Root change focus array
   - autoCheck
   - customizable effects
   - emit events
@@ -61,6 +62,6 @@ export default {
 <style scoped>
 .tree {
   display: flex;
-  align-items: center;
+  align-items: center;  
 }
 </style>
