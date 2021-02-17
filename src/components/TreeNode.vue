@@ -3,13 +3,13 @@
     class="tree-node"
     v-if="nodeSetup.hasNode"
     :ref="el => {dragSetup.element = el}"
-    @keydown.enter="inputSetup.enter"
-    @keydown.esc="inputSetup.esc"
-    @keydown.space="checkboxSetup.space"
-    @keydown.left="nodeSetup.left"
-    @keydown.right="nodeSetup.right"
-    @keydown.up="nodeSetup.up"
-    @keydown.down="nodeSetup.down">
+    @keydown.enter.stop="inputSetup.enter"
+    @keydown.esc.stop="inputSetup.esc"
+    @keydown.space.stop="checkboxSetup.space"
+    @keydown.left.stop="nodeSetup.left"
+    @keydown.right.stop="nodeSetup.right"
+    @keydown.up.stop="nodeSetup.up"
+    @keydown.down.stop="nodeSetup.down">
 
     <div  
       class="node-wrapper"
