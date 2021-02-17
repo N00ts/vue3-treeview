@@ -2,7 +2,13 @@
   <li
     class="tree-node"
     v-if="nodeSetup.hasNode"
-    :ref="el => {dragSetup.element = el}">
+    :ref="el => {dragSetup.element = el}"
+    @keydown.enter="keyboardSetup.enter"
+    @keydown.esc="keyboardSetup.esc"
+    @keydown.left="keyboardSetup.left"
+    @keydown.right="keyboardSetup.right"
+    @keydown.up="keyboardSetup.up"
+    @keydown.down="keyboardSetup.down">
 
     <div  
       class="node-wrapper"

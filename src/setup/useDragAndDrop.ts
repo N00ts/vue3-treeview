@@ -5,6 +5,7 @@ import { compile, computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vu
 import _, { isNil } from "lodash";
 import Emitter from '../misc/emitter';
 import { INode } from '../structure/INode';
+import { Vue } from 'vue-class-component';
 
 enum DragPosition {
     over,

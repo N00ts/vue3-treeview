@@ -1,9 +1,10 @@
 import Emitter from "@/misc/emitter";
 import INodeProps from "@/structure/INodeProps";
 import _ from "lodash";
-import { computed, onMounted, ref, HtmlHTMLAttributes, watch, nextTick } from 'vue';
 import { state } from "./store";
 import { useNode } from "./useNode";
+import { Vue } from 'vue-class-component';
+import { getCurrentInstance } from "vue";
 
 export default function useKeyboard(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useNode(props, attrs, emit);
@@ -14,35 +15,43 @@ export default function useKeyboard(props: INodeProps, attrs: Record<string, unk
 
     const emitter = new Emitter(attrs, emit);
 
+    const instance = getCurrentInstance();
+
     const esc = (() => {
+        console.log("esc");
     });
 
     const enter = (() => {
-
+        console.log("enter");
     });
 
-    const arrowRight = (() => {
-
+    const space = (() => {
+        console.log("space");
     });
 
-    const arrowLeft = (() => {
-
+    const right = (() => {
+        console.log("right");
     });
 
-    const arrowUp = (() => {
-
+    const left = (() => {
+        console.log("left");
+        // console.log(instance.parent);
     });
 
-    const arrowDown = (() => {
+    const up = (() => {
+        console.log("up");
+    });
 
+    const down = (() => {
+        console.log("down");
     });
 
     return {
         esc,
         enter,
-        arrowLeft,
-        arrowRight,
-        arrowDown,
-        arrowUp
+        left,
+        right,
+        down,
+        up
     };
 }
