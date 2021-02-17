@@ -9,8 +9,8 @@
       :class="nodeClass"
       :ref="setupElements"
       :draggable="dragSetup.draggable"
-      :tabindex="focusSetup.tabIndex"
-      @click.stop="focusSetup.focusNode"
+      :tabindex="nodeSetup.tabIndex"
+      @click.stop="nodeSetup.focusNode"
       @dragstart.stop="dragSetup.dragstart"
       @dragend.stop="dragSetup.dragend"
       @dragenter.prevent.stop="dragSetup.dragenter"
@@ -90,7 +90,7 @@ import _ from "lodash-es";
 import { Ref, ShallowUnwrapRef } from "vue";
 import IUseNode from "@/structure/IUseNode";
 import useDragAndDrop from '../setup/useDragAndDrop';
-import useFocus from "@/setup/useFocus";
+import useKeyboard from '../setup/useKeyboard';
 
 @Options({
   components: {
@@ -128,13 +128,13 @@ export default class TreeNode extends Vue {
     return useDragAndDrop(this.$props as any, this.$attrs, this.$emit);
   });
 
-  public focusSetup: ShallowUnwrapRef<any> = setup(() => {
-    return useFocus(this.$props as any, this.$attrs, this.$emit);
+  public keyboardSetup: ShallowUnwrapRef<any> = setup(() => {
+    return useKeyboard(this.$props as any, this.$attrs, this.$emit);
   })
 
   public get nodeClass(): string[] {
     return [ 
-      this.focusSetup.focusClass, 
+      this.keyboardSetup.focusClass, 
       this.checkboxSetup.checkedClass,
       this.dragSetup.dragClass
     ];
@@ -146,8 +146,8 @@ export default class TreeNode extends Vue {
     }
   }
 
-  public setupElements(e: Ref<HTMLElement>): void {
-    this.focusSetup.nodeWrapper = e;
+  public setupElements(e: any): void {
+    this.nodeSetup.nodeWrapper = e;
     this.dragSetup.nodeWrapper = e;
   }
 }

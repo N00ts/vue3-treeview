@@ -12,7 +12,11 @@ export default interface IUseNode {
     hasChildren: ComputedRef<boolean>;
     nbChildren: ComputedRef<number>;
     createNode: Ref<boolean>;
+    nodeWrapper: Ref<HTMLElement>;
+    tabIndex: ComputedRef<number>;
+    focusClass: ComputedRef<string>;
     isRoot: ComputedRef<Boolean>;
     isLeaf: ComputedRef<boolean>;
     toggle: (nv: boolean, ov: boolean) => void;
+    focusNode: () => void;
 }

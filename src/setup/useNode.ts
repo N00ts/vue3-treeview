@@ -2,7 +2,7 @@ import { state } from "@/setup/store";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
-import { toRefs, computed, ref, watch } from 'vue';
+import { toRefs, computed, ref, watch, nextTick } from 'vue';
 import Emitter from '../misc/emitter';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
@@ -13,6 +13,8 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const createNode = ref(false);
 
     const emitter = new Emitter(attrs, emit);
+
+    const nodeWrapper = ref<HTMLElement>(null);
 
     // ensure state exist
     if (_.isNil(node.value.state)) {
@@ -77,6 +79,22 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         return !_.isArray(node.value.children) || node.value.children.length === 0;
     });
 
+    const focusAble = computed(() => {
+        return config.value.focusAble === node.value.id;
+    });
+
+    const tabIndex = computed(() => {
+        return focusAble.value ? 0 : -1;
+    })
+
+    const focusClass = computed(() =>  {
+        if (!focusAble.value) {
+            return null;
+        } 
+
+        return config.value.focusClass ? config.value.focusClass : "focused";
+    })
+
     watch(opened, (nv: boolean, ov: boolean) => {
         if (nv && !createNode.value) {
             createNode.value = true;
@@ -86,6 +104,15 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
         emitter.emit("node-toggle", node);
+    });
+
+    const focusNode = (() => {
+        config.value.focusAble = node.value.id;
+
+        nextTick(() => {
+            nodeWrapper.value.focus();
+            emitter.emit("node-focus", node);
+        })
     });
 
     return {
@@ -99,8 +126,12 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         hasChildren,
         nbChildren,
         createNode,
+        tabIndex,
+        focusClass,
+        nodeWrapper,
         isRoot,
         isLeaf,
         toggle,
+        focusNode
     }
 }   
