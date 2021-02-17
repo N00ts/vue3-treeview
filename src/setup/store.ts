@@ -32,7 +32,7 @@ export function createStore(props: ITreeProps): void {
 
     state.nodes = computedNodes;
     state.config = computedConfig;
-    state.opened = ref(config.value.roots);
+    state.opened = ref(_.clone(config.value.roots));
     state.dragged = ref({
         node: null,
         element: null,
