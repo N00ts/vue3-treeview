@@ -51,7 +51,7 @@ export default class App extends Vue {
     this.nodes = {
       id1: {
         text: "text1",
-        children: ["id11", "id12"],
+        children: ["id11", "id12", "id13"],
         state: {
           checked: true,
           indeterminate: true,
@@ -74,6 +74,16 @@ export default class App extends Vue {
       id12: {
         text: "text12",
         children: [],
+      },
+      id13: {
+        text: "text13",
+        children: ["id131", "id132"],
+      },
+      id131: {
+        text: "text131"
+      },
+      id132: {
+        text: "text132"
       },
       id2: {
         text: "text2",
