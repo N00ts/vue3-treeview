@@ -6,7 +6,7 @@ import _ from "lodash-es";
 import { toRefs, computed, ref, watch, nextTick, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue';
 import Emitter from '../misc/emitter';
 import TreeNode from '../components/TreeNode.vue';
-import { ExtractInstance, Vue, VueConstructor } from "vue-class-component";
+import { ExtractInstance, Vue, VueConstructor, setup } from 'vue-class-component';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
     const { node } = toRefs(props);
@@ -214,7 +214,9 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
             return level.setup.vNodes[0];
         }
 
-        return p ? nextNode(p, node.value.id) : null;
+        return p ? 
+        nextNode(p, node.value.id) : 
+        nextRoot(node.value.id, n.parent.setupState.setup.vNodes);
     });
 
     const nextNode = ((p: any, id: string): any => {
@@ -231,10 +233,14 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
             return nextNode(pSetup.getParent(), pSetup.node.id);
         }
 
-        const rootIdx = config.value.roots.indexOf(pSetup.node.id);
-        return rootIdx < levelNodes.length - 1 && levelNodes[rootIdx + 1] || null;
+        return nextRoot(pSetup.node.id, levelNodes);
     })
 
+    const nextRoot = ((id: string, v: Vue[]) => {
+        const idx = config.value.roots.indexOf(id);
+        return idx < v.length - 1 && v[idx + 1] || null;
+    })
+    
     const getParent = (() => {
         return instance.parent && 
         Number.isFinite(instance.parent.props.depth) &&
