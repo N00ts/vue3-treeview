@@ -17,7 +17,7 @@
     :config="configuration"
     @nodes-updated="changecode"/>
 
-  <textarea style="margin-top: 50px; width: 100%; height: 500px" v-model="code">
+  <textarea style="margin-top: 50px; width: 100%; height: 200px" v-model="code">
   </textarea>
 
   <button v-on:click.stop="updateTree">update tree</button>

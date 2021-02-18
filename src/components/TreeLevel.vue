@@ -3,7 +3,7 @@
     <TreeNode
       v-for="(item, index) in setup.level"
       v-bind="$attrs"
-      :key="index"
+      :key="item.id"
       :node="item"
       :depth="depth"
       :index="index"

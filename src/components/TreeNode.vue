@@ -23,7 +23,7 @@
       @dragenter.prevent.stop="dragSetup.dragenter"
       @dragleave.prevent.stop="dragSetup.dragleave"
       @dragover.prevent.stop="dragSetup.dragover"
-      @drop.stop="dragSetup.drop">
+      @drop.prevent.stop="dragSetup.drop">
 
       <div
         class="icon-wrapper"

@@ -105,26 +105,11 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
             createNode.value = true;
         }
 
-        // added to opened nodes 
-        if (hasChildren) {
-            const opened = state.opened.value;
-            const idx = opened.indexOf(node.value.id);
-            const length = children.value.length;
-            
-            for (let i = 0; i < length; i++) {
-                const child = children.value[i];
+        // => bug when drag dorp change order
+        // => do this when loop over nodes to refresh on TreeLevel
+        updateVisible(nv);
 
-                if (nv && idx >= 0 && !opened.includes(child)) {
-                    opened.splice(idx + i + 1, 0, child);
-                } else if (!nv) {
-                    const childIdx = opened.indexOf(child);
-
-                    if (childIdx >= 0) {
-                        opened.splice(childIdx, 1);
-                    }
-                }
-            }
-        }
+        console.log(state.visible.value);
 
         nv ? emitter.emit("node-opened") : emitter.emit("node-close");
     });
@@ -137,6 +122,29 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
             });
         }
     });
+
+    const updateVisible = ((o: boolean) => {
+        if (hasChildren) {
+            const opened = state.visible.value;
+            const idx = opened.indexOf(node.value.id);
+            const length = children.value.length;
+            
+            for (let i = 0; i < length; i++) {
+                const child = children.value[i];
+
+                if (o && idx >= 0 && !opened.includes(child)) {
+                    opened.splice(idx + i + 1, 0, child);
+                } else if (!o) {
+                    const childIdx = opened.indexOf(child);
+
+                    if (childIdx >= 0) {
+                        opened.splice(childIdx, 1);
+                    }
+                }
+            }
+        }
+
+    })
 
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
@@ -160,8 +168,8 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const up = (() => {
-        const idx = state.opened.value.indexOf(node.value.id);
-        const prev = state.opened.value[idx - 1];
+        const idx = state.visible.value.indexOf(node.value.id);
+        const prev = state.visible.value[idx - 1];
 
         if (!_.isNil(prev)) {
             config.value.focusAble = prev;
@@ -169,12 +177,16 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const down = (() => {
-        const idx = state.opened.value.indexOf(node.value.id);
-        const next = state.opened.value[idx + 1];
+        const idx = state.visible.value.indexOf(node.value.id);
+        const next = state.visible.value[idx + 1];
 
         if (!_.isNil(next)) {
             config.value.focusAble = next;
         }
+    });
+
+    const rebuildOpened = (() => {
+
     });
 
     return {
