@@ -8,7 +8,8 @@
       :depth="depth"
       :index="index"
       :parentId="parentId"
-      :hasChild="setup.hasChild">
+      :hasChild="setup.hasChild"
+      :ref="setRef">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -27,6 +28,7 @@ import TreeNode from "./TreeNode.vue";
 import { Prop } from "vue-property-decorator";
 import { Options, setup, Vue } from "vue-class-component";
 import _ from "lodash-es";
+import { ShallowUnwrapRef } from 'vue';
 
 @Options({
   components: {
@@ -40,7 +42,7 @@ export default class TreeLevel extends Vue {
   @Prop({ default: null, type: String })
   public parentId!: string;
 
-  public setup = setup(() => {
+  public setup: ShallowUnwrapRef<any> = setup(() => {
     return useLevel(this.$props as any);
   }) 
 
@@ -48,6 +50,10 @@ export default class TreeLevel extends Vue {
     if (this.$options.components) {
       this.$options.components.TreeNode = require("./TreeNode.vue").default;
     }
+  }
+
+  public setRef(e: any): void {
+    this.setup.vNodes.push(e);
   }
 }
 </script>

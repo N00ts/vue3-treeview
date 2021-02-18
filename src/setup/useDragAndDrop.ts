@@ -192,49 +192,8 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             const targetId = node.value.id;
             const idx = targetLvl.value.indexOf(targetId);
             targetLvl.value.splice(idx + i, 0, dragId);
-
-            removeVisible(dragged.value.node);
-
-            console.log(state.visible.value);
-
-            const visibleIdx = state.visible.value.indexOf(node.value.id);
-
-            if (visibleIdx >= 0) {
-                addVisibleTo(dragged.value.node, visibleIdx + i)
-                console.log(state.visible.value);
-            }
         }
     }
-
-    const removeVisible = ((node: INode) => {
-        if (node) {
-            const idx = state.visible.value.indexOf(node.id);
-
-            if (idx >= 0) {
-                state.visible.value.splice(idx, 1);
-            }
-    
-            if (node.children && node.children.length > 0) {
-                for (const id of node.children) {
-                    removeVisible(state.nodes.value[id]);
-                }
-            }
-        }
-    });
-
-    const addVisibleTo = ((node: INode, idx: number) => {
-        console.log(idx);
-        if (node && idx >= 0) {
-            state.visible.value.splice(idx, 0, node.id);
-            
-            if (node.children && node.children.length > 0) {
-                for (let i = 0; i < node.children.length; i++) {
-                    const id = node.children[i];
-                    addVisibleTo(state.nodes.value[id], idx + i);
-                }
-            }
-        }
-    });
 
     const insertIn = () => {
         if (isDragging.value) {
@@ -249,15 +208,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
                 node.value.children = [];
             }
     
-            node.value.children.unshift(dragId);  
-
-            removeVisible(dragged.value.node);
-
-            const visibleIdx = state.visible.value.indexOf(node.value.id);
-
-            if (visibleIdx >= 0) {
-                addVisibleTo(dragged.value.node, visibleIdx + 1);
-            }
+            node.value.children.unshift(dragId);
         }
     }
 

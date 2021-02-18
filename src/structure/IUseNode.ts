@@ -1,14 +1,17 @@
 import { ComputedRef, ToRefs, computed, Ref } from 'vue';
+import { Vue } from 'vue-class-component';
 import { INode } from "./INode";
 
 export default interface IUseNode {
     node: Ref<INode>;
     id: ComputedRef<string>;
+    level: Ref<Vue>;
     opened: ComputedRef<boolean>;
     hasNode: ComputedRef<boolean>;
     hasState: ComputedRef<boolean>;
     hideIcons: ComputedRef<boolean>;
     hasConfig: ComputedRef<boolean>;
+    children: ComputedRef<string[]>;
     hasChildren: ComputedRef<boolean>;
     nbChildren: ComputedRef<number>;
     createNode: Ref<boolean>;
@@ -24,4 +27,7 @@ export default interface IUseNode {
     right: () => void;
     up: () => void;
     down: () => void;
+    getParent: () => any;
+    previousNode: (node: any) => any;
+    nextNode: (node: any, id: string) => any;
 }

@@ -68,9 +68,10 @@
     <TreeLevel
       v-if="nodeSetup.createNode"
       v-show="nodeSetup.opened"
+      v-bind="$attrs"
       :parentId="nodeSetup.id"
       :depth="depth + 1"
-      v-bind="$attrs">
+      :ref="setLevelRef">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -155,6 +156,10 @@ export default class TreeNode extends Vue {
     this.nodeSetup.wrapper = e;
     this.dragSetup.wrapper = e;
     this.inputSetup.wrapper = e;
+  }
+
+  public setLevelRef(e: any): void {
+    this.nodeSetup.level = e;
   }
 }
 </script>
