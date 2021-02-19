@@ -10,7 +10,6 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
     const nodes = state.nodes;
     const depth = ref(props.depth);
     const parent = ref(props.parentId);
-    const vNodes = ref<Array<Vue>>([]);
 
     const level = computed(() => {
       const res: INode[] = [];
@@ -41,6 +40,7 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
     const addNode = ((id: string, a: INode[]) => {
       if (nodes.value[id]) {
         nodes.value[id].id = id;
+        nodes.value[id].parent = parent.value;
         a.push(nodes.value[id]);
       }
     })
@@ -71,7 +71,6 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
 
     return {
         id,
-        vNodes,
         level,
         padding,
         style,

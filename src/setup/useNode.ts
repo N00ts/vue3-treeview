@@ -3,10 +3,9 @@ import { INode } from "@/structure/INode";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
-import { toRefs, computed, ref, watch, nextTick, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue';
+import { toRefs, computed, ref, watch, nextTick, getCurrentInstance } from 'vue';
 import Emitter from '../misc/emitter';
-import TreeNode from '../components/TreeNode.vue';
-import { ExtractInstance, Vue, VueConstructor, setup } from 'vue-class-component';
+import { Vue } from 'vue-class-component';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
     const { node } = toRefs(props);
@@ -14,7 +13,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const createNode = ref(false);
     const emitter = new Emitter(attrs, emit);
     const wrapper = ref<HTMLElement>(null);
-    const instance = getCurrentInstance();
     const level = ref<Vue>(null);
 
     // ensure state exist
@@ -24,6 +22,10 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
 
     const id = computed(() => {
         return hasNode.value && node.value.id;
+    })
+
+    const roots = computed(() => {
+        return config.value.roots || [];
     })
 
     const hasNode = computed(() => {
@@ -80,27 +82,27 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         return !_.isArray(node.value.children) || node.value.children.length === 0;
     });
 
-    const focusAble = computed(() => {
-        return config.value.focusAble === node.value.id;
+    const isFocused = computed(() => {
+        return state.focused.value === node.value.id;
     });
 
     const tabIndex = computed(() => {
-        if (props.depth === 0 && props.index === 0 && _.isNil(config.value.focusAble)) {
+        if (props.depth === 0 && props.index === 0 && !isFocused.value) {
             return 0; 
         }
 
-        return focusAble.value ? 0 : -1;
+        return isFocused.value ? 0 : -1;
     })
 
     const focusClass = computed(() =>  {
-        if (!focusAble.value) {
+        if (!isFocused.value) {
             return null;
         } 
 
         return config.value.focusClass ? config.value.focusClass : "focused";
     })
 
-    watch(opened, (nv: boolean, ov: boolean) => {
+    watch(opened, (nv: boolean) => {
         if (nv && !createNode.value) {
             createNode.value = true;
         }
@@ -108,7 +110,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         nv ? emitter.emit("node-opened") : emitter.emit("node-close");
     });
 
-    watch(focusAble, (nv: boolean, ov: boolean) => {
+    watch(isFocused, (nv: boolean, ov: boolean) => {
         if (!_.eq(nv, ov) && nv && wrapper.value) {
             nextTick(() => {
                 wrapper.value.focus();
@@ -123,7 +125,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const focusNode = (() => {
-        config.value.focusAble = node.value.id;
+        state.focused.value = node.value.id;
     });
 
     const right = (() => {
@@ -139,114 +141,99 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const up = (() => {
-        const prev = previousVisibleNode(instance);
+        const prev = prevVisible(node.value.id);
 
         if (prev) {
-            config.value.focusAble = prev.node.id;
+            state.focused.value = prev;
         }
     });
 
-    const previousVisibleNode = ((n: any): any => {
-        const level = n.parent;
-        const setup = n.setupState.nodeSetup;
-        const lvlSetup = level.setupState.setup;
-        const p = setup.getParent();
+    const prevVisible = ((id: string) => {
+        const n = state.nodes.value[id];  
+        const p = state.nodes.value[n.parent];
 
         if (!p) {
-            const idx = config.value.roots.indexOf(setup.node.id);
-            return idx > 0 && lastChild(lvlSetup.vNodes[idx - 1]) || null;
+            const idx = roots.value.indexOf(id);
+            return lastChild(roots.value[idx - 1]) || null;            
         }
 
-        return previousNode(p);
+        return prev(p.id);
     });
 
-    const previousNode = ((p: any): any => {
-        const level = instance.parent as any;
-        const setup = p.setupState.nodeSetup;
-        const lvlSetup = level.setupState.setup;
+    const prev = ((id: string): string => { 
+        const n = state.nodes.value[id];
 
-        if (setup.hasChildren) {
-            const children = setup.children;
-            const idx = children.indexOf(node.value.id);
-            const prev = idx > 0 && lvlSetup.vNodes[idx - 1] || null;
+        if (n.children && n.children.length > 0) {
+            const idx = n.children.indexOf(node.value.id);
+            const prev = n.children[idx - 1];
 
-            if (prev) {
+            if (!_.isNil(prev)) {
                 return lastChild(prev);
             }
-        }
+        } 
 
-        return p.proxy;
+        return n.id;
     });
 
-    const lastChild = ((n: any): any => {
-        const setup = n.nodeSetup as any;
-        const level = setup.level;
+    const lastChild = ((id: string): string => {
+        const n = state.nodes.value[id];
 
-        if (level) {
-            const lvlSetup = level.setup as any;
+        if (!n) {
+            return null;
+        }  
 
-            if (setup.hasChildren && setup.opened) {
-                const last = lvlSetup.vNodes[setup.children.length - 1] || null;
-    
-                if (last) {
-                    return lastChild(last);
-                }
+        if (n.children && n.children.length > 0 && n.state.opened) {
+            const last = n.children[n.children.length - 1];
+
+            if (!_.isNil(last)) {
+                return lastChild(last);
             }
         }
 
-        return n;
-    });
+        return n.id;
+    })
 
     const down = (() => {
-        const next = nextVisibleNode(instance);
+        const next = nextVisible(node.value.id);
 
         if (next) {
-            config.value.focusAble = next.node.id;
+            state.focused.value = next;
         }
     });
 
-    const nextVisibleNode = ((n: any): any => {
-        const setup = n.setupState.nodeSetup;
-        const level = setup.level;
-        const p = setup.getParent();
+    const nextVisible = ((id: string): string => {
+        const n = state.nodes.value[id];
 
-        if (setup.hasChildren && setup.opened) {
-            return level.setup.vNodes[0];
+        if (n.children && n.children.length > 0 && n.state.opened) {
+            return n.children[0];
         }
 
-        return p ? 
-        nextNode(p, node.value.id) : 
-        nextRoot(node.value.id, n.parent.setupState.setup.vNodes);
+        const p = state.nodes.value[n.parent];
+
+        return p ?
+        next(p, id) :
+        nextRoot(id);
     });
 
-    const nextNode = ((p: any, id: string): any => {
-        const pSetup = p.setupState.nodeSetup;
-        const levelNodes = p.parent.setupState.setup.vNodes
-        const children = pSetup.children;
-        const idx = children.indexOf(id);
+    const next = ((p: INode, id: string): string => {
+        const idx = p.children.indexOf(id);
 
-        if (children[idx + 1]) {
-            return pSetup.level.setup.vNodes[idx + 1];
+        if (p.children[idx + 1]) {
+            return p.children[idx + 1];
         }
 
-        if (pSetup.getParent()) {
-            return nextNode(pSetup.getParent(), pSetup.node.id);
+        if (p.parent) {
+            return next(state.nodes.value[p.parent], p.id);
         }
 
-        return nextRoot(pSetup.node.id, levelNodes);
+        return nextRoot(p.id);
+    });
+
+    const nextRoot = ((id: string) => {
+        const roots = config.value.roots;
+        const idx = roots.indexOf(id);
+        return roots[idx + 1] || null;
     })
-
-    const nextRoot = ((id: string, v: Vue[]) => {
-        const idx = config.value.roots.indexOf(id);
-        return idx < v.length - 1 && v[idx + 1] || null;
-    })
-    
-    const getParent = (() => {
-        return instance.parent && 
-        Number.isFinite(instance.parent.props.depth) &&
-        instance.parent.props.depth > 0 ? 
-        instance.parent.parent : null; 
-    });
 
     return {
         id,
@@ -262,7 +249,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         nbChildren,
         createNode,
         tabIndex,
-        focusAble,
         focusClass,
         wrapper,
         isRoot,
@@ -272,9 +258,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         up,
         down,
         toggle,
-        focusNode,
-        getParent,
-        nextNode,
-        previousNode
+        focusNode
     }
-}   
+}

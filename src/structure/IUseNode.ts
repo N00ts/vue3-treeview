@@ -20,14 +20,10 @@ export default interface IUseNode {
     focusClass: ComputedRef<string>;
     isRoot: ComputedRef<boolean>;
     isLeaf: ComputedRef<boolean>;
-    focusAble: ComputedRef<boolean>;
     toggle: (nv: boolean, ov: boolean) => void;
     focusNode: () => void;
     left: () => void;
     right: () => void;
     up: () => void;
     down: () => void;
-    getParent: () => any;
-    previousNode: (node: any) => any;
-    nextNode: (node: any, id: string) => any;
 }

@@ -12,7 +12,6 @@ export default interface IConfiguration {
     disabled?: boolean;
     openedIcon?: IIcon;
     closedIcon?: IIcon;
-    focusAble?: string;
     focusClass?: string;
     checkedClass?: string; 
 }

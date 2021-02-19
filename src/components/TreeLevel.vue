@@ -8,8 +8,7 @@
       :depth="depth"
       :index="index"
       :parentId="parentId"
-      :hasChild="setup.hasChild"
-      :ref="setRef">
+      :hasChild="setup.hasChild">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -50,10 +49,6 @@ export default class TreeLevel extends Vue {
     if (this.$options.components) {
       this.$options.components.TreeNode = require("./TreeNode.vue").default;
     }
-  }
-
-  public setRef(e: any): void {
-    this.setup.vNodes.push(e);
   }
 }
 </script>
