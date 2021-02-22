@@ -3,17 +3,16 @@ import { INode } from "@/structure/INode";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
-import { toRefs, computed, ref, watch, nextTick, getCurrentInstance } from 'vue';
-import Emitter from '../misc/emitter';
+import { computed, ref, watch, nextTick } from 'vue';
 import { Vue } from 'vue-class-component';
 import useCommon from './useCommon';
+import { nodeEvents } from '../misc/nodeEvents';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
     const setup = useCommon(props, attrs);
     const node = setup.node;
     const config = state.config;
     const createNode = ref(node.value.state.opened || false);
-    const emitter = new Emitter(attrs, emit);
     const wrapper = ref<HTMLElement>(null);
     const level = ref<Vue>(null);
 
@@ -116,21 +115,21 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
             createNode.value = true;
         }
 
-        nv ? emitter.emit("node-opened") : emitter.emit("node-close");
+        nv ? emit(nodeEvents.opened, node.value) : emit(nodeEvents.close, node.value);
     });
 
     watch(isFocused, (nv: boolean, ov: boolean) => {
         if (!_.eq(nv, ov) && nv && wrapper.value) {
             nextTick(() => {
                 wrapper.value.focus();
-                emitter.emit("node-focus", node);
+                emit(nodeEvents.focus, node);
             });
         }
     });
 
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
-        emitter.emit("node-toggle", node);
+        emit(nodeEvents.toggle, node.value);
     });
 
     const focusNode = (() => {

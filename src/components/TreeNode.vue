@@ -18,6 +18,7 @@
       :draggable="dragSetup.draggable"
       :tabindex="nodeSetup.tabIndex"
       @click.stop="nodeSetup.focusNode"
+      @blur="inputSetup.blur"
       @dragstart.stop="dragSetup.dragstart"
       @dragend.stop="dragSetup.dragend"
       @dragenter.prevent.stop="dragSetup.dragenter"
@@ -100,12 +101,19 @@ import _ from "lodash-es";
 import { Ref, ShallowUnwrapRef } from "vue";
 import IUseNode from "@/structure/IUseNode";
 import useDragAndDrop from '../setup/useDragAndDrop';
+import { checkboxEvents, dragEvents, inputEvents, nodeEvents } from "@/misc/nodeEvents";
 
 @Options({
   components: {
     TreeLevel,
     TreeIcons,
   },
+  emits: [
+    ...Object.values(nodeEvents),
+    ...Object.values(checkboxEvents),
+    ...Object.values(inputEvents),
+    ...Object.values(dragEvents)
+  ]
 })
 export default class TreeNode extends Vue {
   @Prop({ required: true, type: Number })

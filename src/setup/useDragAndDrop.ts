@@ -3,9 +3,9 @@ import { state } from './store';
 import { useNode } from './useNode';
 import { compile, computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
 import _, { isNil } from "lodash";
-import Emitter from '../misc/emitter';
 import { INode } from '../structure/INode';
 import useCommon from './useCommon';
+import { dragEvents } from '../misc/nodeEvents';
 
 enum DragPosition {
     over,
@@ -14,24 +14,14 @@ enum DragPosition {
 }
 
 export default function useDragAndDrop(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useCommon(props, attrs);
-    
+    const setup = useCommon(props, attrs);   
     const parentId = ref(props.parentId);
-
     const config = state.config;
-
     const nodes = state.nodes;
-
     const node = setup.node;
-
     const dragged = ref(state.dragged);
-
     const element = ref<HTMLElement>(null);
-
     const wrapper = ref<HTMLElement>(null);
-
-    const emitter = new Emitter(attrs, emit);
-
     const pos = ref<DragPosition>(null);
 
     const draggable = computed(() => {
@@ -113,25 +103,25 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
             wrapper: wrapper.value,
             parentId: parentId.value
         };
-        emitter.emit("node-dragstart", context.value);
+        emit(dragEvents.start, context.value);
     };
 
     const dragend = (evt: DragEvent): void => {
-        emitter.emit("node-dragend", context.value);
+        emit(dragEvents.enter, context.value);
     }
 
     const dragenter = (evt: DragEvent): void => {
-        emitter.emit("node-dragenter", context.value);
+        emit(dragEvents.enter, context.value);
     }
 
     const dragleave = (evt: DragEvent): void => {
         pos.value = null;
-        emitter.emit("node-dragleave", context.value);
+        emit(dragEvents.Leave, context.value);
     }
 
     const dragover = (evt: DragEvent): void => {
         if (!isSameNode.value && isDragging.value && !dragContain.value) {
-            emitter.emit("node-over", context.value);
+            emit(dragEvents.over, context.value);
 
             if (wrapper.value) {
                 const factor = .3;
@@ -163,7 +153,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const drop = (evt: DragEvent): void => {
         if (!isSameNode.value && droppable.value && !dragContain.value) {
-            emitter.emit("node-drop", context.value);
+            emit(dragEvents.drop, context.value);
 
             switch(pos.value) {
                 case DragPosition.over: {

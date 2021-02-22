@@ -4,18 +4,13 @@ import { computed, nextTick, ref, watch, onMounted } from 'vue';
 import { state } from '@/setup/store';
 import _, { wrap } from 'lodash';
 import { defaultConfig } from '../misc/default';
-import Emitter from '../misc/emitter';
 import useCommon from './useCommon';
+import { inputEvents } from '../misc/nodeEvents';
 
 export default function useInput(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useCommon(props, attrs);
-
     const config = state.config;
-
-    const emitter = new Emitter(attrs, emit);
-
     const input = ref<HTMLInputElement>(null);
-
     const wrapper = ref<HTMLElement>(null);
 
     const text = computed({
@@ -39,21 +34,21 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
         }
     });
 
-    const blur = (() => {
+    const blur = ((event: Event) => {
         setup.node.value.state.editing = false;
-        emitter.emit("node-blur", setup.node);
+        emit(inputEvents.blur, event, setup.node.value);
     });
 
     const focusInputs = (() => {
         if (editable.value &&  !setup.disabled.value) {
             setup.node.value.state.editing = true;
-            emitter.emit("node-edit", setup.node);
+            emit(inputEvents.edit, setup.node.value);
         }
     });
 
-    const esc = (() => {
+    const esc = ((event: Event) => {
         if (editable.value) {
-            blur();
+            blur(event);
             wrapper.value.focus();
         }
     });
