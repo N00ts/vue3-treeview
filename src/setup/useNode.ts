@@ -12,7 +12,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const setup = useCommon(props, attrs);
     const node = setup.node;
     const config = state.config;
-    const createNode = ref(false);
+    const createNode = ref(node.value.state.opened || false);
     const emitter = new Emitter(attrs, emit);
     const wrapper = ref<HTMLElement>(null);
     const level = ref<Vue>(null);
@@ -207,9 +207,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
 
         const p = state.nodes.value[n.parent];
 
-        return p ?
-        next(p, id) :
-        nextRoot(id);
+        return p ? next(p, id) : nextRoot(id);
     });
 
     const next = ((p: INode, id: string): string => {
