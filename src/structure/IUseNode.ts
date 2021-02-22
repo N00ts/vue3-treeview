@@ -11,6 +11,7 @@ export default interface IUseNode {
     hasState: ComputedRef<boolean>;
     hideIcons: ComputedRef<boolean>;
     hasConfig: ComputedRef<boolean>;
+    disabled: ComputedRef<boolean>;
     children: ComputedRef<string[]>;
     hasChildren: ComputedRef<boolean>;
     nbChildren: ComputedRef<number>;
@@ -18,6 +19,7 @@ export default interface IUseNode {
     wrapper: Ref<HTMLElement>;
     tabIndex: ComputedRef<number>;
     focusClass: ComputedRef<string>;
+    disabledClass: ComputedRef<string>;
     isRoot: ComputedRef<boolean>;
     isLeaf: ComputedRef<boolean>;
     toggle: (nv: boolean, ov: boolean) => void;

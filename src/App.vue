@@ -11,6 +11,9 @@
   <label for="editable">editable</label>
   <input id="editable" type="checkbox" v-model="configuration.editable" />
 
+  <label for="disabled">disabled</label>
+  <input id="disabled" type="checkbox" v-model="configuration.disabled" />
+
   <Tree
     ref="Tree"
     :nodes="nodes"

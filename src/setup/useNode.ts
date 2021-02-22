@@ -57,6 +57,18 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         return props.depth === 0;
     });
 
+    const disabled = computed(() => {
+        return setup.disabled.value;
+    });
+
+    const disabledClass = computed(() => {
+        if (!disabled.value) {
+            return null;
+        }
+
+        return config.value.disabledClass ? config.value.disabledClass : "disabled";
+    });
+
     const hideIcons = computed(() => {
         for (const id of config.value.roots) {
             const node = state.nodes.value[id];
@@ -239,12 +251,14 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         hasState,
         hasConfig,
         hideIcons,
+        disabled,
         children,
         hasChildren,
         nbChildren,
         createNode,
         tabIndex,
         focusClass,
+        disabledClass,
         wrapper,
         isRoot,
         isLeaf,

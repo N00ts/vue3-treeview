@@ -45,7 +45,7 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const focusInputs = (() => {
-        if (editable.value) {
+        if (editable.value &&  !setup.disabled.value) {
             setup.node.value.state.editing = true;
             emitter.emit("node-edit", setup.node);
         }
@@ -59,7 +59,7 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const enter = (() => {
-        if (editable.value) {
+        if (editable.value && !setup.disabled.value) {
             focusInputs();
         }
     });

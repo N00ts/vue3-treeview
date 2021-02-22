@@ -26,10 +26,15 @@ export default function useCommon(props: INodeProps, attrs: Record<string, unkno
         return hasNode.value && !_.isNil(node.value.state);
     });
 
+    const disabled = computed(() => {
+        return config.value.disabled || node.value.state.disabled;
+    });
+
     return {
         node,
         hasNode,
         hasState,
-        hasConfig
+        hasConfig,
+        disabled,
     };
 }

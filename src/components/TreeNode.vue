@@ -41,6 +41,7 @@
         tabindex="-1"
         v-if="checkboxSetup.hasCheckbox"
         :checked="checkboxSetup.checked"
+        :disabled="nodeSetup.disabled"
         :indeterminate.prop="checkboxSetup.indeterminate"
         @click.stop="checkboxSetup.clickCheckbox"
       />
@@ -53,6 +54,7 @@
         v-if="inputSetup.editing"
         v-model="inputSetup.text"
         :ref="el => {inputSetup.input = el}"
+        :disabled="nodeSetup.disabled"
         @blur="inputSetup.blur"
       />
 
@@ -77,7 +79,7 @@
         <slot name="before-input" :node="props.node"></slot>
       </template>
 
-      <template v-slot:after-input="props">
+      <template v-slot:a*fter-input="props">
         <slot name="after-input" :node="props.node"></slot>
       </template>
     </TreeLevel>
@@ -140,7 +142,8 @@ export default class TreeNode extends Vue {
 
   public get nodeClass(): string[] {
     return [ 
-      this.nodeSetup.focusClass, 
+      this.nodeSetup.focusClass,
+      this.nodeSetup.disabledClass,
       this.checkboxSetup.checkedClass,
       this.dragSetup.dragClass
     ];

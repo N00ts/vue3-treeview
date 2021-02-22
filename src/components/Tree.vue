@@ -24,15 +24,16 @@ import { createStore } from '@/setup/store';
 
 /**
   FEATURE to implement:
-  - Drag and drop           => need more tess
-  - Drop outside vue        => done with dragend event
+  - Drag and drop           => done
+  - Drop outside vue        => done (with dragend event)
   - Customize icons         => need more tests
-  - keyboard navigation     => in construction
+  - keyboard navigation     => done
   - Checkable               => done
-  - Root change focus array
+  - disabled
+  - lazy load
   - autoCheck
   - customizable effects
-  - emit events
+  - emit events             => need more ?
   - ARIA
   - default css
   - unit tests

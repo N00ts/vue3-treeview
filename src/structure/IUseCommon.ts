@@ -7,4 +7,5 @@ export default interface IUseCommon {
     hasNode: ComputedRef<boolean>;
     hasState: ComputedRef<boolean>;
     hasConfig: ComputedRef<boolean>;
+    disabled: ComputedRef<boolean>;
 }
