@@ -5,9 +5,10 @@ import { state } from '@/setup/store';
 import _, { wrap } from 'lodash';
 import { defaultConfig } from '../misc/default';
 import Emitter from '../misc/emitter';
+import useCommon from './useCommon';
 
 export default function useInput(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useNode(props, attrs, emit);
+    const setup = useCommon(props, attrs);
 
     const config = state.config;
 

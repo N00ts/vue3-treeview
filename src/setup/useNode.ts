@@ -6,19 +6,16 @@ import _ from "lodash-es";
 import { toRefs, computed, ref, watch, nextTick, getCurrentInstance } from 'vue';
 import Emitter from '../misc/emitter';
 import { Vue } from 'vue-class-component';
+import useCommon from './useCommon';
 
 export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
-    const { node } = toRefs(props);
+    const setup = useCommon(props, attrs);
+    const node = setup.node;
     const config = state.config;
     const createNode = ref(false);
     const emitter = new Emitter(attrs, emit);
     const wrapper = ref<HTMLElement>(null);
     const level = ref<Vue>(null);
-
-    // ensure state exist
-    if (_.isNil(node.value.state)) {
-        node.value.state = {};
-    }
 
     const id = computed(() => {
         return hasNode.value && node.value.id;
@@ -29,15 +26,15 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     })
 
     const hasNode = computed(() => {
-        return !_.isNil(node);
+        return setup.hasNode.value;
     });
 
     const hasConfig = computed(() => {
-        return !_.isNil(config.value);
+        return setup.hasConfig.value;
     });
 
     const hasState = computed(() => {
-        return hasNode.value && !_.isNil(node.value.state);
+        return setup.hasState.value;
     });
 
     const children = computed(() => {

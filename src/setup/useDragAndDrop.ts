@@ -5,7 +5,7 @@ import { compile, computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vu
 import _, { isNil } from "lodash";
 import Emitter from '../misc/emitter';
 import { INode } from '../structure/INode';
-import { Vue } from 'vue-class-component';
+import useCommon from './useCommon';
 
 enum DragPosition {
     over,
@@ -14,7 +14,7 @@ enum DragPosition {
 }
 
 export default function useDragAndDrop(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useNode(props, attrs, emit);
+    const setup = useCommon(props, attrs);
     
     const parentId = ref(props.parentId);
 
