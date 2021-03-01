@@ -37,7 +37,7 @@ import { Prop } from 'vue-property-decorator';
   - keyboard navigation     => done
   - Checkable               => done
   - disabled                => done
-  - lazy load
+  - lazy load               => add a slot
   - autoCheck
   - customizable effects
   - emit events             => need more ?
