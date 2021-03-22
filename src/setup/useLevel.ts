@@ -3,7 +3,6 @@ import { computed, ref } from "vue";
 import _, { xor } from "lodash-es";
 import { defaultConfig } from '../misc/default';
 import { INode } from "@/structure/INode";
-import { Vue } from "vue-class-component";
 
 export default function useLevel(props: {parentId: string, depth: number}): {} {
     const config = state.config;

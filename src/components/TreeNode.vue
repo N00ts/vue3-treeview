@@ -69,7 +69,6 @@
     </div>
 
     <TreeLevel
-      v-if="nodeSetup.createNode"
       v-show="nodeSetup.opened"
       v-bind="$attrs"
       :parentId="nodeSetup.id"

@@ -5,7 +5,7 @@ import ITreeProps from '../structure/ITreeProps';
 import _ from "lodash";
 import IDragContext from '../structure/IDragContext';
 
-interface IState {
+export interface IState {
     nodes: ComputedRef<{[id: string]: INode}>;
     config: ComputedRef<IConfiguration>;
     dragged: Ref<IDragContext>;

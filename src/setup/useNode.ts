@@ -12,7 +12,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const setup = useCommon(props, attrs);
     const node = setup.node;
     const config = state.config;
-    const createNode = ref(node.value.state.opened || false);
     const wrapper = ref<HTMLElement>(null);
     const level = ref<Vue>(null);
 
@@ -111,10 +110,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     })
 
     watch(opened, (nv: boolean) => {
-        if (nv && !createNode.value) {
-            createNode.value = true;
-        }
-
         nv ? emit(nodeEvents.opened, node.value) : emit(nodeEvents.close, node.value);
     });
 
@@ -254,7 +249,6 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
         children,
         hasChildren,
         nbChildren,
-        createNode,
         tabIndex,
         focusClass,
         disabledClass,

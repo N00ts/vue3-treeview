@@ -15,7 +15,6 @@ export default interface IUseNode {
     children: ComputedRef<string[]>;
     hasChildren: ComputedRef<boolean>;
     nbChildren: ComputedRef<number>;
-    createNode: Ref<boolean>;
     wrapper: Ref<HTMLElement>;
     tabIndex: ComputedRef<number>;
     focusClass: ComputedRef<string>;

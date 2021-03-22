@@ -3,6 +3,8 @@ import _ from "lodash";
 import { computed, toRefs } from "vue";
 import { state } from "./store";
 import IUseCommon from '../structure/IUseCommon';
+import { INodeState } from '../structure/INodeState';
+import { defaultState } from '../misc/default';
 
 export default function useCommon(props: INodeProps, attrs: Record<string, unknown>): IUseCommon {
     const { node } = toRefs(props);

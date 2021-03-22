@@ -33,6 +33,7 @@ import IConfiguration from "./structure/IConfiguration";
 import { Options, Vue } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import _ from "lodash-es";
+import { checkMode } from './structure/IConfiguration';
 
 @Options({
   components: {
@@ -43,7 +44,8 @@ export default class App extends Vue {
   public configuration: IConfiguration = {
     roots: ["id1", "id2", "id3"],
     checkboxes: true,
-    dragAndDrop: true
+    dragAndDrop: true,
+    checkmode: checkMode.auto
   };
 
   public nodes: { [id: string]: INode } = {}  ;

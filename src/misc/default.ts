@@ -1,5 +1,6 @@
 import IConfiguration from "../structure/IConfiguration";
 import IIcon from "../structure/IIcon";
+import { INodeState } from '../structure/INodeState';
 
 export const defaultSize = 8;
 
@@ -40,3 +41,14 @@ export const defaultConfig : IConfiguration = {
     openedIcon: createDefaultIcon(defaultOpenDraw),
     closedIcon: createDefaultIcon(defaultCloseDraw)
 };
+
+export const defaultState: INodeState = {
+    opened: false,
+    disabled: false,
+    editing: false,
+    focusable: false,
+    draggable: false,
+    dropable: false,
+    checked: false,
+    indeterminate: false
+}

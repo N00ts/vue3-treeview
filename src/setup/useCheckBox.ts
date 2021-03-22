@@ -1,10 +1,14 @@
-import { computed, SetupContext, watch } from 'vue';
+import { computed, ref, SetupContext, watch } from 'vue';
 import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { state } from '@/setup/store';
 import { defaultConfig } from '../misc/default';
 import useCommon from './useCommon';
 import { checkboxEvents } from '../misc/nodeEvents';
+import { checkMode } from '../structure/IConfiguration';
+import auto from '@/setup/checkbox/auto';
+import manual from '@/setup/checkbox/manual';
+import IUseCheck from '../structure/IUseCheck';
 
 export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useCommon(props, attrs);
@@ -13,20 +17,36 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
 
     const node = setup.node;
 
-    const checked = computed(() => {
-        return setup.hasState.value && node.value.state.checked;
+    const checkmode = ref(state.config.value.checkmode);
+
+    const build = ((): IUseCheck => {
+        if (checkmode.value === checkMode.auto) {
+            return auto(node);
+        }
+
+        return manual(node);
     });
+
+    let factory: IUseCheck = build();
+
+    watch(checkmode, (nv: checkMode, ov: checkMode) => {
+        factory = build();
+    });
+
+    const checked = computed(() => {
+        return factory.checked.value;
+    });
+
+    const indeterminate = computed(() => {
+        return factory.indeterminate.value;
+    })
 
     const hasCheckbox = computed(() => {
         return setup.hasConfig.value && config.value.checkboxes || defaultConfig.checkboxes;        
     });
 
-    const indeterminate = computed(() => {
-        return setup.hasState.value && node.value.state.indeterminate;
-    })
-
     const checkedClass = computed(() => {
-        if (!checked.value) {
+        if (!factory.checked.value) {
             return null;
         }
 
@@ -34,13 +54,13 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     })
 
     const clickCheckbox = (): void => {
-        node.value.state.checked = !node.value.state.checked;
+        factory.click()
         emit(checkboxEvents.checked, setup.node);
     }
 
     const space = (() => {
         if (!node.value.state.editing && !setup.disabled.value) {
-            node.value.state.checked = !node.value.state.checked;
+            factory.click()
         }
     });
 
