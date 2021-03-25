@@ -18,7 +18,6 @@
       :draggable="dragSetup.draggable"
       :tabindex="nodeSetup.tabIndex"
       @click.stop="nodeSetup.focusNode"
-      @blur="inputSetup.blur"
       @dragstart.stop="dragSetup.dragstart"
       @dragend.stop="dragSetup.dragend"
       @dragenter.prevent.stop="dragSetup.dragenter"
