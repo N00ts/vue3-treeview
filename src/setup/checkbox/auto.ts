@@ -36,7 +36,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
             
             if (!_.isNil(cdn)) {
                 ensureState(cdn)
-                res.push(ref(cdn.state));
+                res.push(cdn.state);
             }
         }
 
@@ -52,23 +52,24 @@ export default function auto(node: Ref<INode>): IUseCheck {
     });
 
     const allChecked = computed(() => {
-        return states.value.every((x) => x.value.checked);    
-    });
-
-    const somechecked = computed(() => {
-        return states.value.some((x) => x.value.checked);
+        return states.value.every((x) => x.checked);    
     });
 
     const noneChecked = computed(() => {
-        return states.value.every((x) => !x.value.checked);
+        return states.value.every((x) => !x.checked);
     })
+
+    const somechecked = computed(() => {
+        return !allChecked.value && !noneChecked.value;
+    });
 
     ensureState(node.value);
 
     const recurseDown = ((v: boolean) => {
         if (!_.isNil(v)) {
             for (const s of states.value) {
-                s.value.checked = v;
+                s.indeterminate = false;
+                s.checked = v;
             }
         }
     });
@@ -104,19 +105,26 @@ export default function auto(node: Ref<INode>): IUseCheck {
         }
     })
 
-    watch(noneChecked, (nv: boolean) => {
-        updateState();
+    watch(noneChecked, (nv: boolean, ov: boolean) => {
+        if (nv && !_.eq(nv, ov)) {
+            updateState();
+        }
     }, { deep: true });
 
-    watch(somechecked, (nv: boolean) => {
-        updateState();
+    watch(somechecked, (nv: boolean, ov: boolean) => {
+        if (nv && !_.eq(nv, ov)) {
+            updateState();
+        }
     }, { deep: true });
 
     watch(allChecked, (nv: boolean, ov: boolean) => {
-        updateState();
+        if (nv && !_.eq(nv, ov)) {
+            updateState();
+        }
     }, { deep: true });
 
     const click = (() => {
+        setIndeterminate(false);
         check(!node.value.state.checked);
     });
 
