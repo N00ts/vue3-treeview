@@ -58,7 +58,7 @@
 
 .checkbox-wrapper {
     position: relative;
-    margin-left: 0.75em;
+    margin-left: 0.3em;
 }
 
 .checkbox-wrapper:before {
@@ -71,7 +71,7 @@
 
 .checkbox-wrapper.checked:before, .checkbox-wrapper.indeterminate:before{
     background: #337ab7;
-    border: none;
+    border: 2px solid #337ab7;
 }
 
 .node-wrapper.disabled .checkbox-wrapper.checked:before {
@@ -84,7 +84,7 @@
 
 .checkbox-wrapper.checked:after {
     transform: translate(0.25em, 0.3365384615em) rotate(-45deg);
-    width: 0.75em;
+    width: 0.9em;
     height: 0.375em;
     border: 0.125em solid #fff;
     border-top-style: none;
@@ -93,7 +93,7 @@
 
 .checkbox-wrapper.indeterminate:after {
     transform: translate(0.25em, 0.3365384615em) rotate(0deg);
-    width: 0.75em;
+    width: 1em;
     height: 0.375em;
     border: 0.125em solid #fff;
     border-top-style: none;
