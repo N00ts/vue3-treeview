@@ -46,16 +46,17 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     });
 
     const checkedClass = computed(() => {
-        if (!factory.checked.value) {
-            return null;
-        }
-
-        return config.value.checkedClass ? config.value.checkedClass : "checked";
+        return [
+            factory.checked.value ? config.value.checkedClass ? config.value.checkedClass : "checked" : null,
+            factory.indeterminate.value ? config.value.indeterminateClass ? config.value.indeterminateClass : "indeterminate" : null
+        ];
     })
 
     const clickCheckbox = (): void => {
-        factory.click()
-        emit(checkboxEvents.checked, setup.node);
+        if (!setup.disabled.value) {
+            factory.click()
+            emit(checkboxEvents.checked, setup.node);
+        }
     }
 
     const space = (() => {

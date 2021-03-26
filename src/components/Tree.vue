@@ -38,7 +38,7 @@ import { Prop } from 'vue-property-decorator';
   - Checkable               => done
   - disabled                => done
   - lazy load               => add a slot
-  - autoCheck
+  - autoCheck               => done - (change mode to auto recurse) 
   - customizable effects
   - emit events             => need more ?
   - ARIA

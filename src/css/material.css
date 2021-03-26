@@ -1,0 +1,109 @@
+.tree {
+    font-family: Roboto,Helvetica Neue,sans-serif;
+    width: 100%;
+}
+
+.tree-level {
+    flex: 1;
+}
+
+.node-checkbox {
+    display: none;
+}
+
+.icon-wrapper {
+    padding: 0;
+    min-width: 0;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    height: 24px;
+    width: 24px;
+}
+
+.node-wrapper:hover {
+    background-color: #EEEEEE;
+}
+
+.node-wrapper:focus {
+    border: 0;
+    background-color: #E0E0E0;
+}
+
+.input-wrapper {
+    margin-left: 0.75em;
+}
+
+.icon-wrapper svg {
+    height: 12px;
+    width: 12px;
+} 
+
+.node-wrapper {
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    word-wrap: break-word;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.checkbox-wrapper, .checkbox-wrapper::before {
+    width: 1.25em;
+    height: 1.25em;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    margin-left: 0.75em;
+}
+
+.checkbox-wrapper:before {
+    background: #fff;
+    border: 2px solid rgba(0, 0, 0, 0.54);
+    border-radius: 0.125em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.checkbox-wrapper.checked:before, .checkbox-wrapper.indeterminate:before{
+    background: #337ab7;
+    border: none;
+}
+
+.node-wrapper.disabled .checkbox-wrapper.checked:before {
+    background: rgba(0, 0, 0, 0.26);
+}
+
+.node-wrapper.disabled .checkbox-wrapper:before {
+    border-color: rgba(0, 0, 0, 0.26);
+}
+
+.checkbox-wrapper.checked:after {
+    transform: translate(0.25em, 0.3365384615em) rotate(-45deg);
+    width: 0.75em;
+    height: 0.375em;
+    border: 0.125em solid #fff;
+    border-top-style: none;
+    border-right-style: none;
+}
+
+.checkbox-wrapper.indeterminate:after {
+    transform: translate(0.25em, 0.3365384615em) rotate(0deg);
+    width: 0.75em;
+    height: 0.375em;
+    border: 0.125em solid #fff;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+}
+
+.checkbox-wrapper:before, .checkbox-wrapper:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+}

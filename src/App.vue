@@ -34,6 +34,7 @@ import { Options, Vue } from "vue-class-component";
 import { INode } from "@/structure/INode";
 import _ from "lodash-es";
 import { checkMode } from './structure/IConfiguration';
+import "./css/material.css";
 
 @Options({
   components: {

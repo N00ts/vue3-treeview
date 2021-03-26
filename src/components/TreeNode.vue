@@ -36,38 +36,47 @@
         </TreeIcons>
       </div>
 
-      <input
-        type="checkbox"
-        tabindex="-1"
-        v-if="checkboxSetup.hasCheckbox"
-        :checked="checkboxSetup.checked"
-        :disabled="nodeSetup.disabled"
-        :indeterminate.prop="checkboxSetup.indeterminate"
-        @click.stop="checkboxSetup.clickCheckbox"
-      />
+      <div class="checkbox-wrapper"
+          :class="checkboxSetup.checkedClass"
+          @click.stop="checkboxSetup.clickCheckbox">
+        <input
+          type="checkbox"
+          tabindex="-1"
+          class="node-checkbox"
+          v-if="checkboxSetup.hasCheckbox"
+          :checked="checkboxSetup.checked"
+          :disabled="nodeSetup.disabled"
+          :indeterminate.prop="checkboxSetup.indeterminate"
+        />
+      </div>  
 
       <slot name="before-input" :node="nodeSetup.node"></slot>
 
-      <input
-        type="text"
-        tabindex="0"
-        v-if="inputSetup.editing"
-        v-model="inputSetup.text"
-        :ref="el => {inputSetup.input = el}"
-        :disabled="nodeSetup.disabled"
-        @blur="inputSetup.blur"
-      />
+      <div class="input-wrapper">
+        <input
+          type="text"
+          tabindex="0"
+          class="node-input"
+          v-if="inputSetup.editing"
+          v-model="inputSetup.text"
+          :ref="el => {inputSetup.input = el}"
+          :disabled="nodeSetup.disabled"
+          @blur="inputSetup.blur"
+        />
 
-      <span 
-        v-else
-        @dblclick.stop="inputSetup.focusInputs">
-        {{ inputSetup.text }}
-      </span>
+        <span 
+          v-else
+          class="node-text"
+          @dblclick.stop="inputSetup.focusInputs">
+          {{ inputSetup.text }}
+        </span>
+      </div>
 
       <slot name="after-input" :node="nodeSetup.node"></slot>
     </div>
 
     <TreeLevel
+      v-if="nodeSetup.hasChildren"
       v-show="nodeSetup.opened"
       v-bind="$attrs"
       :parentId="nodeSetup.id"
@@ -173,8 +182,8 @@ export default class TreeNode extends Vue {
 }
 </script>
 <style>
-.icon-wrapper {
-  display: inline-flex;
+.node-wrapper {
+  display: flex;
 }
 
 .node-over {
@@ -196,9 +205,9 @@ export default class TreeNode extends Vue {
 }
 
 .node-wrapper:focus {
-  outline-style: none !important;
-  outline: none !important;
-  outline: 0 !important;
-  border: 1px solid #17a2b8; /* Turquoise color */
+  outline-style: none;
+  outline: none;
+  outline: 0;
+  border: 1px solid #17a2b8;
 }
 </style>

@@ -14,7 +14,7 @@ const defaultCloseDraw = `M38.217,1.779c-3.8-3.8-10.2-1.1-10.2,4.2v112c0,5.3,6.4
 
 const defaultColor = "black";
 
-function createDefaultIcon(draw: string): IIcon {
+export function createDefaultIcon(draw: string): IIcon {
     return {
         type: "shape",
         width: defaultSize,

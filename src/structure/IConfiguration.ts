@@ -20,5 +20,6 @@ export default interface IConfiguration {
     openedIcon?: IIcon;
     closedIcon?: IIcon;
     focusClass?: string;
-    checkedClass?: string; 
+    checkedClass?: string;
+    indeterminateClass?: string;
 }

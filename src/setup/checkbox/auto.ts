@@ -63,6 +63,10 @@ export default function auto(node: Ref<INode>): IUseCheck {
         return !allChecked.value && !noneChecked.value;
     });
 
+    const someIndetermintate = computed(() => {
+        return states.value.some((x) => x.indeterminate);
+    });
+
     ensureState(node.value);
 
     const recurseDown = ((v: boolean) => {
@@ -81,7 +85,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
             return;
         }
 
-        if (noneChecked.value) {
+        if (noneChecked.value && !someIndetermintate.value) {
             setIndeterminate(false);
             check(false);
             return;
@@ -119,6 +123,12 @@ export default function auto(node: Ref<INode>): IUseCheck {
 
     watch(allChecked, (nv: boolean, ov: boolean) => {
         if (nv && !_.eq(nv, ov)) {
+            updateState();
+        }
+    }, { deep: true });
+
+    watch(someIndetermintate, (nv: boolean, ov: boolean) => {
+        if (!_.eq(nv, ov)) {
             updateState();
         }
     }, { deep: true });
