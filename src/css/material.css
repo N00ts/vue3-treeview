@@ -108,3 +108,15 @@
     left: 0;
     top: 0;
 }
+
+.node-over {
+    border-top: solid 2px #5C6BC0;
+}
+  
+.node-in {
+    background-color: #BDBDBD;
+}
+
+.node-under {
+    border-bottom: solid 2px #5C6BC0;
+}
