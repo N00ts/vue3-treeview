@@ -39,7 +39,7 @@ import { Prop } from 'vue-property-decorator';
   - disabled                => done
   - lazy load               => add a slot
   - autoCheck               => done - (change mode to auto recurse) 
-  - customizable effects
+  - customizable effects    => done with transition
   - emit events             => done ?
   - ARIA
   - exemple material css    => done

@@ -79,6 +79,10 @@
     background: rgba(0, 0, 0, 0.26);
 }
 
+.node-wrapper.disabled .checkbox-wrapper.indeterminate {
+    background: rgba(0, 0, 0, 0.26);
+}
+
 .node-wrapper.disabled .checkbox-wrapper {
     border-color: rgba(0, 0, 0, 0.26);
 }
@@ -122,12 +126,15 @@
 }
 
 .input-wrapper {
-    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     position: relative;
     color: #000000;
     display: flex;
     align-items: center;
+}
+
+.node-input, .node-text  {
+    font-family: 'Roboto', sans-serif;
 }
 
 .input-wrapper:after {
