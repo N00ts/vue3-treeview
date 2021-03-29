@@ -47,14 +47,14 @@ export default function useInput(props: INodeProps, attrs: Record<string, unknow
     });
 
     const esc = ((event: Event) => {
-        if (editable.value) {
+        if (editable.value && config.value.keyboardNavigation) {
             blur(event);
             wrapper.value.focus();
         }
     });
 
     const enter = (() => {
-        if (editable.value && !setup.disabled.value) {
+        if (editable.value && !setup.disabled.value && config.value.keyboardNavigation) {
             focusInputs();
         }
     });

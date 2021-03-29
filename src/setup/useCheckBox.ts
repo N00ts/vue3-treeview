@@ -60,7 +60,7 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     }
 
     const space = (() => {
-        if (!node.value.state.editing && !setup.disabled.value) {
+        if (!node.value.state.editing && !setup.disabled.value && config.value.keyboardNavigation) {
             factory.click()
         }
     });

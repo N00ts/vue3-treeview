@@ -132,13 +132,13 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const right = (() => {
-        if (!node.value.state.editing) {
+        if (!node.value.state.editing && config.value.keyboardNavigation) {
             node.value.state.opened = true;
         }
     });
 
     const left = (() => {
-        if (!node.value.state.editing) {
+        if (!node.value.state.editing && config.value.keyboardNavigation) {
             node.value.state.opened = false;
         }
     });
@@ -146,7 +146,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const up = (() => {
         const prev = prevVisible(node.value.id);
 
-        if (prev) {
+        if (prev &&  config.value.keyboardNavigation) {
             state.focused.value = prev;
         }
     });
@@ -199,7 +199,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     const down = (() => {
         const next = nextVisible(node.value.id);
 
-        if (next) {
+        if (next && config.value.keyboardNavigation) {
             state.focused.value = next;
         }
     });

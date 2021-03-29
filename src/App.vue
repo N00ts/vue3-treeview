@@ -14,6 +14,9 @@
   <label for="disabled">disabled</label>
   <input id="disabled" type="checkbox" v-model="configuration.disabled" />
 
+  <label for="keyboardNavigation">keyboardNavigation</label>
+  <input id="keyboardNavigation" type="checkbox" v-model="configuration.keyboardNavigation" />
+
   <Tree
     ref="Tree"
     :nodes="nodes"
@@ -46,7 +49,8 @@ export default class App extends Vue {
     roots: ["id1", "id2", "id3"],
     checkboxes: true,
     dragAndDrop: true,
-    checkmode: checkMode.auto
+    checkmode: checkMode.auto,
+    keyboardNavigation: false
   };
 
   public nodes: { [id: string]: INode } = {}  ;
