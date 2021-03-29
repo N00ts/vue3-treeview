@@ -17,6 +17,10 @@
   <label for="keyboardNavigation">keyboardNavigation</label>
   <input id="keyboardNavigation" type="checkbox" v-model="configuration.keyboardNavigation" />
 
+  <label for="DragandDrop">DragandDrop</label>
+  <input id="DragandDrop" type="checkbox" v-model="configuration.dragAndDrop" />
+
+
   <Tree
     ref="Tree"
     :nodes="nodes"
@@ -48,9 +52,9 @@ export default class App extends Vue {
   public configuration: IConfiguration = {
     roots: ["id1", "id2", "id3"],
     checkboxes: true,
-    dragAndDrop: true,
+    dragAndDrop: false,
     checkmode: checkMode.auto,
-    keyboardNavigation: false
+    keyboardNavigation: false,
   };
 
   public nodes: { [id: string]: INode } = {}  ;
@@ -65,7 +69,8 @@ export default class App extends Vue {
         state: {
           checked: true,
           indeterminate: true,
-          draggable: true
+          draggable: true,
+          dropable: false
         },
       },
       id11: {

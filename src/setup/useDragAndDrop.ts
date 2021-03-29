@@ -25,11 +25,11 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     const pos = ref<DragPosition>(null);
 
     const draggable = computed(() => {
-        return true; // config.value.dragAndDrop && node.value.state.draggable;
+        return config.value.dragAndDrop && node.value.state.draggable !== false;
     });
 
     const droppable = computed(() => {
-        return true; //config.value.dragAndDrop && node.value.state.dropable;
+        return config.value.dragAndDrop && node.value.state.dropable !== false;
     });
 
     const isDragging = computed(() => {
@@ -97,13 +97,15 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     })
 
     const dragstart = (evt: DragEvent): void => {
-        dragged.value = {
-            node: node.value,
-            element: element.value,
-            wrapper: wrapper.value,
-            parentId: parentId.value
-        };
-        emit(dragEvents.start, context.value);
+        if (draggable.value) {
+            dragged.value = {
+                node: node.value,
+                element: element.value,
+                wrapper: wrapper.value,
+                parentId: parentId.value
+            };
+            emit(dragEvents.start, context.value);
+        }
     };
 
     const dragend = (evt: DragEvent): void => {
