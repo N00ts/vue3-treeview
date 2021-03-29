@@ -40,9 +40,9 @@ import { Prop } from 'vue-property-decorator';
   - lazy load               => add a slot
   - autoCheck               => done - (change mode to auto recurse) 
   - customizable effects
-  - emit events             => need more ?
+  - emit events             => done ?
   - ARIA
-  - default css
+  - exemple material css    => done
   - unit tests
 */
 @Options({

@@ -37,13 +37,13 @@
       </div>
 
       <div class="checkbox-wrapper"
+          v-if="checkboxSetup.hasCheckbox"
           :class="checkboxSetup.checkedClass"
           @click.stop="checkboxSetup.clickCheckbox">
         <input
           type="checkbox"
           tabindex="-1"
           class="node-checkbox"
-          v-if="checkboxSetup.hasCheckbox"
           :checked="checkboxSetup.checked"
           :disabled="nodeSetup.disabled"
           :indeterminate.prop="checkboxSetup.indeterminate"
@@ -75,22 +75,24 @@
       <slot name="after-input" :node="nodeSetup.node"></slot>
     </div>
 
-    <TreeLevel
-      v-if="nodeSetup.hasChildren"
-      v-show="nodeSetup.opened"
-      v-bind="$attrs"
-      :parentId="nodeSetup.id"
-      :depth="depth + 1"
-      :ref="setLevelRef">
+    <transition name="level">
+      <TreeLevel
+        v-if="nodeSetup.hasChildren"
+        v-show="nodeSetup.opened"
+        v-bind="$attrs"
+        :parentId="nodeSetup.id"
+        :depth="depth + 1"
+        :ref="setLevelRef">
 
-      <template v-slot:before-input="props">
-        <slot name="before-input" :node="props.node"></slot>
-      </template>
+        <template v-slot:before-input="props">
+          <slot name="before-input" :node="props.node"></slot>
+        </template>
 
-      <template v-slot:a*fter-input="props">
-        <slot name="after-input" :node="props.node"></slot>
-      </template>
-    </TreeLevel>
+        <template v-slot:a*fter-input="props">
+          <slot name="after-input" :node="props.node"></slot>
+        </template>
+      </TreeLevel>
+    </transition>
   </li>
 </template>
 

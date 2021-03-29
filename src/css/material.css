@@ -71,8 +71,8 @@
 }
 
 .checkbox-wrapper.checked, .checkbox-wrapper.indeterminate{
-    background: #337ab7;
-    border: 2px solid #337ab7;
+    background: #3f51b5;
+    border: 2px solid #3f51b5;
 }
 
 .node-wrapper.disabled .checkbox-wrapper.checked {
@@ -119,4 +119,43 @@
 
 .node-under {
     border-bottom: solid 2px #5C6BC0;
+}
+
+.input-wrapper {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    position: relative;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper:after {
+    content: "\00A0";
+    display: block;
+    color: #d50000;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
+
+.input-wrapper input{
+      padding: 4px 0 4px 0;
+      display: block;
+      width: 100%;
+      border: none;
+      font-size: 14px;
+      color: #000000;
+      border-bottom: 1px solid #d2d2d2;
+      outline: none;
+      background: transparent;
+      transition: border-color 0.2s;
+}
+
+.input-wrapper input:focus {
+    outline:none;
+    color: #3f51b5 ;
+    padding-bottom: 4px;
+    border-bottom-width: 3px;
+    border-bottom-color: #3f51b5;
 }
