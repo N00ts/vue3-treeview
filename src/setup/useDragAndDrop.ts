@@ -25,7 +25,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
     const pos = ref<DragPosition>(null);
 
     const draggable = computed(() => {
-        return config.value.dragAndDrop && node.value.state.draggable !== false;
+        return !setup.disabled.value && config.value.dragAndDrop && node.value.state.draggable !== false;
     });
 
     const droppable = computed(() => {
@@ -82,6 +82,7 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     const dragClass = computed(() => {
         return [
+            !droppable.value ? "undroppable" : null,
             pos.value === DragPosition.over ? "node-over" : null,
             pos.value === DragPosition.in ? "node-in" : null,
             pos.value === DragPosition.under ? "node-under" : null
