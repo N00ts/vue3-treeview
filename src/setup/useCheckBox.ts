@@ -1,4 +1,4 @@
-import { computed, ref, SetupContext, watch } from 'vue';
+import { computed, ref, SetupContext, toRefs, watch } from 'vue';
 import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { state } from '@/setup/store';
@@ -17,17 +17,19 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
 
     const node = setup.node;
 
-    const checkmode = ref(state.config.value.checkmode);
+    const checkmode = computed(() => {
+        return setup.hasConfig.value && config.value.checkmode === checkMode.auto ? checkMode.auto : checkMode.manual;
+    })
 
     const build = ((): IUseCheck => {
-        if (checkmode.value === checkMode.auto) {
-            return auto(node);
-        }
-
-        return manual(node);
+        const mode = checkmode.value === checkMode.auto ? auto(node) : manual(node);
+        mode.rebuild();
+        return mode;
     });
 
     let factory: IUseCheck = build();
+
+    let { noneChecked, somechecked, allChecked, someIndetermintate } = toRefs(factory);
 
     watch(checkmode, (nv: checkMode, ov: checkMode) => {
         factory = build();
@@ -51,6 +53,42 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
             factory.indeterminate.value ? config.value.indeterminateClass ? config.value.indeterminateClass : "indeterminate" : null
         ];
     })
+
+    watch(checked, (nv: boolean, ov: boolean) => {
+        if (!indeterminate.value) {
+            factory.recurseDown(nv);
+        }
+    })
+
+    const toto = computed(() => {
+        return noneChecked.value.value;
+    })
+
+    const tata = computed(() => {
+        return allChecked.value.value;
+    })
+
+    const tonton = computed(() => {
+        return somechecked.value.value;
+    })
+
+    watch(toto, (nv: boolean, ov: boolean) => {
+        if (nv && !_.eq(nv, ov)) {
+            factory.updateState();
+        }
+    }, { deep: true });
+
+    watch(tonton, (nv: boolean, ov: boolean) => {
+        if (nv && !_.eq(nv, ov)) {
+            factory.updateState();
+        }
+    }, { deep: true });
+
+    watch(tata, (nv: boolean, ov: boolean) => {
+        if (nv && !_.eq(nv, ov)) {
+            factory.updateState();
+        }
+    }, { deep: true });
 
     const clickCheckbox = (): void => {
         if (!setup.disabled.value) {

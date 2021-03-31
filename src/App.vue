@@ -20,6 +20,8 @@
   <label for="DragandDrop">DragandDrop</label>
   <input id="DragandDrop" type="checkbox" v-model="configuration.dragAndDrop" />
 
+  <label for="checkMode">Checkmode auto</label>
+  <input id="checkMode" type="checkbox" :value="modeBool" @input="changeMode"/>
 
   <Tree
     ref="Tree"
@@ -53,11 +55,13 @@ export default class App extends Vue {
     roots: ["id1", "id2", "id3"],
     checkboxes: true,
     dragAndDrop: false,
-    checkmode: checkMode.auto,
+    checkmode: checkMode.manual,
     keyboardNavigation: false,
   };
 
   public nodes: { [id: string]: INode } = {}  ;
+
+  private modeBool: boolean = false;
 
   private code: string = "";
 
@@ -132,6 +136,11 @@ export default class App extends Vue {
   public changecode(): void {
     this.code = "";
     this.code = JSON.stringify(this.nodes, undefined, 4);
+  }
+
+  public changeMode(e: any, b: any): void {
+    this.modeBool = !this.modeBool;
+    this.configuration.checkmode = this.modeBool ? checkMode.auto : checkMode.manual;
   }
 }
 </script> 

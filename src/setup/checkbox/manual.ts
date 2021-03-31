@@ -12,13 +12,45 @@ export default function manual(node: Ref<INode>): IUseCheck {
         return node.value.state.indeterminate;
     })
 
+    const noneChecked = computed(() => {
+        return false;
+    })
+
+    const somechecked = computed(() => {
+        return false;
+    })
+
+    const allChecked = computed(() => {
+        return false;
+    })
+
+    const someIndetermintate = computed(() => {
+        return false;
+    })
+
     const click = (() => {
         node.value.state.checked = !node.value.state.checked;
+    });
+
+    const rebuild = (() => {
+    });
+
+    const updateState = (() => {
+    });
+
+    const recurseDown = (() => {
     });
 
     return {
         checked,
         indeterminate,
-        click
+        noneChecked,
+        somechecked,
+        allChecked,
+        someIndetermintate,
+        click,
+        rebuild,
+        updateState,
+        recurseDown
     };
 }

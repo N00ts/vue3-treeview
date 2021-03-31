@@ -67,8 +67,6 @@ export default function auto(node: Ref<INode>): IUseCheck {
         return states.value.some((x) => x.indeterminate);
     });
 
-    ensureState(node.value);
-
     const recurseDown = ((v: boolean) => {
         if (!_.isNil(v)) {
             for (const s of states.value) {
@@ -77,8 +75,6 @@ export default function auto(node: Ref<INode>): IUseCheck {
             }
         }
     });
-
-    recurseDown(checked.value);
 
     const updateState = (() => {
         if (!hasChildren.value) {
@@ -101,37 +97,11 @@ export default function auto(node: Ref<INode>): IUseCheck {
         check(false)
     });
 
-    updateState();
-
-    watch(checked, (nv: boolean, ov: boolean) => {
-        if (!indeterminate.value) {
-            recurseDown(nv);
-        }
-    })
-
-    watch(noneChecked, (nv: boolean, ov: boolean) => {
-        if (nv && !_.eq(nv, ov)) {
-            updateState();
-        }
-    }, { deep: true });
-
-    watch(somechecked, (nv: boolean, ov: boolean) => {
-        if (nv && !_.eq(nv, ov)) {
-            updateState();
-        }
-    }, { deep: true });
-
-    watch(allChecked, (nv: boolean, ov: boolean) => {
-        if (nv && !_.eq(nv, ov)) {
-            updateState();
-        }
-    }, { deep: true });
-
-    watch(someIndetermintate, (nv: boolean, ov: boolean) => {
-        if (!_.eq(nv, ov)) {
-            updateState();
-        }
-    }, { deep: true });
+    const rebuild = (() => {
+        ensureState(node.value);
+        recurseDown(checked.value);
+        updateState();
+    });
 
     const click = (() => {
         setIndeterminate(false);
@@ -141,6 +111,13 @@ export default function auto(node: Ref<INode>): IUseCheck {
     return {
         checked,
         indeterminate,
-        click
+        noneChecked,
+        somechecked,
+        allChecked,
+        someIndetermintate,
+        click,
+        rebuild,
+        updateState,
+        recurseDown
     };
 }
