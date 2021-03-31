@@ -16,7 +16,7 @@ export default function manual(node: Ref<INode>): IUseCheck {
         return false;
     })
 
-    const somechecked = computed(() => {
+    const someChecked = computed(() => {
         return false;
     })
 
@@ -24,7 +24,7 @@ export default function manual(node: Ref<INode>): IUseCheck {
         return false;
     })
 
-    const someIndetermintate = computed(() => {
+    const someIndeterminate = computed(() => {
         return false;
     })
 
@@ -45,9 +45,9 @@ export default function manual(node: Ref<INode>): IUseCheck {
         checked,
         indeterminate,
         noneChecked,
-        somechecked,
+        someChecked,
         allChecked,
-        someIndetermintate,
+        someIndeterminate,
         click,
         rebuild,
         updateState,

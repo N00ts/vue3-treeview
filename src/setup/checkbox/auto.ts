@@ -59,11 +59,11 @@ export default function auto(node: Ref<INode>): IUseCheck {
         return states.value.every((x) => !x.checked);
     })
 
-    const somechecked = computed(() => {
+    const someChecked = computed(() => {
         return !allChecked.value && !noneChecked.value;
     });
 
-    const someIndetermintate = computed(() => {
+    const someIndeterminate = computed(() => {
         return states.value.some((x) => x.indeterminate);
     });
 
@@ -81,7 +81,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
             return;
         }
 
-        if (noneChecked.value && !someIndetermintate.value) {
+        if (noneChecked.value && !someIndeterminate.value) {
             setIndeterminate(false);
             check(false);
             return;
@@ -112,9 +112,9 @@ export default function auto(node: Ref<INode>): IUseCheck {
         checked,
         indeterminate,
         noneChecked,
-        somechecked,
+        someChecked,
         allChecked,
-        someIndetermintate,
+        someIndeterminate,
         click,
         rebuild,
         updateState,

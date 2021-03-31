@@ -1,14 +1,14 @@
-import { computed, ref, SetupContext, toRefs, watch } from 'vue';
+import { computed, ref, SetupContext, toRefs, watch, ComputedRef } from 'vue';
 import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { state } from '@/setup/store';
 import { defaultConfig } from '../misc/default';
 import useCommon from './useCommon';
 import { checkboxEvents } from '../misc/nodeEvents';
-import { checkMode } from '../structure/IConfiguration';
 import auto from '@/setup/checkbox/auto';
 import manual from '@/setup/checkbox/manual';
 import IUseCheck from '../structure/IUseCheck';
+import { checkMode } from '../structure/IConfiguration';
 
 export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
     const setup = useCommon(props, attrs);
@@ -17,30 +17,28 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
 
     const node = setup.node;
 
-    const checkmode = computed(() => {
-        return setup.hasConfig.value && config.value.checkmode === checkMode.auto ? checkMode.auto : checkMode.manual;
+    const mode = computed(() => {
+        return setup.hasConfig.value && config.value.checkMode === checkMode.auto ? checkMode.auto : checkMode.manual;
     })
 
-    const build = ((): IUseCheck => {
-        const mode = checkmode.value === checkMode.auto ? auto(node) : manual(node);
-        mode.rebuild();
-        return mode;
+    const factory = computed(() =>  {
+        return mode.value === checkMode.auto ? 
+        auto(node) :
+        manual(node);
     });
 
-    let factory: IUseCheck = build();
-
-    let { noneChecked, somechecked, allChecked, someIndetermintate } = toRefs(factory);
-
-    watch(checkmode, (nv: checkMode, ov: checkMode) => {
-        factory = build();
-    });
+    watch(mode, (nv: number, ov: number) => {
+        if (!_.eq(nv, ov)) {
+            factory.value.rebuild();
+        }
+    })
 
     const checked = computed(() => {
-        return factory.checked.value;
+        return factory.value.checked.value;
     });
 
     const indeterminate = computed(() => {
-        return factory.indeterminate.value;
+        return factory.value.indeterminate.value;
     })
 
     const hasCheckbox = computed(() => {
@@ -49,57 +47,55 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
 
     const checkedClass = computed(() => {
         return [
-            factory.checked.value ? config.value.checkedClass ? config.value.checkedClass : "checked" : null,
-            factory.indeterminate.value ? config.value.indeterminateClass ? config.value.indeterminateClass : "indeterminate" : null
+            factory.value.checked.value ? config.value.checkedClass ? config.value.checkedClass : "checked" : null,
+            factory.value.indeterminate.value ? config.value.indeterminateClass ? config.value.indeterminateClass : "indeterminate" : null
         ];
     })
 
     watch(checked, (nv: boolean, ov: boolean) => {
         if (!indeterminate.value) {
-            factory.recurseDown(nv);
+            factory.value.recurseDown(nv);
         }
     })
 
-    const toto = computed(() => {
-        return noneChecked.value.value;
+    const allChecked = computed(() => {
+        return factory.value.allChecked.value;    
+    });
+
+    const noneChecked = computed(() => {
+        return factory.value.noneChecked.value;
     })
 
-    const tata = computed(() => {
-        return allChecked.value.value;
-    })
+    const someChecked = computed(() => {
+        return factory.value.someChecked.value;
+    });
 
-    const tonton = computed(() => {
-        return somechecked.value.value;
-    })
+    const someIndeterminate = computed(() => {
+        return factory.value.someIndeterminate.value;
+    });
 
-    watch(toto, (nv: boolean, ov: boolean) => {
-        if (nv && !_.eq(nv, ov)) {
-            factory.updateState();
-        }
-    }, { deep: true });
-
-    watch(tonton, (nv: boolean, ov: boolean) => {
-        if (nv && !_.eq(nv, ov)) {
-            factory.updateState();
+    watch<Array<ComputedRef>>([allChecked, noneChecked, someChecked], ([ov1, ov2, ov3]) => {
+        if (ov1 || ov2 || ov3) {
+            factory.value.updateState();
         }
     }, { deep: true });
 
-    watch(tata, (nv: boolean, ov: boolean) => {
-        if (nv && !_.eq(nv, ov)) {
-            factory.updateState();
+    watch(someIndeterminate, (nv: boolean, ov: boolean) => {
+        if (!_.eq(nv, ov)) {
+            factory.value.updateState();
         }
     }, { deep: true });
 
     const clickCheckbox = (): void => {
         if (!setup.disabled.value) {
-            factory.click()
+            factory.value.click()
             emit(checkboxEvents.checked, setup.node);
         }
     }
 
     const space = (() => {
         if (!node.value.state.editing && !setup.disabled.value && config.value.keyboardNavigation) {
-            factory.click()
+            factory.value.click()
         }
     });
 

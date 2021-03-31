@@ -12,7 +12,7 @@ export default interface IConfiguration {
     padding?: number;
     editable?: boolean;
     checkboxes?: boolean;
-    checkmode?: checkMode;
+    checkMode?: checkMode;
     dragAndDrop?: boolean;
     keyboardNavigation?:boolean;
     disabled?: boolean;

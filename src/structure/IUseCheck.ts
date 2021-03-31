@@ -4,9 +4,9 @@ export default interface IUseCheck {
     indeterminate: ComputedRef<boolean>;
     checked: ComputedRef<boolean>;
     noneChecked: ComputedRef<boolean>;
-    somechecked: ComputedRef<boolean>;
+    someChecked: ComputedRef<boolean>;
     allChecked: ComputedRef<boolean>;
-    someIndetermintate: ComputedRef<boolean>;
+    someIndeterminate: ComputedRef<boolean>;
     click: () => void;
     rebuild: () => void;
     updateState: () => void;

@@ -55,7 +55,7 @@ export default class App extends Vue {
     roots: ["id1", "id2", "id3"],
     checkboxes: true,
     dragAndDrop: false,
-    checkmode: checkMode.manual,
+    checkMode: checkMode.manual,
     keyboardNavigation: false,
   };
 
@@ -140,7 +140,7 @@ export default class App extends Vue {
 
   public changeMode(e: any, b: any): void {
     this.modeBool = !this.modeBool;
-    this.configuration.checkmode = this.modeBool ? checkMode.auto : checkMode.manual;
+    this.configuration.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
   }
 }
 </script> 
