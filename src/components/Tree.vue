@@ -27,7 +27,7 @@ import { createApp, SetupContext, ShallowUnwrapRef } from 'vue';
 import useTree from '../setup/useTree';
 import { Options, setup, Vue } from 'vue-class-component';
 import IConfiguration from '../structure/IConfiguration';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 /**
   FEATURE to implement:
@@ -58,8 +58,7 @@ export default class Tree extends Vue {
   public config!: IConfiguration;
 
   public treeSetup: ShallowUnwrapRef<any> = setup(() => {
-    createStore(this.$props as ITreeProps);
-    return useTree(this.$attrs, this.$emit);
+    return useTree(this.$props as any, this.$attrs);
   });
 }
 </script>

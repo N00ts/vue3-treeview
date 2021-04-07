@@ -1,9 +1,13 @@
-import { ref, HtmlHTMLAttributes } from 'vue';
+import _ from 'lodash';
+import { ref, watch } from 'vue';
 import { INode } from '../structure/INode';
-import { state } from "./store";
+import { createStore, state } from "./store";
 
-export default function useTree(attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
+export default function useTree(props: any, attrs: Record<string, unknown>): {} {
     const element = ref<HTMLElement>(null);
+    const nodes = props.nodes;
+
+    createStore(props);
 
     const blur = ((event: MouseEvent, node: INode) => {
         const target = event.relatedTarget as HTMLElement;

@@ -12,12 +12,16 @@ export interface IState {
     focused: Ref<string>;
 }
 
-export let state: IState = {
-    nodes: null,
-    config: null,
-    dragged: ref(null),
-    focused: ref(null)
-};
+function createState(): IState {
+    return {
+        nodes: null,
+        config: null,
+        dragged: ref(null),
+        focused: ref(null)
+    }
+}
+
+export let state: IState = null;
 
 export function createStore(props: ITreeProps): void {
     const { nodes, config } = toRefs(props);
@@ -30,6 +34,7 @@ export function createStore(props: ITreeProps): void {
         return config.value;
     })
 
+    state = createState();
     state.nodes = computedNodes;
     state.config = computedConfig;
     state.focused = ref(null);
