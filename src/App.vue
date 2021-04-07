@@ -157,10 +157,11 @@ export default class App extends Vue {
   }
 
   public generateRandomTree(): void {
-    if (this.nbNodes < 0) return;
+    if (this.nbNodes < 0) {
+      if (this.nbRoots > this.nbNodes) {
+        console.warn("roots cannot be inferior than nodes");
+      }
 
-    if (this.nbRoots > this.nbNodes) {
-      console.warn("roots cannot be inferior than nodes");
       return;
     }
 
