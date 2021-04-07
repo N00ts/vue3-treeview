@@ -52,6 +52,8 @@ import _ from "lodash-es";
 import { checkMode } from './structure/IConfiguration';
 import "./css/material.css";
 import { Watch } from 'vue-property-decorator';
+import { IState } from './setup/store';
+import { INodeState } from './structure/INodeState';
 
 @Options({
   components: {
@@ -165,19 +167,45 @@ export default class App extends Vue {
       return;
     }
 
-    let newNodes = {};
+    let newNodes: { [id: string]: INode }  = {};
+    let nbNodes = this.nbNodes;
+    this.configuration.roots = [];
 
-    let nbRoots = Math.round(Math.random() * (this.nbNodes / 5)); 
+    for (let i = 0; i < this.nbRoots; i++) {
+      let id = `id${i}`;
 
-    console.log(nbRoots);
-
-    /*
-    for (let i = 0; i <= this.nbNodes; i++) {
-      let n: INode = {
-
+      newNodes[id] = {
+        text: `text${i}`,
+        children: [],
+        state: this.generateRandomState()
       }
+
+      this.configuration.roots.push(id);
+
+      nbNodes--;
     }
-    */
+
+    this.nodes = newNodes;
+  }
+
+  private addChildren(node: INode): void {
+  }
+
+  private generateRandomState(): INodeState {
+    return {
+      opened: this.randBool(),
+      disabled: this.randBool(),
+      editing: this.randBool(),
+      focusable: this.randBool(),
+      draggable: this.randBool(),
+      dropable: this.randBool(),
+      checked: this.randBool(),
+      indeterminate: this.randBool()
+    }
+  }
+
+  private randBool(): boolean {
+    return Boolean(Math.round(Math.random()));
   }
 }
 </script> 
