@@ -32,7 +32,6 @@
   <textarea style="margin-top: 50px; width: 100%; height: 200px" v-model="code">
   </textarea>
 
-  <button v-on:click.stop="updateTree">update tree</button>
   <button v-on:click.stop="changecode">update code</button>
 </template>
 
@@ -44,6 +43,7 @@ import { INode } from "@/structure/INode";
 import _ from "lodash-es";
 import { checkMode } from './structure/IConfiguration';
 import "./css/material.css";
+import { Watch } from 'vue-property-decorator';
 
 @Options({
   components: {
@@ -133,7 +133,8 @@ export default class App extends Vue {
     this.nodes = JSON.parse(this.code);
   }
 
-  public changecode(): void {
+  @Watch("nodes", { deep: true })
+  public changecode(nv: any): void {
     this.code = "";
     this.code = JSON.stringify(this.nodes, undefined, 4);
   }
