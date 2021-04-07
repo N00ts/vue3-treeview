@@ -1,27 +1,27 @@
 <template>
-  <label for="showCheckBoxes">Show checkboxes</label>
-  <input
-    id="showCheckBoxes"
-    type="checkbox"
-    v-model="configuration.checkboxes"/>
+  
+  <p>
+    <label for="showCheckBoxes">Show checkboxes</label>
+    <input id="showCheckBoxes" type="checkbox" v-model="configuration.checkboxes"/>
 
-  <label for="padding">padding</label>
-  <input id="padding" type="number" v-model="configuration.padding" />
+    <label for="padding">padding</label>
+    <input id="padding" type="number" v-model="configuration.padding" />
 
-  <label for="editable">editable</label>
-  <input id="editable" type="checkbox" v-model="configuration.editable" />
+    <label for="editable">editable</label>
+    <input id="editable" type="checkbox" v-model="configuration.editable" />
 
-  <label for="disabled">disabled</label>
-  <input id="disabled" type="checkbox" v-model="configuration.disabled" />
+    <label for="disabled">disabled</label>
+    <input id="disabled" type="checkbox" v-model="configuration.disabled" />
 
-  <label for="keyboardNavigation">keyboardNavigation</label>
-  <input id="keyboardNavigation" type="checkbox" v-model="configuration.keyboardNavigation" />
+    <label for="keyboardNavigation">keyboardNavigation</label>
+    <input id="keyboardNavigation" type="checkbox" v-model="configuration.keyboardNavigation" />
 
-  <label for="DragandDrop">DragandDrop</label>
-  <input id="DragandDrop" type="checkbox" v-model="configuration.dragAndDrop" />
+    <label for="DragandDrop">DragandDrop</label>
+    <input id="DragandDrop" type="checkbox" v-model="configuration.dragAndDrop" />
 
-  <label for="checkMode">Checkmode auto</label>
-  <input id="checkMode" type="checkbox" :value="modeBool" @input="changeMode"/>
+    <label for="checkMode">Checkmode auto</label>
+    <input id="checkMode" type="checkbox" :value="modeBool" @input="changeMode"/>
+  </p>
 
   <Tree
     ref="Tree"
@@ -32,7 +32,15 @@
   <textarea style="margin-top: 50px; width: 100%; height: 200px" v-model="code">
   </textarea>
 
-  <button v-on:click.stop="changecode">update code</button>
+  <button v-on:click.stop="updateTree">update Tree</button>
+
+  <p>
+    <label for="nbNodes">Number of nodes</label>
+    <input id="nbNodes" type="number" v-model="nbNodes" />
+    <label for="nbRoots">Number of Roots</label>
+    <input id="nbRoots" type="number" v-model="nbRoots" />
+    <button v-on:click.stop="generateRandomTree">Generate random tree</button>
+  </p>
 </template>
 
 <script lang="ts">
@@ -64,6 +72,10 @@ export default class App extends Vue {
   private modeBool: boolean = false;
 
   private code: string = "";
+
+  private nbNodes: number = 0;
+
+  private nbRoots: number = 0;
 
   public mounted(): void {
     this.nodes = {
@@ -142,6 +154,29 @@ export default class App extends Vue {
   public changeMode(e: any, b: any): void {
     this.modeBool = !this.modeBool;
     this.configuration.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
+  }
+
+  public generateRandomTree(): void {
+    if (this.nbNodes < 0) return;
+
+    if (this.nbRoots > this.nbNodes) {
+      console.warn("roots cannot be inferior than nodes");
+      return;
+    }
+
+    let newNodes = {};
+
+    let nbRoots = Math.round(Math.random() * (this.nbNodes / 5)); 
+
+    console.log(nbRoots);
+
+    /*
+    for (let i = 0; i <= this.nbNodes; i++) {
+      let n: INode = {
+
+      }
+    }
+    */
   }
 }
 </script> 
