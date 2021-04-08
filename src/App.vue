@@ -86,6 +86,8 @@ export default class App extends Vue {
 
   private maxChild: number = 0;
 
+  private nbNodes: number = 0;
+
   public mounted(): void {
     this.nodes = {
       id1: {
@@ -168,15 +170,18 @@ export default class App extends Vue {
   public randomTree(): void {
     this.configuration.roots = [];
     this.nodes = {};
-
-    console.log(`max node created: ${this.nbRoots * this.maxChild * this.maxDepth}`);
+    this.nbNodes = 0;
+    let maxNodes = 0;
 
     for (let i = 0; i < this.nbRoots; i++) {
+      maxNodes += ((Math.pow(this.maxChild, 0) - Math.pow(this.maxChild, this.maxDepth)) / (1 - this.maxChild));
       let maxDepth = this.maxDepth;
       const n = this.createNode(i + 1, maxDepth);
       this.configuration.roots.push(n);
     }
 
+    console.log(`max nodes: ${maxNodes}`);
+    console.log(`node created: ${this.nbNodes}`);
     console.log(this.nodes);
   }
 
@@ -200,6 +205,7 @@ export default class App extends Vue {
     }
 
     this.nodes[id] = n;
+    this.nbNodes++;
 
     if (depth > 0 && this.randBool(0.8)) {
       this.addNodes(n, lvl, depth - 1);
