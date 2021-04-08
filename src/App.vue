@@ -5,7 +5,7 @@
     <input id="showCheckBoxes" type="checkbox" v-model="configuration.checkboxes"/>
 
     <label for="padding">padding</label>
-    <input id="padding" type="number" v-model="configuration.padding" />
+    <input id="padding" type="number" v-model.number="configuration.padding" />
 
     <label for="editable">editable</label>
     <input id="editable" type="checkbox" v-model="configuration.editable" />
@@ -36,13 +36,13 @@
 
   <p>
     <label for="nbRoots">Number of Roots</label>
-    <input id="nbRoots" type="number" v-model="nbRoots" />
+    <input id="nbRoots" type="number" v-model.number="nbRoots" />
 
     <label for="maxChild">Max child</label>
-    <input id="maxChild" type="number" v-model="maxChild" />
+    <input id="maxChild" type="number" v-model.number="maxChild" />
 
     <label for="maxDepth">Max Depth</label>
-    <input id="maxDepth" type="number" v-model="maxDepth" />
+    <input id="maxDepth" type="number" v-model.number="maxDepth" />
 
     <button v-on:click.stop="randomTree">Generate random tree</button>
   </p>
@@ -174,7 +174,7 @@ export default class App extends Vue {
     let maxNodes = 0;
 
     for (let i = 0; i < this.nbRoots; i++) {
-      maxNodes += ((Math.pow(this.maxChild, 0) - Math.pow(this.maxChild, this.maxDepth)) / (1 - this.maxChild));
+      maxNodes += (Math.pow(this.maxChild, this.maxDepth + 1) - 1)  / (this.maxChild - 1);
       let maxDepth = this.maxDepth;
       const n = this.createNode(i + 1, maxDepth);
       this.configuration.roots.push(n);
