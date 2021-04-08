@@ -35,11 +35,16 @@
   <button v-on:click.stop="updateTree">update Tree</button>
 
   <p>
-    <label for="nbNodes">Number of nodes</label>
-    <input id="nbNodes" type="number" v-model="nbNodes" />
     <label for="nbRoots">Number of Roots</label>
     <input id="nbRoots" type="number" v-model="nbRoots" />
-    <button v-on:click.stop="generateRandomTree">Generate random tree</button>
+
+    <label for="maxChild">Max child</label>
+    <input id="maxChild" type="number" v-model="maxChild" />
+
+    <label for="maxDepth">Max Depth</label>
+    <input id="maxDepth" type="number" v-model="maxDepth" />
+
+    <button v-on:click.stop="randomTree">Generate random tree</button>
   </p>
 </template>
 
@@ -75,9 +80,11 @@ export default class App extends Vue {
 
   private code: string = "";
 
-  private nbNodes: number = 0;
-
   private nbRoots: number = 0;
+
+  private maxDepth: number = 0;
+
+  private maxChild: number = 0;
 
   public mounted(): void {
     this.nodes = {
@@ -158,40 +165,50 @@ export default class App extends Vue {
     this.configuration.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
   }
 
-  public generateRandomTree(): void {
-    if (this.nbNodes < 0) {
-      if (this.nbRoots > this.nbNodes) {
-        console.warn("roots cannot be inferior than nodes");
-      }
-
-      return;
-    }
-
-    let newNodes: { [id: string]: INode }  = {};
-    let nbNodes = this.nbNodes;
+  public randomTree(): void {
     this.configuration.roots = [];
+    this.nodes = {};
+
+    console.log(`max node created: ${this.nbRoots * this.maxChild * this.maxDepth}`);
 
     for (let i = 0; i < this.nbRoots; i++) {
-      let id = `id${i}`;
-
-      newNodes[id] = {
-        text: `text${i}`,
-        children: [],
-        state: this.generateRandomState()
-      }
-
-      this.configuration.roots.push(id);
-
-      nbNodes--;
+      let maxDepth = this.maxDepth;
+      const n = this.createNode(i + 1, maxDepth);
+      this.configuration.roots.push(n);
     }
 
-    this.nodes = newNodes;
+    console.log(this.nodes);
   }
 
-  private addChildren(node: INode): void {
+  private addNodes(parent: INode, lvl: number, depth: number): void {
+    for (let i = 0; i < this.maxChild; i++) {
+      if (!this.randBool(0.8)) {
+        break;
+      }
+
+      const n = this.createNode(Number(`${lvl}${i + 1}`), depth);
+      parent.children.push(n);
+    }
   }
 
-  private generateRandomState(): INodeState {
+  private createNode(lvl: number, depth: number): string {
+    const id = `id${ lvl }`;
+    const n: INode = {
+      text: `text${id}`,
+      children: [],
+      state: this.randomState()
+    }
+
+    this.nodes[id] = n;
+
+    if (depth > 0 && this.randBool(0.8)) {
+      this.addNodes(n, lvl, depth - 1);
+    }
+
+    return id;
+  }
+
+  private randomState(): INodeState {
     return {
       opened: this.randBool(),
       disabled: this.randBool(),
@@ -200,12 +217,12 @@ export default class App extends Vue {
       draggable: this.randBool(),
       dropable: this.randBool(),
       checked: this.randBool(),
-      indeterminate: this.randBool()
+      indeterminate: this.randBool(0.3)
     }
   }
 
-  private randBool(): boolean {
-    return Boolean(Math.round(Math.random()));
+  private randBool(mod: number = 0.5): boolean {
+    return Math.random() < mod;
   }
 }
 </script> 
