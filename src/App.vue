@@ -26,13 +26,7 @@
   <Tree
     ref="Tree"
     :nodes="nodes"
-    :config="configuration"
-    @nodes-updated="changecode"/>
-
-  <textarea style="margin-top: 50px; width: 100%; height: 200px" v-model="code">
-  </textarea>
-
-  <button v-on:click.stop="updateTree">update Tree</button>
+    :config="configuration"/>
 
   <p>
     <label for="nbRoots">Number of Roots</label>
@@ -56,8 +50,6 @@ import { INode } from "@/structure/INode";
 import _ from "lodash-es";
 import { checkMode } from './structure/IConfiguration';
 import "./css/material.css";
-import { Watch } from 'vue-property-decorator';
-import { IState } from './setup/store';
 import { INodeState } from './structure/INodeState';
 
 @Options({
@@ -152,16 +144,6 @@ export default class App extends Vue {
     this.code = JSON.stringify(this.nodes, undefined, 4);
   }
 
-  public updateTree(): void {
-    this.nodes = JSON.parse(this.code);
-  }
-
-  @Watch("nodes", { deep: true })
-  public changecode(nv: any): void {
-    this.code = "";
-    this.code = JSON.stringify(this.nodes, undefined, 4);
-  }
-
   public changeMode(e: any, b: any): void {
     this.modeBool = !this.modeBool;
     this.configuration.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
@@ -187,7 +169,7 @@ export default class App extends Vue {
 
   private addNodes(parent: INode, lvl: number, depth: number): void {
     for (let i = 0; i < this.maxChild; i++) {
-      if (!this.randBool(0.8)) {
+      if (!this.randBool(1)) {
         break;
       }
 
@@ -207,7 +189,7 @@ export default class App extends Vue {
     this.nodes[id] = n;
     this.nbNodes++;
 
-    if (depth > 0 && this.randBool(0.8)) {
+    if (depth > 0 && this.randBool(1)) {
       this.addNodes(n, lvl, depth - 1);
     }
 
@@ -216,14 +198,14 @@ export default class App extends Vue {
 
   private randomState(): INodeState {
     return {
-      opened: this.randBool(),
-      disabled: this.randBool(),
-      editing: this.randBool(),
-      focusable: this.randBool(),
-      draggable: this.randBool(),
-      dropable: this.randBool(),
-      checked: this.randBool(),
-      indeterminate: this.randBool(0.3)
+      opened: true, //this.randBool(),
+      disabled: false, // this.randBool(),
+      editing: false, // this.randBool(),
+      focusable: true, // this.randBool(),
+      draggable: true, // this.randBool(),
+      dropable: true, // this.randBool(),
+      checked: true, // this.randBool(),
+      indeterminate: false, // this.randBool(0.3)
     }
   }
 
