@@ -1,8 +1,8 @@
-import { computed, ref, watch, toRefs, reactive, Ref } from 'vue';
+import { computed, Ref } from 'vue';
 import { INode } from '../../structure/INode';
 import { state } from '../store';
 import IUseCheck from '../../structure/IUseCheck';
-import _, { defaultsDeep } from 'lodash';
+import _ from 'lodash';
 import { ensureState } from '../../misc/helpers';
 
 export default function auto(node: Ref<INode>): IUseCheck {
