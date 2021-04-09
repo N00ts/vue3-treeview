@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { INode } from '../structure/INode';
 import { createStore, state } from "./store";
 
