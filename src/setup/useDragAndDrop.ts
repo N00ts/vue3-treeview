@@ -1,8 +1,7 @@
 import INodeProps from "@/structure/INodeProps";
 import { state } from './store';
-import { useNode } from './useNode';
-import { compile, computed, HtmlHTMLAttributes, onMounted, ref, watch } from 'vue';
-import _, { isNil } from "lodash";
+import { computed, ref } from 'vue';
+import _ from "lodash";
 import { INode } from '../structure/INode';
 import useCommon from './useCommon';
 import { dragEvents } from '../misc/nodeEvents';
