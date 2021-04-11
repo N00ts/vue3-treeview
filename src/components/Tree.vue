@@ -1,9 +1,9 @@
 <template>
-    <div class="tree" :ref="el => {treeSetup.element = el}">
+    <div class="tree" :ref="setElementRef">
         <TreeLevel 
             :depth="0"
             :parentId="null"
-            @node-blur="treeSetup.blur"
+            @node-blur="blur"
             v-bind="$attrs">
             
             <template v-slot:before-input="props">
@@ -19,15 +19,13 @@
 
 <script lang="ts">
 import TreeLevel from './TreeLevel.vue';
-import ITreeProps from '@/structure/ITreeProps';
 import _ from "lodash-es";
-import { createStore } from '@/setup/store';
 import { INode } from '@/structure/INode';
-import { createApp, SetupContext, ShallowUnwrapRef } from 'vue';
+import { ShallowUnwrapRef } from 'vue';
 import useTree from '../setup/useTree';
 import { Options, setup, Vue } from 'vue-class-component';
 import IConfiguration from '../structure/IConfiguration';
-import { Prop, Watch } from 'vue-property-decorator';
+import { Prop } from 'vue-property-decorator';
 
 /**
   FEATURE to implement:
@@ -46,21 +44,32 @@ import { Prop, Watch } from 'vue-property-decorator';
   - exemple material css    => done
   - unit tests
 */
-@Options({
+export default {
   components: {
     TreeLevel
+  },
+  props: {
+    nodes: {
+      required: true,
+      type: Object,
+      default: () => {}
+    },
+    config: {
+      required: true,
+      type: Object,
+      default: () => {}
+    }
+  },
+  setup(props) {
+    return {
+      ...useTree(props)
+    }
+  },
+  methods: {
+    setElementRef(e: any) {
+      this.element = e;
+    }
   }
-})
-export default class Tree extends Vue {
-  @Prop({ required: true, type: Object, default: () => {} })
-  public nodes!: INode[];
-
-  @Prop({ required: true, type: Object, default: () => {} })
-  public config!: IConfiguration;
-
-  public treeSetup: ShallowUnwrapRef<any> = setup(() => {
-    return useTree(this.$props as any, this.$attrs);
-  });
 }
 </script>
 <style scoped>

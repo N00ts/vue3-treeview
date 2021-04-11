@@ -3,9 +3,8 @@ import { ref } from 'vue';
 import { INode } from '../structure/INode';
 import { createStore, state } from "./store";
 
-export default function useTree(props: any, attrs: Record<string, unknown>): {} {
+export default function useTree(props: any): {} {
     const element = ref<HTMLElement>(null);
-    const nodes = props.nodes;
 
     createStore(props);
 
