@@ -3,22 +3,18 @@ import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { state } from '@/setup/store';
 import { defaultConfig } from '../misc/default';
-import useCommon from './useCommon';
 import { checkboxEvents } from '../misc/nodeEvents';
 import auto from '@/setup/checkbox/auto';
 import manual from '@/setup/checkbox/manual';
-import IUseCheck from '../structure/IUseCheck';
 import { checkMode } from '../structure/IConfiguration';
+import IUseCommon from '../structure/IUseCommon';
 
-export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useCommon(props, attrs);
-    
-    const config = state.config;
-
-    const node = setup.node;
+export function useCheckBox(common: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
+    const node = common.node;
+    const config = common.config;
 
     const mode = computed(() => {
-        return setup.hasConfig.value && config.value.checkMode === checkMode.auto ? checkMode.auto : checkMode.manual;
+        return config.value.checkMode === checkMode.auto ? checkMode.auto : checkMode.manual;
     })
 
     const factory = computed(() =>  {
@@ -42,7 +38,7 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     })
 
     const hasCheckbox = computed(() => {
-        return setup.hasConfig.value && config.value.checkboxes || defaultConfig.checkboxes;        
+        return config.value.checkboxes || defaultConfig.checkboxes;        
     });
 
     const checkedClass = computed(() => {
@@ -87,14 +83,14 @@ export function useCheckBox(props: INodeProps, attrs: Record<string, unknown>, e
     }, { deep: true });
 
     const clickCheckbox = (): void => {
-        if (!setup.disabled.value) {
+        if (!common.disabled.value) {
             factory.value.click()
-            emit(checkboxEvents.checked, setup.node);
+            emit(checkboxEvents.checked, node);
         }
     }
 
     const space = (() => {
-        if (!node.value.state.editing && !setup.disabled.value && config.value.keyboardNavigation) {
+        if (!node.value.state.editing && !common.disabled.value && config.value.keyboardNavigation) {
             factory.value.click()
         }
     });

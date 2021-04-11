@@ -1,10 +1,10 @@
 import INodeProps from "@/structure/INodeProps";
 import { state } from './store';
-import { computed, ref } from 'vue';
+import { computed, ref, toRefs } from 'vue';
 import _ from "lodash";
 import { INode } from '../structure/INode';
-import useCommon from './useCommon';
 import { dragEvents } from '../misc/nodeEvents';
+import IUseCommon from '../structure/IUseCommon';
 
 enum DragPosition {
     over,
@@ -12,19 +12,18 @@ enum DragPosition {
     under
 }
 
-export default function useDragAndDrop(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): {} {
-    const setup = useCommon(props, attrs);   
+export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
+    const node = cmn.node;
     const parentId = ref(props.parentId);
-    const config = state.config;
+    const config = cmn.config;
     const nodes = state.nodes;
-    const node = setup.node;
     const dragged = ref(state.dragged);
+    const wrapper = cmn.wrapper;
     const element = ref<HTMLElement>(null);
-    const wrapper = ref<HTMLElement>(null);
     const pos = ref<DragPosition>(null);
 
     const draggable = computed(() => {
-        return !setup.disabled.value && config.value.dragAndDrop && node.value.state.draggable !== false;
+        return !cmn.disabled.value && config.value.dragAndDrop && node.value.state.draggable !== false;
     });
 
     const droppable = computed(() => {
@@ -206,7 +205,6 @@ export default function useDragAndDrop(props: INodeProps, attrs: Record<string, 
 
     return {
         element,
-        wrapper,
         dragClass,
         draggable,
         dragstart,

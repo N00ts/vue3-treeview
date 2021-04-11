@@ -39,7 +39,7 @@ export default class TreeIcons extends Vue {
     }
 
     public setup = setup(() => {
-        return useIcon(this.$props as any, this.$attrs, this.$emit);
+        return useIcon(this.$props as any );
     });
 }
 </script>

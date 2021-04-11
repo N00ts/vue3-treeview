@@ -1,86 +1,86 @@
 <template>
   <li
     class="tree-node"
-    v-if="nodeSetup.hasNode"
-    :ref="el => {dragSetup.element = el}"
-    @keydown.enter.stop="inputSetup.enter"
-    @keydown.esc.stop="inputSetup.esc"
-    @keydown.space.stop="checkboxSetup.space"
-    @keydown.left.stop="nodeSetup.left"
-    @keydown.right.stop="nodeSetup.right"
-    @keydown.up.stop="nodeSetup.up"
-    @keydown.down.stop="nodeSetup.down">
+    v-if="hasNode"
+    :ref="setElementRef"
+    @keydown.enter.stop="enter"
+    @keydown.esc.stop="esc"
+    @keydown.space.stop="space"
+    @keydown.left.stop="left"
+    @keydown.right.stop="right"
+    @keydown.up.stop="up"
+    @keydown.down.stop="down">
 
     <div  
       class="node-wrapper"
       :class="nodeClass"
-      :ref="setupElements"
-      :draggable="dragSetup.draggable"
-      :tabindex="nodeSetup.tabIndex"
-      @click.stop="nodeSetup.focusNode"
-      @dragstart.stop="dragSetup.dragstart"
-      @dragend.stop="dragSetup.dragend"
-      @dragenter.prevent.stop="dragSetup.dragenter"
-      @dragleave.prevent.stop="dragSetup.dragleave"
-      @dragover.prevent.stop="dragSetup.dragover"
-      @drop.prevent.stop="dragSetup.drop">
+      :ref="setWrapperRef"
+      :draggable="draggable"
+      :tabindex="tabIndex"
+      @click.stop="focusNode"
+      @dragstart.stop="dragstart"
+      @dragend.stop="dragend"
+      @dragenter.prevent.stop="dragenter"
+      @dragleave.prevent.stop="dragleave"
+      @dragover.prevent.stop="dragover"
+      @drop.prevent.stop="drop">
 
       <div
         class="icon-wrapper"
-        v-if="!nodeSetup.hideIcons"
-        @click.stop="nodeSetup.toggle">
+        v-if="!hideIcons"
+        @click.stop="toggle">
 
         <TreeIcons
-          :isLeaf="nodeSetup.isLeaf"
-          :opened="nodeSetup.opened">
+          :isLeaf="isLeaf"
+          :opened="opened">
         </TreeIcons>
       </div>
 
       <div class="checkbox-wrapper"
-          v-if="checkboxSetup.hasCheckbox"
-          :class="checkboxSetup.checkedClass"
-          @click.stop="checkboxSetup.clickCheckbox">
+          v-if="hasCheckbox"
+          :class="checkedClass"
+          @click.stop="clickCheckbox">
         <input
           type="checkbox"
           tabindex="-1"
           class="node-checkbox"
-          :checked="checkboxSetup.checked"
-          :disabled="nodeSetup.disabled"
-          :indeterminate.prop="checkboxSetup.indeterminate"
+          :checked="checked"
+          :disabled="disabled"
+          :indeterminate.prop="indeterminate"
         />
       </div>  
 
-      <slot name="before-input" :node="nodeSetup.node"></slot>
+      <slot name="before-input" :node="node"></slot>
 
       <div class="input-wrapper">
         <input
           type="text"
           tabindex="0"
           class="node-input"
-          v-if="inputSetup.editing"
-          v-model="inputSetup.text"
-          :ref="el => {inputSetup.input = el}"
-          :disabled="nodeSetup.disabled"
-          @blur="inputSetup.blur"
+          v-if="editing"
+          v-model="text"
+          :ref="setInputRef"
+          :disabled="disabled"
+          @blur="blur"
         />
 
         <span 
           v-else
           class="node-text"
-          @dblclick.stop="inputSetup.focusInputs">
-          {{ inputSetup.text }}
+          @dblclick.stop="focusInputs">
+          {{ text }}
         </span>
       </div>
 
-      <slot name="after-input" :node="nodeSetup.node"></slot>
+      <slot name="after-input" :node="node"></slot>
     </div>
 
     <transition name="level">
       <TreeLevel
-        v-if="nodeSetup.hasChildren"
-        v-show="nodeSetup.opened"
+        v-if="hasChildren"
+        v-show="opened"
         v-bind="$attrs"
-        :parentId="nodeSetup.id"
+        :parentId="id"
         :depth="depth + 1"
         :ref="setLevelRef">
 
@@ -98,90 +98,96 @@
 
 <script lang="ts">
 import useInput from "../setup/useInput";
-import useIcon from "../setup/useIcon"
-import TreeLevel from "./TreeLevel.vue";
+import TreeLevel from './TreeLevel.vue';
 import TreeIcons from './TreeIcons.vue';
 import { useNode } from "@/setup/useNode";
 import { useCheckBox } from "../setup/useCheckBox";
-import { Prop } from "vue-property-decorator";
-import { Options, Vue, setup } from "vue-class-component";
-import { INode } from "@/structure/INode";
 import _ from "lodash-es";
-import { Ref, ShallowUnwrapRef } from "vue";
-import IUseNode from "@/structure/IUseNode";
+import { computed } from "vue";
 import useDragAndDrop from '../setup/useDragAndDrop';
 import { checkboxEvents, dragEvents, inputEvents, nodeEvents } from "@/misc/nodeEvents";
+import useCommon from '@/setup/useCommon';
 
-@Options({
+export default {
   components: {
     TreeLevel,
-    TreeIcons,
+    TreeIcons
   },
   emits: [
     ...Object.values(nodeEvents),
     ...Object.values(checkboxEvents),
     ...Object.values(inputEvents),
-    ...Object.values(dragEvents)
-  ]
-})
-export default class TreeNode extends Vue {
-  @Prop({ required: true, type: Number })
-  public depth!: Number;
+    ...Object.values(dragEvents)    
+  ],
+  props: {
+    depth: {
+      required: true,
+      type: Number
+    },
+    index: {
+      required: true,
+      type: Number
+    },
+    node: {
+      required: true,
+      type: Object
+    },
+    parentId: {
+      default: null,
+      string: String
+    }
+  },
+  setup(props, { attrs, emit }) {
+    const cmn = useCommon(props);
 
-  @Prop({ required: true, type: Number })
-  public index: number;
+    const nodeSetup = useNode(cmn, props, attrs, emit)
 
-  @Prop({ required: true, type: Object })
-  public node!: INode;
+    const inputSetup = useInput(cmn, props, emit);
 
-  @Prop({ default: null, type: String })
-  public parentId!: string;
+    const checkboxSetup = useCheckBox(cmn, props, emit);
 
-  public inputSetup: ShallowUnwrapRef<any>  = setup(() => {
-    return useInput(this.$props as any, this.$attrs, this.$emit);
-  });
+    const dragSetup = useDragAndDrop(cmn, props, emit);
 
-  public nodeSetup: ShallowUnwrapRef<IUseNode> = setup(() => {
-    return useNode(this.$props as any, this.$attrs, this.$emit);
-  });
-
-  public checkboxSetup : ShallowUnwrapRef<any> = setup(() => {
-    return useCheckBox(this.$props as any, this.$attrs, this.$emit);
-  });
-
-  public iconSetup = setup(() => {
-    return useIcon(this.$props as any, this.$attrs, this.$emit);
-  });
-
-  public dragSetup: ShallowUnwrapRef<any> = setup(() => {
-    return useDragAndDrop(this.$props as any, this.$attrs, this.$emit);
-  });
-
-  public get nodeClass(): string[] {
-    return [ 
-      this.nodeSetup.focusClass,
-      this.nodeSetup.disabledClass,
-      this.checkboxSetup.checkedClass,
-      this.dragSetup.dragClass
-    ];
-  }
-
-  public beforeCreate(): void {
+    return {
+      ...cmn,
+      ...nodeSetup,
+      ...inputSetup,
+      ...checkboxSetup,
+      ...dragSetup
+    };
+  },
+  beforeCreate() {
     if (this.$options.components) {
       this.$options.components.TreeLevel = require("./TreeLevel.vue").default;
+    }    
+  },
+  computed: {
+    nodeClass(): string[] {
+      return [
+        this.focusClass,
+        this.disabledClass,
+        this.checkedClass,
+        this.dragClass       
+      ]
     }
-  }
-
-  public setupElements(e: any): void {
-    this.nodeSetup.wrapper = e;
-    this.dragSetup.wrapper = e;
-    this.inputSetup.wrapper = e;
-  }
-
-  public setLevelRef(e: any): void {
-    this.nodeSetup.level = e;
-  }
+  },
+  methods: {
+    setWrapperRef(e: any) {
+      this.wrapper = e;
+    },
+    setLevelRef(e: any) {
+      this.level = e;
+    },
+    setElementRef(e: any) {
+      this.element = e;
+    },
+    setInputRef(e: any) {
+      this.input = e;
+    }
+  },
 }
+
+
 </script>
 <style>
 .node-wrapper {

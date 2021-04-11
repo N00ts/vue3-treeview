@@ -2,7 +2,7 @@
     <div class="tree" :ref="el => {treeSetup.element = el}">
         <TreeLevel 
             :depth="0"
-            :parentid="null"
+            :parentId="null"
             @node-blur="treeSetup.blur"
             v-bind="$attrs">
             

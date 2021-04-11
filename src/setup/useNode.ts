@@ -3,37 +3,36 @@ import { INode } from "@/structure/INode";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
-import { computed, ref, watch, nextTick } from 'vue';
+import { computed, ref, watch, nextTick, toRefs } from 'vue';
 import { Vue } from 'vue-class-component';
-import useCommon from './useCommon';
 import { nodeEvents } from '../misc/nodeEvents';
+import IUseCommon from '../structure/IUseCommon';
 
-export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
-    const setup = useCommon(props, attrs);
-    const node = setup.node;
-    const config = state.config;
-    const wrapper = ref<HTMLElement>(null);
+export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
+    const node = cmn.node;
+    const config = cmn.config;
+    const wrapper = cmn.wrapper;
     const level = ref<Vue>(null);
 
     const id = computed(() => {
         return hasNode.value && node.value.id;
     })
 
-    const roots = computed(() => {
-        return config.value.roots || [];
-    })
-
     const hasNode = computed(() => {
-        return setup.hasNode.value;
+        return !_.isNil(node);
     });
 
     const hasConfig = computed(() => {
-        return setup.hasConfig.value;
+        return !_.isNil(config.value);
     });
 
     const hasState = computed(() => {
-        return setup.hasState.value;
+        return hasNode.value && !_.isNil(node.value.state);
     });
+
+    const roots = computed(() => {
+        return config.value.roots || [];
+    })
 
     const children = computed(() => {
         return _.isNil(node.value.children) ? [] : node.value.children;
@@ -56,7 +55,7 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
     });
 
     const disabled = computed(() => {
-        return setup.disabled.value;
+        return config.value.disabled || node.value.state.disabled;
     });
 
     const disabledClass = computed(() => {
@@ -238,22 +237,14 @@ export function useNode(props: INodeProps, attrs: Record<string, unknown>, emit:
 
     return {
         id,
-        node,
         level,
         opened,
         hasNode,
-        hasState,
-        hasConfig,
         hideIcons,
-        disabled,
-        children,
         hasChildren,
-        nbChildren,
         tabIndex,
         focusClass,
         disabledClass,
-        wrapper,
-        isRoot,
         isLeaf,
         right,
         left,

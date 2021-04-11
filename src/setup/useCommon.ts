@@ -1,15 +1,16 @@
 import INodeProps from "@/structure/INodeProps";
 import _ from "lodash";
-import { computed, toRefs } from "vue";
+import { computed, Ref, ToRefs, toRefs, ref } from 'vue';
 import { state } from "./store";
 import IUseCommon from '../structure/IUseCommon';
-import { INodeState } from '../structure/INodeState';
-import { defaultState } from '../misc/default';
+import { INode } from "@/structure/INode";
 
-export default function useCommon(props: INodeProps, attrs: Record<string, unknown>): IUseCommon {
+export default function useCommon(props: INodeProps): IUseCommon {
     const { node } = toRefs(props);
-    
+
     const config = state.config;
+
+    const wrapper = ref<HTMLElement>(null);
 
     // ensure state exist
     if (_.isNil(node.value.state)) {
@@ -33,10 +34,12 @@ export default function useCommon(props: INodeProps, attrs: Record<string, unkno
     });
 
     return {
-        node,
+        node, 
+        config,
         hasNode,
         hasState,
         hasConfig,
         disabled,
+        wrapper
     };
 }
