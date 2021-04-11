@@ -20,12 +20,7 @@
 <script lang="ts">
 import TreeLevel from './TreeLevel.vue';
 import _ from "lodash-es";
-import { INode } from '@/structure/INode';
-import { ShallowUnwrapRef } from 'vue';
 import useTree from '../setup/useTree';
-import { Options, setup, Vue } from 'vue-class-component';
-import IConfiguration from '../structure/IConfiguration';
-import { Prop } from 'vue-property-decorator';
 
 /**
   FEATURE to implement:

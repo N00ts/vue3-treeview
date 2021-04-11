@@ -185,8 +185,6 @@ export default {
     }
   },
 }
-
-
 </script>
 <style>
 .node-wrapper {

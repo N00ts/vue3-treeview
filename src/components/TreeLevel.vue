@@ -1,14 +1,13 @@
 <template>
-  <ul class="tree-level" id="id" :style="setup.style">
+  <ul class="tree-level" id="id" :style="style">
     <TreeNode
-      v-for="(item, index) in setup.level"
+      v-for="(item, index) in level"
       v-bind="$attrs"
       :key="item.id"
       :node="item"
       :depth="depth"
       :index="index"
-      :parentId="parentId"
-      :hasChild="setup.hasChild">
+      :parentId="parentId">
 
       <template v-slot:before-input="props">
         <slot name="before-input" :node="props.node"></slot>
@@ -24,30 +23,31 @@
 <script lang="ts">
 import useLevel from '../setup/useLevel';
 import TreeNode from "./TreeNode.vue";
-import { Prop } from "vue-property-decorator";
-import { Options, setup, Vue } from "vue-class-component";
 import _ from "lodash-es";
-import { ShallowUnwrapRef } from 'vue';
 
-@Options({
+export default {
   components: {
-    TreeNode,
+    TreeNode
   },
-})
-export default class TreeLevel extends Vue {
-  @Prop({ default: null, required: true, type: Number })
-  public depth!: Number;
-
-  @Prop({ default: null, type: String })
-  public parentId!: string;
-
-  public setup: ShallowUnwrapRef<any> = setup(() => {
-    return useLevel(this.$props as any);
-  }) 
-
-  public beforeCreate(): void {
+  props: {
+    depth: {
+      required: true,
+      type: Number,
+      default: null
+    },
+    parentId: {
+      type: String,
+      default: null
+    }
+  },
+  beforeCreate() {
     if (this.$options.components) {
       this.$options.components.TreeNode = require("./TreeNode.vue").default;
+    }
+  },
+  setup(props) {
+    return {
+      ...useLevel(props)
     }
   }
 }
