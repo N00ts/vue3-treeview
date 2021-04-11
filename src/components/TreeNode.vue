@@ -103,7 +103,6 @@ import TreeIcons from './TreeIcons.vue';
 import { useNode } from "@/setup/useNode";
 import { useCheckBox } from "../setup/useCheckBox";
 import _ from "lodash-es";
-import { computed } from "vue";
 import useDragAndDrop from '../setup/useDragAndDrop';
 import { checkboxEvents, dragEvents, inputEvents, nodeEvents } from "@/misc/nodeEvents";
 import useCommon from '@/setup/useCommon';
