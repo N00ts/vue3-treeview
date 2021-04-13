@@ -11,9 +11,7 @@
     "core-js": "^3.6.5",
     "lodash-es": "^4.17.20",
     "vue": "^3.0.0-0",
-    "vue-class-component": "^8.0.0-0",
-    "vue-class-store": "^3.0.0",
-    "vue-property-decorator": "^9.1.2"
+    "vue-class-component": "^8.0.0-0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.168",

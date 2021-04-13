@@ -139,20 +139,12 @@ export default {
   setup(props, { attrs, emit }) {
     const cmn = useCommon(props);
 
-    const nodeSetup = useNode(cmn, props, attrs, emit)
-
-    const inputSetup = useInput(cmn, props, emit);
-
-    const checkboxSetup = useCheckBox(cmn, props, emit);
-
-    const dragSetup = useDragAndDrop(cmn, props, emit);
-
     return {
       ...cmn,
-      ...nodeSetup,
-      ...inputSetup,
-      ...checkboxSetup,
-      ...dragSetup
+      ...useNode(cmn, props, attrs, emit),
+      ...useInput(cmn, props, emit),
+      ...useCheckBox(cmn, props, emit),
+      ...useDragAndDrop(cmn, props, emit)
     };
   },
   beforeCreate() {

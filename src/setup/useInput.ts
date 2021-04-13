@@ -1,6 +1,5 @@
-import { useNode } from './useNode';
 import INodeProps from '../structure/INodeProps';
-import { computed, nextTick, ref, watch, onMounted, toRefs } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import _ from 'lodash';
 import { defaultConfig } from '../misc/default';
 import { inputEvents } from '../misc/nodeEvents';

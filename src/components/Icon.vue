@@ -30,12 +30,12 @@
   >    
 </template>
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import IIcon from '../structure/IIcon';
-
-export default class Icon extends Vue {
-    @Prop({ type: Object, required: true })
-    public icon: IIcon;
+export default {
+  props: {
+    icon: {
+      required: true,
+      type: Object
+    }
+  }
 }
 </script>

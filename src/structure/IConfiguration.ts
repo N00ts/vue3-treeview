@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import IIcon from './IIcon';
 
 export enum checkMode {

@@ -1,14 +1,14 @@
 <template>
     <template
-        v-if="setup.useIcons">
+        v-if="useIcons">
 
         <Icon
             v-if="opened"
-            :icon="setup.openedIcon"/>
+            :icon="openedIcon"/>
 
         <Icon
             v-else
-            :icon="setup.closedIcon"/>
+            :icon="closedIcon"/>
     </template>
 
     <Icon
@@ -18,28 +18,27 @@
 <script lang="ts">
 import useIcon from "@/setup/useIcon";
 import Icon from './Icon.vue';
-import { Prop } from "vue-property-decorator";
-import { Options, setup, Vue } from "vue-class-component";
 import { createDefaultIcon } from "@/misc/default";
 
-@Options({
+export default {
     components: {
         Icon
+    },
+    props: {
+        isLeaf: {
+            type: Boolean
+        },
+        opened: {
+            type: Boolean
+        }
+    },
+    setup(props) {
+        return useIcon(props);
+    },
+    computed: {
+        fakeIcon() {
+            return createDefaultIcon(null);
+        }
     }
-})
-export default class TreeIcons extends Vue {
-    @Prop({ type: Boolean })
-    public isLeaf: boolean;
-
-    @Prop({ type: Boolean })
-    public opened: boolean;
-
-    public get fakeIcon(): {} {
-        return createDefaultIcon(null);
-    }
-
-    public setup = setup(() => {
-        return useIcon(this.$props as any );
-    });
 }
 </script>

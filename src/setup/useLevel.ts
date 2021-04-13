@@ -1,6 +1,6 @@
 import { state } from "@/setup/store";
 import { computed, ref } from "vue";
-import _, { xor } from "lodash-es";
+import _ from "lodash-es";
 import { defaultConfig } from '../misc/default';
 import { INode } from "@/structure/INode";
 

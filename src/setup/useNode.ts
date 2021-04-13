@@ -3,10 +3,10 @@ import { INode } from "@/structure/INode";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
 import _ from "lodash-es";
-import { computed, ref, watch, nextTick, toRefs } from 'vue';
-import { Vue } from 'vue-class-component';
+import { computed, ref, watch, nextTick } from 'vue';
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
+import { Vue } from 'vue-class-component';
 
 export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
     const node = cmn.node;
@@ -20,10 +20,6 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
 
     const hasNode = computed(() => {
         return !_.isNil(node);
-    });
-
-    const hasConfig = computed(() => {
-        return !_.isNil(config.value);
     });
 
     const hasState = computed(() => {
@@ -48,10 +44,6 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
 
     const opened = computed(() => {
         return hasState.value && node.value.state.opened || false;
-    });
-
-    const isRoot = computed(() => {
-        return props.depth === 0;
     });
 
     const disabled = computed(() => {

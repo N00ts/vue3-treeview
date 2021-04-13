@@ -1,7 +1,6 @@
-import { computed, ref, SetupContext, toRefs, watch, ComputedRef } from 'vue';
+import { computed, watch, ComputedRef } from 'vue';
 import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
-import { state } from '@/setup/store';
 import { defaultConfig } from '../misc/default';
 import { checkboxEvents } from '../misc/nodeEvents';
 import auto from '@/setup/checkbox/auto';
