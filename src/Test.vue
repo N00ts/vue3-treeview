@@ -47,7 +47,6 @@ import Tree from "./components/Tree.vue";
 import { INode } from "@/structure/INode";
 import _ from "lodash-es";
 import { checkMode } from './structure/IConfiguration';
-import "./css/material.css";
 import { INodeState } from './structure/INodeState';
 
 export default {
