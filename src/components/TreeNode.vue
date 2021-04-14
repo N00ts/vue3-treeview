@@ -182,29 +182,4 @@ export default {
 .node-wrapper {
   display: flex;
 }
-
-.node-over {
-  border-top: solid 1px red;
-}
-
-.node-in {
-  background-color: gray;
-}
-
-.node-under {
-  border-bottom: solid 1px blue;
-}
-
-.icon-wrapper {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
-
-.node-wrapper:focus {
-  outline-style: none;
-  outline: none;
-  outline: 0;
-  border: 1px solid #17a2b8;
-}
 </style>
