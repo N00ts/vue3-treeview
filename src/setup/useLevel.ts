@@ -65,6 +65,7 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
     const style = computed(() => {
         return {
             "padding-left": `${padding.value}px`,
+            "list-style": "none"
         };
     });
 

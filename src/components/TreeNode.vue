@@ -14,6 +14,7 @@
     <div  
       class="node-wrapper"
       :class="nodeClass"
+      :style="style"
       :ref="setWrapperRef"
       :draggable="draggable"
       :tabindex="tabIndex"
@@ -178,8 +179,3 @@ export default {
   },
 }
 </script>
-<style>
-.node-wrapper {
-  display: flex;
-}
-</style>

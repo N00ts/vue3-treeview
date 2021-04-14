@@ -52,8 +52,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.tree-level {
-  list-style: none;
-}
-</style>

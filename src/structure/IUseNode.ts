@@ -5,6 +5,7 @@ import { INode } from "./INode";
 export default interface IUseNode {
     id: ComputedRef<string>;
     level: Ref<Vue>;
+    style: ComputedRef<Object>;
     opened: ComputedRef<boolean>;
     hasNode: ComputedRef<boolean>;
     hideIcons: ComputedRef<boolean>;

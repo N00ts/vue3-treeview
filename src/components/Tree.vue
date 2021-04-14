@@ -1,5 +1,5 @@
 <template>
-    <div class="tree" :ref="setElementRef">
+    <div class="tree" :ref="setElementRef" :style="style">
         <TreeLevel 
             :depth="0"
             :parentId="null"
@@ -67,9 +67,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.tree {
-  display: flex;
-  align-items: center;  
-}
-</style>

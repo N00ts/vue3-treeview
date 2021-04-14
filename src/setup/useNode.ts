@@ -46,6 +46,12 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         return hasState.value && node.value.state.opened || false;
     });
 
+    const style = computed(() => {
+        return {
+            display: "flex"
+        };
+    });
+
     const disabled = computed(() => {
         return config.value.disabled || node.value.state.disabled;
     });
@@ -230,6 +236,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     return {
         id,
         level,
+        style,
         opened,
         hasNode,
         hideIcons,
