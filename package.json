@@ -1,7 +1,7 @@
 {
   "name": "vue3treeview",
   "description": "A simple vue js 3 component",
-  "author": "Tristan Fontaine dev@tristanfontaine.com>",
+  "author": "Tristan Fontaine <dev@tristanfontaine.com>",
   "library": "vue3treeview",
   "license": "MIT",
   "version": "0.1.0",
