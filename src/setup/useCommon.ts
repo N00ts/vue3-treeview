@@ -37,7 +37,7 @@ export default function useCommon(props: INodeProps, emit: (event: string, ...ar
 
     const editable = computed(() => {
         return config.value.editable && 
-        (node.value.state.editable ? node.value.state.editable : true) || defaultConfig.editable;
+        (!_.isNil(node.value.state.editable) ? node.value.state.editable : true) || defaultConfig.editable;
     });
 
     const editing = computed(() => {

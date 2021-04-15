@@ -18,6 +18,10 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
     });
 
     const editableClass = computed(() => {
+        if (!cmn.editable.value) {
+            return null;
+        }
+
         return config.value.editableClass ? config.value.editableClass : "editable";
     });
 
