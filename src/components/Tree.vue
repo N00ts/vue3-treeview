@@ -22,23 +22,6 @@ import TreeLevel from './TreeLevel.vue';
 import _ from "lodash-es";
 import useTree from '../setup/useTree';
 
-/**
-  FEATURE to implement:
-  - Drag and drop           => done
-  - Drop outside vue        => done (with dragend event)
-  - Customize icons         => need more tests
-  - keyboard navigation     => done
-  - Checkable               => done
-  - disabled                => done
-  - lazy load               => add a slot
-  - autoCheck               => done - (change mode to auto recurse) 
-  - customizable effects    => done with transition
-  - emit events             => done ?
-  - Check infinite loop
-  - ARIA
-  - exemple material css    => done
-  - unit tests
-*/
 export default {
   components: {
     TreeLevel
@@ -67,3 +50,4 @@ export default {
   }
 }
 </script>
+<style src="../css/material.css"/>

@@ -49,6 +49,23 @@ import _ from "lodash-es";
 import { checkMode } from './structure/IConfiguration';
 import { INodeState } from './structure/INodeState';
 
+/**
+  FEATURE to implement:
+  - Drag and drop           => done
+  - Drop outside vue        => done (with dragend event)
+  - Customize icons         => need more tests
+  - keyboard navigation     => done
+  - Checkable               => done
+  - disabled                => done
+  - lazy load               => add a slot
+  - autoCheck               => done - (change mode to auto recurse) 
+  - customizable effects    => done with transition
+  - emit events             => done ?
+  - Check infinite loop
+  - ARIA
+  - exemple material css    => done
+  - unit tests
+*/
 export default {
   components: {
     Tree,
@@ -184,13 +201,13 @@ export default {
       return {
         opened: this.randBool(),
         disabled: this.randBool(),
-        editing: this.randBool(),
+        editable: this.randBool(),
         focusable: this.randBool(),
         draggable: this.randBool(),
         dropable: this.randBool(),
         checked: this.randBool(),
         indeterminate: this.randBool(0.3)
-      }      
+      };
     },
     randBool(mod: number = 0.5): boolean {
       return Math.random() < mod;
