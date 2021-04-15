@@ -10,6 +10,8 @@ export default interface IConfiguration {
     leaves?: string[];
     padding?: number;
     editable?: boolean;
+    editing?: string;
+    editableClass?: string;
     checkboxes?: boolean;
     checkMode?: checkMode;
     dragAndDrop?: boolean;

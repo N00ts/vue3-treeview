@@ -8,9 +8,9 @@ import manual from '@/setup/checkbox/manual';
 import { checkMode } from '../structure/IConfiguration';
 import IUseCommon from '../structure/IUseCommon';
 
-export function useCheckBox(common: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
-    const node = common.node;
-    const config = common.config;
+export function useCheckBox(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
+    const node = cmn.node;
+    const config = cmn.config;
 
     const mode = computed(() => {
         return config.value.checkMode === checkMode.auto ? checkMode.auto : checkMode.manual;
@@ -82,14 +82,14 @@ export function useCheckBox(common: IUseCommon, props: INodeProps, emit: (event:
     }, { deep: true });
 
     const clickCheckbox = (): void => {
-        if (!common.disabled.value) {
+        if (!cmn.disabled.value) {
             factory.value.click()
             emit(checkboxEvents.checked, node);
         }
     }
 
     const space = (() => {
-        if (!node.value.state.editing && !common.disabled.value && config.value.keyboardNavigation) {
+        if (!cmn.editing.value && !cmn.disabled.value && config.value.keyboardNavigation) {
             factory.value.click()
         }
     });

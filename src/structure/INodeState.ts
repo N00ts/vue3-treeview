@@ -1,7 +1,7 @@
 export interface INodeState {
     opened?: boolean;
     disabled?: boolean;
-    editing?: boolean;
+    editable?: boolean;
     focusable?: boolean;
     draggable?: boolean;
     dropable?: boolean;

@@ -1,7 +1,6 @@
 import INodeProps from '../structure/INodeProps';
 import { computed, nextTick, ref, watch } from 'vue';
 import _ from 'lodash';
-import { defaultConfig } from '../misc/default';
 import { inputEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 
@@ -9,6 +8,8 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
     const node = cmn.node; 
     const config = cmn.config;
     const wrapper = cmn.wrapper;
+    const editable = cmn.editable;
+    const editing = cmn.editing;
     const input = ref<HTMLInputElement>(null);
 
     const text = computed({
@@ -16,12 +17,8 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
         set: (val: string) => node.value.text = val 
     });
 
-    const editable = computed(() => {
-        return config.value.editable || defaultConfig.editable;
-    });
-
-    const editing = computed(() => {
-        return editable.value && node.value.state.editing
+    const editableClass = computed(() => {
+        return config.value.editableClass ? config.value.editableClass : "editable";
     });
 
     watch(editing, (nv: boolean, ov: boolean) => {
@@ -32,21 +29,16 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
         }
     });
 
-    const blur = ((event: Event) => {
-        node.value.state.editing = false;
-        emit(inputEvents.blur, event, node.value);
-    });
-
     const focusInputs = (() => {
         if (editable.value && !cmn.disabled.value) {
-            node.value.state.editing = true;
+            config.value.editing = node.value.id;
             emit(inputEvents.edit, node.value);
         }
     });
 
     const esc = ((event: Event) => {
         if (editable.value && config.value.keyboardNavigation) {
-            blur(event);
+            cmn.blur(event);
             wrapper.value.focus();
         }
     });
@@ -62,7 +54,7 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
         input,
         editing,
         editable,
-        blur,
+        editableClass,
         focusInputs,
         esc,
         enter

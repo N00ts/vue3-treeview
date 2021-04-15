@@ -12,6 +12,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     const node = cmn.node;
     const config = cmn.config;
     const wrapper = cmn.wrapper;
+    const editing = cmn.editing;
     const level = ref<Vue>(null);
 
     const id = computed(() => {
@@ -119,23 +120,24 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         }
     });
 
+    const focus = (() => {
+        state.focused.value = node.value.id;
+    });
+
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
         emit(nodeEvents.toggle, node.value);
     });
 
-    const focusNode = (() => {
-        state.focused.value = node.value.id;
-    });
 
     const right = (() => {
-        if (!node.value.state.editing && config.value.keyboardNavigation) {
+        if (!editing.value && config.value.keyboardNavigation) {
             node.value.state.opened = true;
         }
     });
 
     const left = (() => {
-        if (!node.value.state.editing && config.value.keyboardNavigation) {
+        if (!editing.value && config.value.keyboardNavigation) {
             node.value.state.opened = false;
         }
     });
@@ -250,6 +252,6 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         up,
         down,
         toggle,
-        focusNode
+        focus
     }
 }

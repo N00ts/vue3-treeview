@@ -15,7 +15,7 @@ export default interface IUseNode {
     disabledClass: ComputedRef<string>;
     isLeaf: ComputedRef<boolean>;
     toggle: (nv: boolean, ov: boolean) => void;
-    focusNode: () => void;
+    focus: () => void;
     left: () => void;
     right: () => void;
     up: () => void;

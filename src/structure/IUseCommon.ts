@@ -11,4 +11,7 @@ export default interface IUseCommon {
     hasConfig: ComputedRef<boolean>;
     disabled: ComputedRef<boolean>;
     wrapper: Ref<HTMLElement>;
+    editable: Ref<Boolean>;
+    editing: Ref<Boolean>;
+    blur: (e: Event) => void;
 }

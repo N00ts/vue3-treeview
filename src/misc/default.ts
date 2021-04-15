@@ -35,6 +35,7 @@ export const defaultConfig : IConfiguration = {
     roots: [],
     padding: 16,
     editable: false,
+    editing: null,
     checkboxes: false,
     dragAndDrop: false,
     keyboardNavigation: false,
@@ -45,7 +46,6 @@ export const defaultConfig : IConfiguration = {
 export const defaultState: INodeState = {
     opened: false,
     disabled: false,
-    editing: false,
     focusable: false,
     draggable: false,
     dropable: false,

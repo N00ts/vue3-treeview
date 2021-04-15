@@ -18,7 +18,8 @@
       :ref="setWrapperRef"
       :draggable="draggable"
       :tabindex="tabIndex"
-      @click.stop="focusNode"
+      @blur="blur"
+      @click.stop="focus"
       @dragstart.stop="dragstart"
       @dragend.stop="dragend"
       @dragenter.prevent.stop="dragenter"
@@ -68,7 +69,7 @@
         <span 
           v-else
           class="node-text"
-          @dblclick.stop="focusInputs">
+          @dblclick="focusInputs">
           {{ text }}
         </span>
       </div>
@@ -138,7 +139,7 @@ export default {
     }
   },
   setup(props, { attrs, emit }) {
-    const cmn = useCommon(props);
+    const cmn = useCommon(props, emit);
 
     return {
       ...cmn,
@@ -159,7 +160,8 @@ export default {
         this.focusClass,
         this.disabledClass,
         this.checkedClass,
-        this.dragClass       
+        this.editableClass,
+        this.dragClass  
       ]
     }
   },
