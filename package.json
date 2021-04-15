@@ -1,8 +1,8 @@
 {
-  "name": "vue3treeview",
+  "name": "treevue",
   "description": "A simple vue js 3 component",
   "author": "Tristan Fontaine <dev@tristanfontaine.com>",
-  "library": "vue3treeview",
+  "library": "treevue",
   "license": "MIT",
   "version": "0.1.0",
   "private": false,
@@ -10,7 +10,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "bundle": "vue-cli-service build --target lib --name vue3treeview ./src/components/Tree.vue"
+    "bundle": "vue-cli-service build --target lib --name treevue ./src/components/Tree.vue && rm dist/demo.html"
   },
   "dependencies": {
     "core-js": "^3.10.1",
