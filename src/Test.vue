@@ -29,7 +29,7 @@
     :config="configuration"
     
     @node-opened="log('node-opened')"
-    @node-close="log('node-close')"
+    @node-closed="log('node-closed')"
     @node-focus="log('node-focus')"
     @node-toggle="log('node-toggle')"
     @node-blur="log('node-blur')"
@@ -65,23 +65,6 @@ import { INode } from "@/structure/INode";
 import { checkMode } from './structure/IConfiguration';
 import { INodeState } from './structure/INodeState';
 
-/**
-  FEATURE to implement:
-  - Drag and drop           => done
-  - Drop outside vue        => done (with dragend event)
-  - Customize icons         => need more tests
-  - keyboard navigation     => done
-  - Checkable               => done
-  - disabled                => done
-  - lazy load               => add a slot
-  - autoCheck               => done - (change mode to auto recurse) 
-  - customizable effects    => done with transition
-  - emit events             => done ?
-  - Check infinite loop
-  - ARIA
-  - exemple material css    => done
-  - unit tests
-*/
 export default {
   components: {
     Tree,
