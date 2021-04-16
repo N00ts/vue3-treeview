@@ -110,7 +110,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     })
 
     watch(opened, (nv: boolean) => {
-        nv ? emit(nodeEvents.opened, node.value) : emit(nodeEvents.close, node.value);
+        nv ? emit(nodeEvents.opened, node.value) : emit(nodeEvents.closed, node.value);
     });
 
     watch(isFocused, (nv: boolean, ov: boolean) => {

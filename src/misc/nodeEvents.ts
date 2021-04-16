@@ -1,6 +1,6 @@
 export const nodeEvents = {
     opened: "nodeOpened",
-    close: "nodeClose",
+    closed: "nodeClosed",
     focus: "nodeFocus",
     toggle: "nodeToggle",
     blur: "nodeBlur",
