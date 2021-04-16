@@ -4,7 +4,7 @@ import { computed, toRefs, ref } from 'vue';
 import { state } from './store';
 import IUseCommon from '../structure/IUseCommon';
 import { defaultConfig } from '../misc/default';
-import { inputEvents } from "@/misc/nodeEvents";
+import { nodeEvents } from '../misc/nodeEvents';
 
 export default function useCommon(props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseCommon {
     const { node } = toRefs(props);
@@ -49,7 +49,7 @@ export default function useCommon(props: INodeProps, emit: (event: string, ...ar
 
         if (!current.contains(related)) {
             config.value.editing = null;
-            emit(inputEvents.blur, e, node.value);
+            emit(nodeEvents.blur, e, node.value);
         }
     });
 

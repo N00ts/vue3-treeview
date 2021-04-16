@@ -1,27 +1,22 @@
 export const nodeEvents = {
-    opened: "node-opened",
-    close: "node-close",
-    focus: "node-focus",
-    toggle: "node-toggle",
-    blur: "node-blur",
-    edit: "node-edit",
-
+    opened: "nodeOpened",
+    close: "nodeClose",
+    focus: "nodeFocus",
+    toggle: "nodeToggle",
+    blur: "nodeBlur",
+    edit: "nodeEdit",
 };
 
 export const checkboxEvents = {
-    checked: "node-checked"
-};
-
-export const inputEvents = {
-    edit: "node-edit",
-    blur: "node-blur"
+    checked: "nodeChecked",
+    unchecked: "nodeUnchecked"
 };
 
 export const dragEvents = {
-    start: "node-dragstart",
-    end: "node-dragend",
-    enter: "node-dragenter",
-    Leave: "node-dragleave",
-    over: "node-over",
-    drop: "node-drop"
+    start: "nodeDragstart",
+    end: "nodeDragend",
+    enter: "nodeDragenter",
+    Leave: "nodeDragleave",
+    over: "nodeOver",
+    drop: "nodeDrop"
 };

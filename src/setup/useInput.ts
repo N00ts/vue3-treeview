@@ -1,7 +1,7 @@
 import INodeProps from '../structure/INodeProps';
 import { computed, nextTick, ref, watch } from 'vue';
 import eq from "lodash-es/eq";
-import { inputEvents } from '../misc/nodeEvents';
+import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 
 export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
@@ -36,7 +36,7 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
     const focusInputs = (() => {
         if (editable.value && !cmn.disabled.value) {
             config.value.editing = node.value.id;
-            emit(inputEvents.edit, node.value);
+            emit(nodeEvents.edit, node.value);
         }
     });
 

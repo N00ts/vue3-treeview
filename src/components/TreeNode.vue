@@ -105,7 +105,7 @@ import TreeIcons from './TreeIcons.vue';
 import { useNode } from "@/setup/useNode";
 import { useCheckBox } from "../setup/useCheckBox";
 import useDragAndDrop from '../setup/useDragAndDrop';
-import { checkboxEvents, dragEvents, inputEvents, nodeEvents } from "@/misc/nodeEvents";
+import { checkboxEvents, dragEvents, nodeEvents } from "@/misc/nodeEvents";
 import useCommon from '@/setup/useCommon';
 
 export default {
@@ -116,7 +116,6 @@ export default {
   emits: [
     ...Object.values(nodeEvents),
     ...Object.values(checkboxEvents),
-    ...Object.values(inputEvents),
     ...Object.values(dragEvents)    
   ],
   props: {

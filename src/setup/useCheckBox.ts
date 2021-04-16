@@ -84,7 +84,7 @@ export function useCheckBox(cmn: IUseCommon, props: INodeProps, emit: (event: st
     const clickCheckbox = (): void => {
         if (!cmn.disabled.value) {
             factory.value.click()
-            emit(checkboxEvents.checked, node);
+            emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node);
         }
     }
 

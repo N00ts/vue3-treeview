@@ -26,7 +26,24 @@
   <Tree
     ref="Tree"
     :nodes="nodes"
-    :config="configuration"/>
+    :config="configuration"
+    
+    @node-opened="log('node-opened')"
+    @node-close="log('node-close')"
+    @node-focus="log('node-focus')"
+    @node-toggle="log('node-toggle')"
+    @node-blur="log('node-blur')"
+    @node-edit="log('node-edit')"
+    
+    @node-checked="log('node-checked')"
+    @node-unchecked="log('node-unchecked')"
+    
+    @node-dragstart="log('node-dragstart')"
+    @node-dragenter="log('node-dragenter')"
+    @node-dragleave="log('node-dragleave')"
+    @node-dragend="log('node-dragend')"
+    @node-over="log('node-over')"
+    @node-drop="log('node-drop')"/>
 
   <p>
     <label for="nbRoots">Number of Roots</label>
@@ -151,6 +168,9 @@ export default {
     this.code = JSON.stringify(this.nodes, undefined, 4);
   },
   methods: {
+    log(s: string): void {
+      console.log(s);
+    },
     changeMode(): void {
       this.modeBool = !this.modeBool;
       this.configuration.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
