@@ -4,14 +4,14 @@
     v-if="icon.type === 'shape'"
     :width="icon.width"
     :height="icon.height"
-    :class="icon.iconClass"
-    :style="icon.iconStyle"
+    :class="icon.class"
+    :style="icon.style"
     :viewBox="icon.viewBox">
 
     <path 
       :d="icon.draw"
       :fill="icon.fill"
-      :strok="icon.stroke">
+      :stroke="icon.stroke">
     </path>
   </svg>
 
@@ -27,6 +27,8 @@
     :alt="icon.alt"
     :width="icon.width"
     :height="icon.height"
+    :class="icon.class"
+    :style="icon.style"
   >    
 </template>
 <script lang="ts">
