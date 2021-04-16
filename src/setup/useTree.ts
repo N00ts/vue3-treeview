@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { ref, computed } from 'vue';
 import { INode } from '../structure/INode';
 import { createStore, state } from "./store";

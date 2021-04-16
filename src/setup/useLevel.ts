@@ -1,6 +1,7 @@
 import { state } from "@/setup/store";
 import { computed, ref } from "vue";
-import _ from "lodash-es";
+import isNil from "lodash-es/isNil";
+import toInteger from "lodash-es/toInteger";
 import { defaultConfig } from '../misc/default';
 import { INode } from "@/structure/INode";
 
@@ -13,7 +14,7 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
     const level = computed(() => {
       const res: INode[] = [];
 
-      if (_.isNil(parent.value) && config.value.roots && depth.value === 0) {
+      if (isNil(parent.value) && config.value.roots && depth.value === 0) {
           for (const id of config.value.roots) {
             addNode(id, res);
           }
@@ -21,7 +22,7 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
           return res;
         }
     
-      if (!_.isNil(parent.value)) {
+      if (!isNil(parent.value)) {
         const node = nodes.value[parent.value];
   
         if (node && node.children && node.children.length > 0) {
@@ -53,11 +54,11 @@ export default function useLevel(props: {parentId: string, depth: number}): {} {
             return 0;
         }
       
-        if (_.isNil(config.value.padding)) {
+        if (isNil(config.value.padding)) {
             return defaultConfig.padding;
         }
 
-        const p = _.toInteger(config.value.padding);
+        const p = toInteger(config.value.padding);
 
         return p >=0 ? p : 0;      
     });

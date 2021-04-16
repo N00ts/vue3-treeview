@@ -1,9 +1,8 @@
 import INodeProps from "@/structure/INodeProps";
-import _ from "lodash";
-import { computed, Ref, ToRefs, toRefs, ref, HtmlHTMLAttributes } from 'vue';
+import isNil from "lodash-es/isNil";
+import { computed, toRefs, ref } from 'vue';
 import { state } from './store';
 import IUseCommon from '../structure/IUseCommon';
-import { INode } from "@/structure/INode";
 import { defaultConfig } from '../misc/default';
 import { inputEvents } from "@/misc/nodeEvents";
 
@@ -15,20 +14,20 @@ export default function useCommon(props: INodeProps, emit: (event: string, ...ar
     const wrapper = ref<HTMLElement>(null);
 
     // ensure state exist
-    if (_.isNil(node.value.state)) {
+    if (isNil(node.value.state)) {
         node.value.state = {};
     }
 
     const hasNode = computed(() => {
-        return !_.isNil(node);
+        return !isNil(node);
     });
 
     const hasConfig = computed(() => {
-        return !_.isNil(config.value);
+        return !isNil(config.value);
     });
 
     const hasState = computed(() => {
-        return hasNode.value && !_.isNil(node.value.state);
+        return hasNode.value && !isNil(node.value.state);
     });
 
     const disabled = computed(() => {
@@ -37,7 +36,7 @@ export default function useCommon(props: INodeProps, emit: (event: string, ...ar
 
     const editable = computed(() => {
         return config.value.editable && 
-        (!_.isNil(node.value.state.editable) ? node.value.state.editable : true) || defaultConfig.editable;
+        (!isNil(node.value.state.editable) ? node.value.state.editable : true) || defaultConfig.editable;
     });
 
     const editing = computed(() => {

@@ -1,9 +1,9 @@
 import { computed, watch, ComputedRef } from 'vue';
-import _ from "lodash-es";
 import INodeProps from '../structure/INodeProps';
 import { defaultConfig } from '../misc/default';
 import { checkboxEvents } from '../misc/nodeEvents';
 import auto from '@/setup/checkbox/auto';
+import eq from "lodash-es/eq";
 import manual from '@/setup/checkbox/manual';
 import { checkMode } from '../structure/IConfiguration';
 import IUseCommon from '../structure/IUseCommon';
@@ -23,7 +23,7 @@ export function useCheckBox(cmn: IUseCommon, props: INodeProps, emit: (event: st
     });
 
     watch(mode, (nv: number, ov: number) => {
-        if (!_.eq(nv, ov)) {
+        if (!eq(nv, ov)) {
             factory.value.rebuild();
         }
     })
@@ -76,7 +76,7 @@ export function useCheckBox(cmn: IUseCommon, props: INodeProps, emit: (event: st
     }, { deep: true });
 
     watch(someIndeterminate, (nv: boolean, ov: boolean) => {
-        if (!_.eq(nv, ov)) {
+        if (!eq(nv, ov)) {
             factory.value.updateState();
         }
     }, { deep: true });

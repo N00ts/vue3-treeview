@@ -2,7 +2,6 @@ import { INode } from "@/structure/INode";
 import IConfiguration from '../structure/IConfiguration';
 import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
 import ITreeProps from '../structure/ITreeProps';
-import _ from "lodash";
 import IDragContext from '../structure/IDragContext';
 
 export interface IState {

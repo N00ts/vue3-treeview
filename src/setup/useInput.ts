@@ -1,6 +1,6 @@
 import INodeProps from '../structure/INodeProps';
 import { computed, nextTick, ref, watch } from 'vue';
-import _ from 'lodash';
+import eq from "lodash-es/eq";
 import { inputEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 
@@ -26,7 +26,7 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
     });
 
     watch(editing, (nv: boolean, ov: boolean) => {
-        if (!_.eq(nv, ov) && nv) {
+        if (!eq(nv, ov) && nv) {
             nextTick(() => {
                 input.value.focus();
             });

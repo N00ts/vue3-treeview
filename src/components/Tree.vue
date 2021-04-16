@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import TreeLevel from './TreeLevel.vue';
-import _ from "lodash-es";
 import useTree from '../setup/useTree';
 
 export default {

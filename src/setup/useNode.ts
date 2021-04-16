@@ -2,7 +2,9 @@ import { state } from "@/setup/store";
 import { INode } from "@/structure/INode";
 import INodeProps from "@/structure/INodeProps";
 import IUseNode from "@/structure/IUseNode";
-import _ from "lodash-es";
+import isNil from "lodash-es/isNil";
+import eq from "lodash-es/eq";
+import isArray from "lodash-es/isArray";
 import { computed, ref, watch, nextTick } from 'vue';
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
@@ -20,11 +22,11 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     })
 
     const hasNode = computed(() => {
-        return !_.isNil(node);
+        return !isNil(node);
     });
 
     const hasState = computed(() => {
-        return hasNode.value && !_.isNil(node.value.state);
+        return hasNode.value && !isNil(node.value.state);
     });
 
     const roots = computed(() => {
@@ -32,7 +34,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     })
 
     const children = computed(() => {
-        return _.isNil(node.value.children) ? [] : node.value.children;
+        return isNil(node.value.children) ? [] : node.value.children;
     });
 
     const nbChildren = computed(() => {
@@ -78,13 +80,13 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     });
 
     const isLeaf = computed(() => {
-        if (_.isArray(config.value.leaves)) {
+        if (isArray(config.value.leaves)) {
             const arr: string[] = config.value.leaves;
             const idx = arr.indexOf(id.value);
             return Number.isFinite(idx) && idx >= 0;
         }
 
-        return !_.isArray(node.value.children) || node.value.children.length === 0;
+        return !isArray(node.value.children) || node.value.children.length === 0;
     });
 
     const isFocused = computed(() => {
@@ -112,7 +114,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
     });
 
     watch(isFocused, (nv: boolean, ov: boolean) => {
-        if (!_.eq(nv, ov) && nv && wrapper.value) {
+        if (!eq(nv, ov) && nv && wrapper.value) {
             nextTick(() => {
                 wrapper.value.focus();
                 emit(nodeEvents.focus, node);
@@ -169,7 +171,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
             const idx = n.children.indexOf(node.value.id);
             const prev = n.children[idx - 1];
 
-            if (!_.isNil(prev)) {
+            if (!isNil(prev)) {
                 return lastChild(prev);
             }
         } 
@@ -187,7 +189,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         if (n.children && n.children.length > 0 && n.state.opened) {
             const last = n.children[n.children.length - 1];
 
-            if (!_.isNil(last)) {
+            if (!isNil(last)) {
                 return lastChild(last);
             }
         }

@@ -23,7 +23,6 @@
 <script lang="ts">
 import useLevel from '../setup/useLevel';
 import TreeNode from "./TreeNode.vue";
-import _ from "lodash-es";
 
 export default {
   components: {

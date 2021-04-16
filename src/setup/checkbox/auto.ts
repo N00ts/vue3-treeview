@@ -2,7 +2,7 @@ import { computed, Ref } from 'vue';
 import { INode } from '../../structure/INode';
 import { state } from '../store';
 import IUseCheck from '../../structure/IUseCheck';
-import _ from 'lodash';
+import isNil from "lodash-es/isNil";
 import { ensureState } from '../../misc/helpers';
 
 export default function auto(node: Ref<INode>): IUseCheck {
@@ -21,7 +21,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
     })
 
     const hasChildren = computed(() => {
-        return !_.isNil(children.value) && children.value.length > 0 || false;
+        return !isNil(children.value) && children.value.length > 0 || false;
     });
 
     const states = computed(() => {
@@ -34,7 +34,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
         for (const c of children.value) {
             const cdn = nodes.value[c];
             
-            if (!_.isNil(cdn)) {
+            if (!isNil(cdn)) {
                 ensureState(cdn)
                 res.push(cdn.state);
             }
@@ -68,7 +68,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
     });
 
     const recurseDown = ((v: boolean) => {
-        if (!_.isNil(v)) {
+        if (!isNil(v)) {
             for (const s of states.value) {
                 s.indeterminate = false;
                 s.checked = v;

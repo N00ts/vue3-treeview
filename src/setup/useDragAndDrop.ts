@@ -1,7 +1,7 @@
 import INodeProps from "@/structure/INodeProps";
 import { state } from './store';
-import { computed, ref, toRefs } from 'vue';
-import _ from "lodash";
+import { computed, ref } from 'vue';
+import isNil from "lodash-es/isNil";
 import { INode } from '../structure/INode';
 import { dragEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
@@ -31,7 +31,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit:
     });
 
     const isDragging = computed(() => {
-        return !_.isNil(dragged.value.node); 
+        return !isNil(dragged.value.node); 
     });
 
     const isSameNode = computed(() => {
@@ -51,7 +51,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit:
     });
 
     const targetParent = computed(() => {
-        return !_.isNil(parentId.value) ? getParent(parentId.value) : null; 
+        return !isNil(parentId.value) ? getParent(parentId.value) : null; 
     });
 
     const targetLvl = computed(() => {
@@ -88,11 +88,11 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit:
     })
 
     const getParent = ((id: string) => {
-        return !_.isNil(id) ? nodes.value[id] : null;
+        return !isNil(id) ? nodes.value[id] : null;
     });
 
     const getLevel = ((node: INode) => {
-        return !_.isNil(node) ? node.children : config.value.roots;
+        return !isNil(node) ? node.children : config.value.roots;
     })
 
     const dragstart = (evt: DragEvent): void => {
