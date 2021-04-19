@@ -1,7 +1,6 @@
 {
   "name": "vue3-treeview",
-  "description": "A simple vue js 3 component",
-  "author": "Tristan Fontaine <dev@tristanfontaine.com>",
+  "description": "A simple vue js 3 treeview component",
   "library": "vue3-treeview",
   "license": "MIT",
   "version": "0.1.0",
@@ -10,8 +9,23 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "doc": "vue-cli-service build --dest docs",
     "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue"
   },
+  "main": "dist/vue3-treeview.common.js",
+  "module": "dist/vue3-treeview.common.js",
+  "unpkg": "dist/vue3-treeview.umd.min.js",
+  "css": "dist/vue3-treeview.css",
+  "author": {
+    "name": "Tristan Fontaine",
+    "email": "tristanfontaine3000@gmail.com"
+  },
+  "keywords": [
+    "treeview",
+    "vue",
+    "vue3",
+    "javascript"
+  ],  
   "dependencies": {
     "core-js": "^3.10.1",
     "lodash-es": "^4.17.21",
