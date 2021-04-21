@@ -10,4 +10,4 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-     - run: vuepress build docs
+     - run: npm run build
