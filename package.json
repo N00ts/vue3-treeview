@@ -13,7 +13,6 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "types": "vue-dts-gen src/components/Tree.vue",
     "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue",
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs"
