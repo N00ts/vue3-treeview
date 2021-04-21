@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: "build"
+    name: build
     runs-on: ubuntu-latest
     steps:
      - run: npm run build
