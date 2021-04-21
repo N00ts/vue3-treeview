@@ -1,6 +1,8 @@
-name: docs
+name: deploy
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
