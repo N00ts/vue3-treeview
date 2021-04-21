@@ -1,3 +1,8 @@
+# VuePress files
+docs/.vuepress/.temp/
+docs/.vuepress/.cache/
+docs/.vuepress/dist/
+
 .DS_Store
 node_modules
 /dist
