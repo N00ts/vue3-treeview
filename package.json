@@ -2,6 +2,8 @@
   "name": "vue3-treeview",
   "version": "0.1.0",
   "private": false,
+  "library": "vue3-treeview",
+  "license": "MIT",
   "description": "A simple vue js 3 treeview component",
   "author": {
     "name": "Tristan Fontaine",
@@ -20,10 +22,8 @@
   "module": "dist/vue3-treeview.common.js",
   "unpkg": "dist/vue3-treeview.umd.min.js",
   "style": "dist/vue3-treeview.css",
-  "types": "./vue3-treeview.d.ts",
   "files": [
-    "dist/*",
-    "src/*"
+    "dist/*"
   ],
   "dependencies": {
     "core-js": "^3.10.1",
@@ -77,7 +77,5 @@
     "vue",
     "vue3",
     "javascript"
-  ],
-  "library": "vue3-treeview",
-  "license": "MIT"
+  ]
 }
