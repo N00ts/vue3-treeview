@@ -9,6 +9,5 @@ on:
 jobs:
   docs:
     runs-on: ubuntu-latest
-
     steps:
      - run: vuepress build docs
