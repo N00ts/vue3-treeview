@@ -2,7 +2,7 @@
 
 ## Documentation
 
-Project still under construction but usable, you can check documentation at [here](https://n00ts.github.io/vue3-treeview/)
+Project still under construction but usable, you can check documentation [here](https://n00ts.github.io/vue3-treeview/)
 
 ## License
 
