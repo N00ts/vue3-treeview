@@ -29,7 +29,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
             return [];
         }
 
-        let res = [];
+        const res = [];
 
         for (const c of children.value) {
             const cdn = nodes.value[c];
