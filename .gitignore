@@ -1,7 +1,5 @@
 # VuePress files
-docs/.vuepress/.temp/
-docs/.vuepress/.cache/
-docs/.vuepress/dist/
+docs/.vitepress/dist/
 
 .DS_Store
 node_modules

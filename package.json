@@ -5,17 +5,15 @@
   "library": "vue3-treeview",
   "license": "MIT",
   "description": "A simple vue js 3 treeview component",
-  "author": {
-    "name": "Tristan Fontaine",
-    "email": "tristanfontaine3000@gmail.com"
-  },
+  "author": "Tristan Fontaine <tristanfontaine3000@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue",
-    "docs:build": "vuepress build docs",
-    "docs:dev": "vuepress dev docs"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "main": "dist/vue3-treeview.common.js",
   "module": "dist/vue3-treeview.common.js",
@@ -33,19 +31,19 @@
   "devDependencies": {
     "@types/lodash": "^4.14.168",
     "@types/lodash-es": "^4.17.4",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "@vue/cli-plugin-babel": "^5.0.0-alpha.8",
-    "@vue/cli-plugin-eslint": "^5.0.0-alpha.8",
-    "@vue/cli-plugin-typescript": "^5.0.0-alpha.8",
-    "@vue/cli-service": "^5.0.0-alpha.8",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "^4.5.12",
+    "@vue/cli-plugin-eslint": "^4.5.12",
+    "@vue/cli-plugin-typescript": "^4.5.12",
+    "@vue/cli-service": "^4.5.12",
     "@vue/compiler-sfc": "^3.0.11",
-    "@vue/eslint-config-typescript": "^7.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.20.0",
+    "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.9.0",
-    "typescript": "~4.1.5",
-    "vuepress": "^2.0.0-beta.9"
+    "typescript": "^3.9.9",
+    "vitepress": "^0.13.0"
   },
   "eslintConfig": {
     "root": true,
@@ -76,5 +74,6 @@
     "vue",
     "vue3",
     "javascript"
-  ]
+  ],
+  "repository": "https://github.com/N00ts/vue3-treeview.git"
 }
