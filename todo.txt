@@ -1,15 +1,17 @@
 FEATURE to implement:
-  - Drag and drop           => done
-  - Customize icons         => done
-  - keyboard navigation     => done
-  - check                   => done
-  - disabled                => done
-  - lazy load               => add a slot for loading spinner / skeletton
-  - autoCheck               => done
-  - customizable effects    => done
-  - emit events             => done
+  - Drag and drop             => done
+  - Customize icons           => done
+  - keyboard navigation       => done
+  - check                     => done
+  - disabled                  => done
+  - lazy load                 => add a slot for loading spinner / skeletton
+  - autoCheck                 => done
+  - customizable effects      => done
+  - emit events               => done
+  - Node focusable or not
+  - allow dnd with function
   - ARIA
-  - exemple material css    => done
+  - exemple material css      => done
   - unit tests
-  - documentation
+  - documentation             => in progress
   - typings
