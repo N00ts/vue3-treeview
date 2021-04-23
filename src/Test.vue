@@ -204,7 +204,6 @@ export default {
         opened: this.randBool(),
         disabled: this.randBool(),
         editable: this.randBool(),
-        focusable: this.randBool(),
         draggable: this.randBool(),
         dropable: this.randBool(),
         checked: this.randBool(),

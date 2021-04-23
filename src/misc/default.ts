@@ -46,7 +46,6 @@ export const defaultConfig : IConfiguration = {
 export const defaultState: INodeState = {
     opened: false,
     disabled: false,
-    focusable: false,
     draggable: false,
     dropable: false,
     checked: false,
