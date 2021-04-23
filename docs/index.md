@@ -15,3 +15,6 @@ npm install vue3-treeview
 ``` js
 import Tree from "vue3-treeview";
 ```
+
+## Properties
+
