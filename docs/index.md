@@ -1,20 +1,5 @@
-## Introduction
+# Vue-3-Treeview
 
-> a vue 3 pluggin to display treeview
+`Vue-3-Treeview` is a simple treeview with all the required feature.
 
----
-
-## Installation
-
-``` sh
-npm install vue3-treeview
-```
-
-## Usage
-
-``` js
-import Tree from "vue3-treeview";
-```
-
-## Properties
-
+To get start, please navigate to the [Guide](guide/getting-started.md) section.
