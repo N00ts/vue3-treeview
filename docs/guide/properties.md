@@ -1,4 +1,4 @@
-## Tree properties
+## Tree
 
 | Prop   | Type   | Default | Required | Description        |
 |--------|--------|---------|----------|--------------------|
@@ -107,4 +107,19 @@ The following table describe properties by "type" but they are all included in t
 
 ### shape
 
+Shape is a custom drawn shape. 
+For more information you can consult [SVG icon docs](https://developer.mozilla.org/en-US/docs/Web/SVG).
 
+| Prop    | Type   | Default | Required | Description                                                        |
+|---------|--------|---------|----------|--------------------------------------------------------------------|
+| type    | String | "shape" | false    | type can be "shape", "class", "img"                                |
+| width   | Number | null    | false    | width of the icon                                                  |
+| height  | Number | null    | false    | height of the icon                                                 |
+| class   | String | null    | false    | Even if your icon is drawn you can add a class to it               |
+| style   | String | null    | false    | Inline icon style                                                  |
+| viewbox | String | null    | false    | Viewbox of the drawn icon, for more information check svg icon doc |
+| d       | String | null    | false    | Icon drawn coordinates                                             |
+| fill    | String | null    | false    | Fill color of the svg icon                                         |
+| stroke  | String | null    | false    | SVG icon stroke property                                           |
+
+### Class
