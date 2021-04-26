@@ -102,11 +102,11 @@
 import useInput from "../setup/useInput";
 import TreeLevel from './TreeLevel.vue';
 import TreeIcons from './TreeIcons.vue';
-import { useNode } from "@/setup/useNode";
+import { useNode } from "../setup/useNode";
 import { useCheckBox } from "../setup/useCheckBox";
 import useDragAndDrop from '../setup/useDragAndDrop';
-import { checkboxEvents, dragEvents, nodeEvents } from "@/misc/nodeEvents";
-import useCommon from '@/setup/useCommon';
+import { checkboxEvents, dragEvents, nodeEvents } from "../misc/nodeEvents";
+import useCommon from '../setup/useCommon';
 
 export default {
   components: {

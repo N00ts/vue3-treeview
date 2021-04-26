@@ -1,4 +1,4 @@
-import { INode } from "@/structure/INode";
+import { INode } from "../structure/INode";
 import IConfiguration from '../structure/IConfiguration';
 import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
 import ITreeProps from '../structure/ITreeProps';

@@ -1,7 +1,7 @@
-import { state } from "@/setup/store";
-import { INode } from "@/structure/INode";
-import INodeProps from "@/structure/INodeProps";
-import IUseNode from "@/structure/IUseNode";
+import { state } from "../setup/store";
+import { INode } from "../structure/INode";
+import INodeProps from "../structure/INodeProps";
+import IUseNode from "../structure/IUseNode";
 import isNil from "lodash-es/isNil";
 import eq from "lodash-es/eq";
 import isArray from "lodash-es/isArray";

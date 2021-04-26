@@ -16,9 +16,9 @@
         :icon="fakeIcon"/>
 </template>
 <script lang="ts">
-import useIcon from "@/setup/useIcon";
+import useIcon from "../setup/useIcon";
 import Icon from './Icon.vue';
-import { createDefaultIcon } from "@/misc/default";
+import { createDefaultIcon } from "../misc/default";
 
 export default {
     components: {

@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
     title: 'vue3-treeview',
     description: 'vue3-treeview documentation',
@@ -20,7 +22,11 @@ module.exports = {
       sidebar: {
           "/guide/": getSidebar()
       }
-  }
+  },
+  alias: {
+    '@docs': path.resolve(__dirname, '..'),
+    '@src': path.resolve(__dirname, '../../src'),
+  },
 }
 
 function getSidebar() {

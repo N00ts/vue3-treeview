@@ -1,9 +1,9 @@
-import { state } from "@/setup/store";
+import { state } from "./store";
 import { computed, ref } from "vue";
 import isNil from "lodash-es/isNil";
 import toInteger from "lodash-es/toInteger";
 import { defaultConfig } from '../misc/default';
-import { INode } from "@/structure/INode";
+import { INode } from "../structure/INode";
 
 export default function useLevel(props: {parentId: string, depth: number}): {} {
     const config = state.config;

@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import Tree from "./components/Tree.vue";
-import { INode } from "@/structure/INode";
+import { INode } from "./structure/INode";
 import { checkMode } from './structure/IConfiguration';
 import { INodeState } from './structure/INodeState';
 

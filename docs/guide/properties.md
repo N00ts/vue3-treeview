@@ -5,6 +5,8 @@
 | nodes  | Object | {}      | true     | Nodes              |
 | config | Object | {}      | true     | Tree configuration |
 
+<test/>
+
 ## Nodes
 Type: `{ [id]: Node }`  
 Default: <em>Empty Object</em>

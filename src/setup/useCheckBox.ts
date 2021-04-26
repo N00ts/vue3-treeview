@@ -2,9 +2,9 @@ import { computed, watch, ComputedRef } from 'vue';
 import INodeProps from '../structure/INodeProps';
 import { defaultConfig } from '../misc/default';
 import { checkboxEvents } from '../misc/nodeEvents';
-import auto from '@/setup/checkbox/auto';
+import auto from '../setup/checkbox/auto';
 import eq from "lodash-es/eq";
-import manual from '@/setup/checkbox/manual';
+import manual from '../setup/checkbox/manual';
 import { checkMode } from '../structure/IConfiguration';
 import IUseCommon from '../structure/IUseCommon';
 

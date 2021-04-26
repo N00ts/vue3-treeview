@@ -1,4 +1,4 @@
-import INodeProps from "@/structure/INodeProps";
+import INodeProps from "../structure/INodeProps";
 import isNil from "lodash-es/isNil";
 import { computed, toRefs, ref } from 'vue';
 import { state } from './store';
