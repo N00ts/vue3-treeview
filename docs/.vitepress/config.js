@@ -3,20 +3,24 @@ module.exports = {
     description: 'vue3-treeview documentation',
     base: '/vue3-treeview/',
     themeConfig: {
-        nav: [
-          {
-            text: 'Guide',
-            link: "/guide/getting-started"
-          },
-          {
-            text: 'Examples',
-            link: '/examples/',
-          }
-        ],
-        sidebar: {
-            "/guide/": getSidebar()
+      repo: 'N00ts/vue3-treeview',
+      docsDir: 'docs',
+      editLinks: true,
+      editLinkText: 'Edit this page on GitHub',
+      nav: [
+        {
+          text: 'Guide',
+          link: "/guide/getting-started"
+        },
+        {
+          text: 'Examples',
+          link: '/examples/',
         }
-    }
+      ],
+      sidebar: {
+          "/guide/": getSidebar()
+      }
+  }
 }
 
 function getSidebar() {

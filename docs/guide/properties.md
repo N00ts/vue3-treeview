@@ -110,16 +110,39 @@ The following table describe properties by "type" but they are all included in t
 Shape is a custom drawn shape. 
 For more information you can consult [SVG icon docs](https://developer.mozilla.org/en-US/docs/Web/SVG).
 
-| Prop    | Type   | Default | Required | Description                                                        |
-|---------|--------|---------|----------|--------------------------------------------------------------------|
-| type    | String | "shape" | false    | type can be "shape", "class", "img"                                |
-| width   | Number | null    | false    | width of the icon                                                  |
-| height  | Number | null    | false    | height of the icon                                                 |
-| class   | String | null    | false    | Even if your icon is drawn you can add a class to it               |
-| style   | String | null    | false    | Inline icon style                                                  |
-| viewbox | String | null    | false    | Viewbox of the drawn icon, for more information check svg icon doc |
-| d       | String | null    | false    | Icon drawn coordinates                                             |
-| fill    | String | null    | false    | Fill color of the svg icon                                         |
-| stroke  | String | null    | false    | SVG icon stroke property                                           |
+| Prop    | Type            | Default | Required | Description                                                        |
+|---------|-----------------|---------|----------|--------------------------------------------------------------------|
+| type    | String          | "shape" | false    | type can be "shape", "class", "img"                                |
+| width   | Number          | null    | false    | width of the icon                                                  |
+| height  | Number          | null    | false    | height of the icon                                                 |
+| class   | String / Array  | null    | false    | Even if your icon is drawn you can add a class to it               |
+| style   | String / Object | null    | false    | Inline icon style                                                  |
+| viewbox | String          | null    | false    | Viewbox of the drawn icon, for more information check svg icon doc |
+| d       | String          | null    | false    | Icon drawn coordinates                                             |
+| fill    | String          | null    | false    | Fill color of the svg icon                                         |
+| stroke  | String          | null    | false    | SVG icon stroke property                                           |
 
 ### Class
+
+A simple way to use svg icons is to design them with classes.
+To se how it work you can check [Front Awsome](https://fontawesome.com/)
+
+| Prop  | Type            | Default | Required | Description                         |
+|-------|-----------------|---------|----------|-------------------------------------|
+| type  | String          | "class" | false    | type can be "shape", "class", "img" |
+| class | String / Array  | null    | false    | The corresponding svg class         |
+| style | String / Object |         |          |                                     |
+
+### img
+
+You can also decide to use an image as Icon.
+
+| Prop   | Type            | Default | Required | Description                                            |
+|--------|-----------------|---------|----------|--------------------------------------------------------|
+| type   | String          | "img"   | false    | type can be "shape", "class", "img"                    |
+| src    | String          | null    | false    | The image source                                       |
+| alt    | String          | null    | false    | The alt tag                                            |
+| width  | Number          | null    | false    | width of the icon                                      |
+| height | Number          | null    | false    | height of the icon                                     |
+| class  | String / Array  | null    | false    | ven if your icon is an image you can add a class to it |
+| style  | String / Object | null    | false    | Inline icon style                                      |
