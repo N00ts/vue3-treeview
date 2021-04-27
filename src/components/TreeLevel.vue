@@ -22,11 +22,11 @@
 
 <script lang="ts">
 import useLevel from '../setup/useLevel';
-import TreeNode from "./TreeNode.vue";
+import {defineAsyncComponent} from "vue"
 
 export default {
   components: {
-    TreeNode
+    TreeNode: defineAsyncComponent(() => import("./TreeNode.vue"))
   },
   props: {
     depth: {
@@ -37,11 +37,6 @@ export default {
     parentId: {
       type: String,
       default: null
-    }
-  },
-  beforeCreate() {
-    if (this.$options.components) {
-      this.$options.components.TreeNode = require("./TreeNode.vue").default;
     }
   },
   setup(props) {

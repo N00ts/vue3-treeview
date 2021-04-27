@@ -100,17 +100,17 @@
 
 <script lang="ts">
 import useInput from "../setup/useInput";
-import TreeLevel from './TreeLevel.vue';
 import TreeIcons from './TreeIcons.vue';
 import { useNode } from "../setup/useNode";
 import { useCheckBox } from "../setup/useCheckBox";
 import useDragAndDrop from '../setup/useDragAndDrop';
 import { checkboxEvents, dragEvents, nodeEvents } from "../misc/nodeEvents";
 import useCommon from '../setup/useCommon';
+import {defineAsyncComponent} from "vue"
 
 export default {
   components: {
-    TreeLevel,
+  TreeLevel: defineAsyncComponent(() => import("./TreeLevel.vue")),
     TreeIcons
   },
   emits: [
@@ -146,11 +146,6 @@ export default {
       ...useCheckBox(cmn, props, emit),
       ...useDragAndDrop(cmn, props, emit)
     };
-  },
-  beforeCreate() {
-    if (this.$options.components) {
-      this.$options.components.TreeLevel = require("./TreeLevel.vue").default;
-    }    
   },
   computed: {
     nodeClass(): string[] {
