@@ -6,7 +6,6 @@
   >
     <TreeNode
       v-for="(item, index) in level"
-      v-bind="$attrs"
       :key="item.id"
       :node="item"
       :depth="depth"

@@ -98,7 +98,6 @@
       <TreeLevel
         v-if="!isLoading && hasChildren"
         v-show="opened"
-        v-bind="$attrs"
         :parent-id="id"
         :depth="depth + 1"
         :ref="setLevelRef"
