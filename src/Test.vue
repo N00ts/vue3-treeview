@@ -1,26 +1,54 @@
 <template>
-  
   <p>
     <label for="showCheckBoxes">Show checkboxes</label>
-    <input id="showCheckBoxes" type="checkbox" v-model="configuration.checkboxes"/>
+    <input
+      id="showCheckBoxes"
+      type="checkbox"
+      v-model="configuration.checkboxes"
+    >
 
     <label for="padding">padding</label>
-    <input id="padding" type="number" v-model.number="configuration.padding" />
+    <input
+      id="padding"
+      type="number"
+      v-model.number="configuration.padding"
+    >
 
     <label for="editable">editable</label>
-    <input id="editable" type="checkbox" v-model="configuration.editable" />
+    <input
+      id="editable"
+      type="checkbox"
+      v-model="configuration.editable"
+    >
 
     <label for="disabled">disabled</label>
-    <input id="disabled" type="checkbox" v-model="configuration.disabled" />
+    <input
+      id="disabled"
+      type="checkbox"
+      v-model="configuration.disabled"
+    >
 
     <label for="keyboardNavigation">keyboardNavigation</label>
-    <input id="keyboardNavigation" type="checkbox" v-model="configuration.keyboardNavigation" />
+    <input
+      id="keyboardNavigation"
+      type="checkbox"
+      v-model="configuration.keyboardNavigation"
+    >
 
     <label for="DragandDrop">DragandDrop</label>
-    <input id="DragandDrop" type="checkbox" v-model="configuration.dragAndDrop" />
+    <input
+      id="DragandDrop"
+      type="checkbox"
+      v-model="configuration.dragAndDrop"
+    >
 
     <label for="checkMode">Checkmode auto</label>
-    <input id="checkMode" type="checkbox" :value="modeBool" @input="changeMode"/>
+    <input
+      id="checkMode"
+      type="checkbox"
+      :value="modeBool"
+      @input="changeMode"
+    >
   </p>
 
   <Tree
@@ -43,19 +71,34 @@
     @node-dragleave="log('node-dragleave')"
     @node-dragend="log('node-dragend')"
     @node-over="log('node-over')"
-    @node-drop="log('node-drop')"/>
+    @node-drop="log('node-drop')"
+  />
 
   <p>
     <label for="nbRoots">Number of Roots</label>
-    <input id="nbRoots" type="number" v-model.number="nbRoots" />
+    <input
+      id="nbRoots"
+      type="number"
+      v-model.number="nbRoots"
+    >
 
     <label for="maxChild">Max child</label>
-    <input id="maxChild" type="number" v-model.number="maxChild" />
+    <input
+      id="maxChild"
+      type="number"
+      v-model.number="maxChild"
+    >
 
     <label for="maxDepth">Max Depth</label>
-    <input id="maxDepth" type="number" v-model.number="maxDepth" />
+    <input
+      id="maxDepth"
+      type="number"
+      v-model.number="maxDepth"
+    >
 
-    <button v-on:click.stop="randomTree">Generate random tree</button>
+    <button @click.stop="randomTree">
+      Generate random tree
+    </button>
   </p>
 </template>
 

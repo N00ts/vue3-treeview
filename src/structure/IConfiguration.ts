@@ -15,7 +15,7 @@ export default interface IConfiguration {
     checkboxes?: boolean;
     checkMode?: checkMode;
     dragAndDrop?: boolean;
-    keyboardNavigation?:boolean;
+    keyboardNavigation?: boolean;
     disabled?: boolean;
     disabledClass?: string;
     openedIcon?: IIcon;

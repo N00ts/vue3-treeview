@@ -6,20 +6,21 @@
     :height="icon.height"
     :class="icon.class"
     :style="icon.style"
-    :viewBox="icon.viewBox">
+    :viewBox="icon.viewBox"
+  >
 
     <path 
       :d="icon.draw"
       :fill="icon.fill"
-      :stroke="icon.stroke">
-    </path>
+      :stroke="icon.stroke"
+    />
   </svg>
 
   <i
     v-else-if="icon.type === 'class'" 
     :class="icon.class"
-    :style="icon.style">
-  </i>
+    :style="icon.style"
+  />
 
   <img 
     v-else-if="icon.type === 'img'"

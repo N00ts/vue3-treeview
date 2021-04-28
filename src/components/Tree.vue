@@ -1,20 +1,30 @@
 <template>
-    <div class="tree" :ref="setElementRef" :style="style">
-        <TreeLevel 
-            :depth="0"
-            :parentId="null"
-            @node-blur="blur"
-            v-bind="$attrs">
-            
-            <template v-slot:before-input="props">
-              <slot name="before-input" :node="props.node"></slot>
-            </template>
+  <div
+    class="tree"
+    :ref="setElementRef"
+    :style="style"
+  >
+    <TreeLevel 
+      :depth="0"
+      :parent-id="null"
+      @node-blur="blur"
+      v-bind="$attrs"
+    >
+      <template #before-input="props">
+        <slot
+          name="before-input"
+          :node="props.node"
+        />
+      </template>
 
-            <template v-slot:after-input="props">
-              <slot name="after-input" :node="props.node"></slot>
-            </template>
-        </TreeLevel>
-    </div>
+      <template #after-input="props">
+        <slot
+          name="after-input"
+          :node="props.node"
+        />
+      </template>
+    </TreeLevel>
+  </div>
 </template>
 
 <script lang="ts">

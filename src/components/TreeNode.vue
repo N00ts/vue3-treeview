@@ -9,8 +9,8 @@
     @keydown.left.stop="left"
     @keydown.right.stop="right"
     @keydown.up.stop="up"
-    @keydown.down.stop="down">
-
+    @keydown.down.stop="down"
+  >
     <div  
       class="node-wrapper"
       :class="nodeClass"
@@ -25,23 +25,25 @@
       @dragenter.prevent.stop="dragenter"
       @dragleave.prevent.stop="dragleave"
       @dragover.prevent.stop="dragover"
-      @drop.prevent.stop="drop">
-
+      @drop.prevent.stop="drop"
+    >
       <div
         class="icon-wrapper"
         v-if="!hideIcons"
-        @click.stop="toggle">
-
+        @click.stop="toggle"
+      >
         <TreeIcons
-          :isLeaf="isLeaf"
-          :opened="opened">
-        </TreeIcons>
+          :is-leaf="isLeaf"
+          :opened="opened"
+        />
       </div>
 
-      <div class="checkbox-wrapper"
-          v-if="hasCheckbox"
-          :class="checkedClass"
-          @click.stop="clickCheckbox">
+      <div
+        class="checkbox-wrapper"
+        v-if="hasCheckbox"
+        :class="checkedClass"
+        @click.stop="clickCheckbox"
+      >
         <input
           type="checkbox"
           tabindex="-1"
@@ -49,10 +51,13 @@
           :checked="checked"
           :disabled="disabled"
           :indeterminate.prop="indeterminate"
-        />
+        >
       </div>  
 
-      <slot name="before-input" :node="node"></slot>
+      <slot
+        name="before-input"
+        :node="node"
+      />
 
       <div class="input-wrapper">
         <input
@@ -64,17 +69,21 @@
           :ref="setInputRef"
           :disabled="disabled"
           @blur="blur"
-        />
+        >
 
         <span 
           v-else
           class="node-text"
-          @dblclick="focusInputs">
+          @dblclick="focusInputs"
+        >
           {{ text }}
         </span>
       </div>
 
-      <slot name="after-input" :node="node"></slot>
+      <slot
+        name="after-input"
+        :node="node"
+      />
     </div>
 
     <transition name="level">
@@ -82,16 +91,22 @@
         v-if="hasChildren"
         v-show="opened"
         v-bind="$attrs"
-        :parentId="id"
+        :parent-id="id"
         :depth="depth + 1"
-        :ref="setLevelRef">
-
-        <template v-slot:before-input="props">
-          <slot name="before-input" :node="props.node"></slot>
+        :ref="setLevelRef"
+      >
+        <template #before-input="props">
+          <slot
+            name="before-input"
+            :node="props.node"
+          />
         </template>
 
-        <template v-slot:a*fter-input="props">
-          <slot name="after-input" :node="props.node"></slot>
+        <template #a*fter-input="props">
+          <slot
+            name="after-input"
+            :node="props.node"
+          />
         </template>
       </TreeLevel>
     </transition>
@@ -133,7 +148,7 @@ export default {
     },
     parentId: {
       default: null,
-      string: String
+      type: String
     }
   },
   setup(props, { attrs, emit }) {

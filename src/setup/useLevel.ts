@@ -5,7 +5,7 @@ import toInteger from "lodash-es/toInteger";
 import { defaultConfig } from '../misc/default';
 import { INode } from "../structure/INode";
 
-export default function useLevel(props: {parentId: string, depth: number}): {} {
+export default function useLevel(props: {parentId: string; depth: number}): {} {
     const config = state.config;
     const nodes = state.nodes;
     const depth = ref(props.depth);

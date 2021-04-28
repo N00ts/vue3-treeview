@@ -31,7 +31,7 @@ export function createDefaultIcon(draw: string): IIcon {
     };
 }
 
-export const defaultConfig : IConfiguration = {
+export const defaultConfig: IConfiguration = {
     roots: [],
     padding: 16,
     editable: false,

@@ -1,19 +1,22 @@
 <template>
-    <template
-        v-if="useIcons">
-
-        <Icon
-            v-if="opened"
-            :icon="openedIcon"/>
-
-        <Icon
-            v-else
-            :icon="closedIcon"/>
-    </template>
+  <template
+    v-if="useIcons"
+  >
+    <Icon
+      v-if="opened"
+      :icon="openedIcon"
+    />
 
     <Icon
-        v-else
-        :icon="fakeIcon"/>
+      v-else
+      :icon="closedIcon"
+    />
+  </template>
+
+  <Icon
+    v-else
+    :icon="fakeIcon"
+  />
 </template>
 <script lang="ts">
 import useIcon from "../setup/useIcon";

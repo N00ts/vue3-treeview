@@ -1,5 +1,9 @@
 <template>
-  <ul class="tree-level" id="id" :style="style">
+  <ul
+    class="tree-level"
+    id="id"
+    :style="style"
+  >
     <TreeNode
       v-for="(item, index) in level"
       v-bind="$attrs"
@@ -7,14 +11,20 @@
       :node="item"
       :depth="depth"
       :index="index"
-      :parentId="parentId">
-
-      <template v-slot:before-input="props">
-        <slot name="before-input" :node="props.node"></slot>
+      :parent-id="parentId"
+    >
+      <template #before-input="props">
+        <slot
+          name="before-input"
+          :node="props.node"
+        />
       </template>
 
-      <template v-slot:after-input="props">
-        <slot name="after-input" :node="props.node"></slot>
+      <template #after-input="props">
+        <slot
+          name="after-input"
+          :node="props.node"
+        />
       </template>
     </TreeNode>
   </ul>
