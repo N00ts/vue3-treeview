@@ -102,7 +102,7 @@
           />
         </template>
 
-        <template #a*fter-input="props">
+        <template #after-input="props">
           <slot
             name="after-input"
             :node="props.node"
