@@ -12,7 +12,7 @@ enum DragPosition {
     under
 }
 
-export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
+export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     const node = cmn.node;
     const parentId = ref(props.parentId);
     const config = cmn.config;
@@ -103,26 +103,26 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit:
                 wrapper: wrapper.value,
                 parentId: parentId.value
             };
-            emit(dragEvents.start, context.value);
+            cmn.root.emit(dragEvents.start, context.value);
         }
     };
 
     const dragend = (evt: DragEvent): void => {
-        emit(dragEvents.end, context.value);
+        cmn.root.emit(dragEvents.end, context.value);
     }
 
     const dragenter = (evt: DragEvent): void => {
-        emit(dragEvents.enter, context.value);
+        cmn.root.emit(dragEvents.enter, context.value);
     }
 
     const dragleave = (evt: DragEvent): void => {
         pos.value = null;
-        emit(dragEvents.Leave, context.value);
+        cmn.root.emit(dragEvents.Leave, context.value);
     }
 
     const dragover = (evt: DragEvent): void => {
         if (!isSameNode.value && isDragging.value && !dragContain.value) {
-            emit(dragEvents.over, context.value);
+            cmn.root.emit(dragEvents.over, context.value);
 
             if (wrapper.value) {
                 const factor = .3;
@@ -154,7 +154,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps, emit:
 
     const drop = (evt: DragEvent): void => {
 
-        emit(dragEvents.drop, context.value);
+        cmn.root.emit(dragEvents.drop, context.value);
 
         if (!isSameNode.value && droppable.value && !dragContain.value) {
             switch(pos.value) {

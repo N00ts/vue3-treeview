@@ -8,7 +8,7 @@ import manual from '../setup/checkbox/manual';
 import { checkMode } from '../structure/IConfiguration';
 import IUseCommon from '../structure/IUseCommon';
 
-export function useCheckBox(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
+export function useCheckBox(cmn: IUseCommon): {} {
     const node = cmn.node;
     const config = cmn.config;
 
@@ -84,7 +84,7 @@ export function useCheckBox(cmn: IUseCommon, props: INodeProps, emit: (event: st
     const clickCheckbox = (): void => {
         if (!cmn.disabled.value) {
             factory.value.click()
-            emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node);
+            cmn.root.emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node);
         }
     }
 

@@ -1,11 +1,13 @@
-import { ref, computed } from 'vue';
+import { ref, computed, provide } from 'vue';
 import { INode } from '../structure/INode';
 import { createStore, state } from "./store";
 
-export default function useTree(props: any): {} {
+export default function useTree(props: any, emit: (event: string, ...args: any[]) => void): {} {
     const element = ref<HTMLElement>(null);
 
     createStore(props);
+
+    provide("emitter", emit);
 
     const style = computed(() => {
         return {

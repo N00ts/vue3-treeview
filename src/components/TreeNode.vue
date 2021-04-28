@@ -166,15 +166,15 @@ export default {
       type: String
     }
   },
-  setup(props, { emit }) {
-    const cmn = useCommon(props, emit);
+  setup(props) {
+    const cmn = useCommon(props);
 
     return {
       ...cmn,
-      ...useNode(cmn, props, emit),
-      ...useInput(cmn, props, emit),
-      ...useCheckBox(cmn, props, emit),
-      ...useDragAndDrop(cmn, props, emit)
+      ...useInput(cmn),
+      ...useCheckBox(cmn),
+      ...useNode(cmn, props),
+      ...useDragAndDrop(cmn, props)
     };
   },
   computed: {

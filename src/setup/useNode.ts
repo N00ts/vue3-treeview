@@ -10,7 +10,7 @@ import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 import { Vue } from 'vue-class-component';
 
-export function useNode(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseNode {
+export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const node = cmn.node;
     const config = cmn.config;
     const wrapper = cmn.wrapper;
@@ -114,14 +114,14 @@ export function useNode(cmn: IUseCommon, props: INodeProps, emit: (event: string
     })
 
     watch(opened, (nv: boolean) => {
-        nv ? emit(nodeEvents.opened, node.value) : emit(nodeEvents.closed, node.value);
+        nv ? cmn.root.emit(nodeEvents.opened, node.value) : cmn.root.emit(nodeEvents.closed, node.value);
     });
 
     watch(isFocused, (nv: boolean, ov: boolean) => {
         if (!eq(nv, ov) && nv && wrapper.value) {
             nextTick(() => {
                 wrapper.value.focus();
-                emit(nodeEvents.focus, node);
+                cmn.root.emit(nodeEvents.focus, node);
             });
         }
     });
@@ -132,7 +132,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, emit: (event: string
 
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
-        emit(nodeEvents.toggle, node.value);
+        cmn.root.emit(nodeEvents.toggle, node.value);
     });
 
 

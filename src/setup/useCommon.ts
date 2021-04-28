@@ -1,17 +1,21 @@
 import INodeProps from "../structure/INodeProps";
 import isNil from "lodash-es/isNil";
-import { computed, toRefs, ref } from 'vue';
+import { computed, toRefs, ref, inject } from 'vue';
 import { state } from './store';
 import IUseCommon from '../structure/IUseCommon';
 import { defaultConfig } from '../misc/default';
 import { nodeEvents } from '../misc/nodeEvents';
 
-export default function useCommon(props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseCommon {
+export default function useCommon(props: INodeProps): IUseCommon {
     const { node } = toRefs(props);
 
     const config = state.config;
 
     const wrapper = ref<HTMLElement>(null);
+
+    const root = {
+        emit: inject<(event: string, ...args: any[]) => void>("emitter")
+    };
 
     // ensure state exist
     if (isNil(node.value.state)) {
@@ -49,7 +53,7 @@ export default function useCommon(props: INodeProps, emit: (event: string, ...ar
 
         if (!current.contains(related)) {
             config.value.editing = null;
-            emit(nodeEvents.blur, e, node.value);
+            root.emit(nodeEvents.blur, e, node.value);
         }
     });
 
@@ -63,6 +67,7 @@ export default function useCommon(props: INodeProps, emit: (event: string, ...ar
         wrapper,
         editable,
         editing,
-        blur
+        blur,
+        root
     };
 }

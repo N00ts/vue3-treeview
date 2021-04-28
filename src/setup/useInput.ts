@@ -4,7 +4,7 @@ import eq from "lodash-es/eq";
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 
-export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): {} {
+export default function useInput(cmn: IUseCommon): {} {
     const node = cmn.node; 
     const config = cmn.config;
     const wrapper = cmn.wrapper;
@@ -36,7 +36,7 @@ export default function useInput(cmn: IUseCommon, props: INodeProps, emit: (even
     const focusInputs = (() => {
         if (editable.value && !cmn.disabled.value) {
             config.value.editing = node.value.id;
-            emit(nodeEvents.edit, node.value);
+            cmn.root.emit(nodeEvents.edit, node.value);
         }
     });
 

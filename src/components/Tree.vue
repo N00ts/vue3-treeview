@@ -47,9 +47,9 @@ export default {
       default: () => {}
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     return {
-      ...useTree(props)
+      ...useTree(props, emit)
     }
   },
   methods: {

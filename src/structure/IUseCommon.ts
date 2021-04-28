@@ -14,4 +14,5 @@ export default interface IUseCommon {
     editable: Ref<boolean>;
     editing: Ref<boolean>;
     blur: (e: Event) => void;
+    root: { emit: (event: string, ...args: any[]) => void };
 }
