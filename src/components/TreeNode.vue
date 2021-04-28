@@ -89,7 +89,7 @@
     <transition name="load">
       <slot
         v-if="isLoading && !hasChildren"
-        name="load-slot"
+        name="loading-slot"
         :node="node"
       />
     </transition>
@@ -102,9 +102,9 @@
         :depth="depth + 1"
         :ref="setLevelRef"
       >
-        <template #load-slot="props">
+        <template #loading-slot="props">
           <slot
-            name="load-slot"
+            name="loading-slot"
             :node="props.node"
           />
         </template>

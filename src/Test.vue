@@ -56,7 +56,7 @@
     :nodes="nodes"
     :config="config"
     
-    @node-opened="log('node-opened')"
+    @node-opened="log(`node-opened`)"
     @node-closed="log('node-closed')"
     @node-focus="log('node-focus')"
     @node-toggle="log('node-toggle')"
@@ -73,8 +73,10 @@
     @node-over="log('node-over')"
     @node-drop="log('node-drop')"
   >
-    <!--template #load-slot="props">
-      <div class="load"></div>
+    <!--template #loading-slot>
+      <div class="load">
+        Loading...
+      </div>
     </template>
 
     <template #before-input="props">
@@ -223,6 +225,7 @@ export default {
             }
 
             this.nodes[id] = n;
+            node.children = [];
             node.children.push(id)
           }
           node.state.isLoading = false;

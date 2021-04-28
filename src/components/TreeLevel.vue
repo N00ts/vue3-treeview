@@ -12,9 +12,9 @@
       :index="index"
       :parent-id="parentId"
     >
-      <template #load-slot="props">
+      <template #loading-slot="props">
         <slot
-          name="load-slot"
+          name="loading-slot"
           :node="props.node"
         />
       </template>

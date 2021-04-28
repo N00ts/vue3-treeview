@@ -10,6 +10,13 @@
       @node-blur="blur"
       v-bind="$attrs"
     >
+      <template #loading-slot="props">
+        <slot
+          name="loading-slot"
+          :node="props.node"
+        />
+      </template>
+
       <template #before-input="props">
         <slot
           name="before-input"
