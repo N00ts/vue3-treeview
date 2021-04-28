@@ -86,15 +86,30 @@
       />
     </div>
 
+    <transition name="load">
+      <slot
+        v-if="isLoading && !hasChildren"
+        name="load-slot"
+        :node="node"
+      />
+    </transition>
+
     <transition name="level">
       <TreeLevel
-        v-if="hasChildren"
+        v-if="!isLoading && hasChildren"
         v-show="opened"
         v-bind="$attrs"
         :parent-id="id"
         :depth="depth + 1"
         :ref="setLevelRef"
       >
+        <template #load-slot="props">
+          <slot
+            name="load-slot"
+            :node="props.node"
+          />
+        </template>
+
         <template #before-input="props">
           <slot
             name="before-input"
@@ -125,7 +140,7 @@ import {defineAsyncComponent} from "vue"
 
 export default {
   components: {
-  TreeLevel: defineAsyncComponent(() => import("./TreeLevel.vue")),
+    TreeLevel: defineAsyncComponent(() => import("./TreeLevel.vue")),
     TreeIcons
   },
   emits: [
@@ -151,12 +166,12 @@ export default {
       type: String
     }
   },
-  setup(props, { attrs, emit }) {
+  setup(props, { emit }) {
     const cmn = useCommon(props, emit);
 
     return {
       ...cmn,
-      ...useNode(cmn, props, attrs, emit),
+      ...useNode(cmn, props, emit),
       ...useInput(cmn, props, emit),
       ...useCheckBox(cmn, props, emit),
       ...useDragAndDrop(cmn, props, emit)

@@ -10,7 +10,7 @@ import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 import { Vue } from 'vue-class-component';
 
-export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string, unknown>, emit: (event: string, ...args: any[]) => void): IUseNode {
+export function useNode(cmn: IUseCommon, props: INodeProps, emit: (event: string, ...args: any[]) => void): IUseNode {
     const node = cmn.node;
     const config = cmn.config;
     const wrapper = cmn.wrapper;
@@ -47,6 +47,10 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
 
     const opened = computed(() => {
         return hasState.value && node.value.state.opened || false;
+    });
+
+    const isLoading = computed(() => {
+        return hasState.value && node.value.state.isLoading || false;
     });
 
     const style = computed(() => {
@@ -152,18 +156,6 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         }
     });
 
-    const prevVisible = ((id: string) => {
-        const n = state.nodes.value[id];  
-        const p = state.nodes.value[n.parent];
-
-        if (!p) {
-            const idx = roots.value.indexOf(id);
-            return lastChild(roots.value[idx - 1]) || null;            
-        }
-
-        return prev(p.id);
-    });
-
     const prev = ((id: string): string => { 
         const n = state.nodes.value[id];
 
@@ -177,6 +169,18 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         } 
 
         return n.id;
+    });
+
+    const prevVisible = ((id: string) => {
+        const n = state.nodes.value[id];  
+        const p = state.nodes.value[n.parent];
+
+        if (!p) {
+            const idx = roots.value.indexOf(id);
+            return lastChild(roots.value[idx - 1]) || null;            
+        }
+
+        return prev(p.id);
     });
 
     const lastChild = ((id: string): string => {
@@ -205,17 +209,11 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         }
     });
 
-    const nextVisible = ((id: string): string => {
-        const n = state.nodes.value[id];
-
-        if (n.children && n.children.length > 0 && n.state.opened) {
-            return n.children[0];
-        }
-
-        const p = state.nodes.value[n.parent];
-
-        return p ? next(p, id) : nextRoot(id);
-    });
+    const nextRoot = ((id: string) => {
+        const roots = config.value.roots;
+        const idx = roots.indexOf(id);
+        return roots[idx + 1] || null;
+    })
 
     const next = ((p: INode, id: string): string => {
         const idx = p.children.indexOf(id);
@@ -231,11 +229,17 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         return nextRoot(p.id);
     });
 
-    const nextRoot = ((id: string) => {
-        const roots = config.value.roots;
-        const idx = roots.indexOf(id);
-        return roots[idx + 1] || null;
-    })
+    const nextVisible = ((id: string): string => {
+        const n = state.nodes.value[id];
+
+        if (n.children && n.children.length > 0 && n.state.opened) {
+            return n.children[0];
+        }
+
+        const p = state.nodes.value[n.parent];
+
+        return p ? next(p, id) : nextRoot(id);
+    });
 
     return {
         id,
@@ -249,6 +253,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps, attrs: Record<string
         focusClass,
         disabledClass,
         isLeaf,
+        isLoading,
         right,
         left,
         up,

@@ -4,42 +4,42 @@
     <input
       id="showCheckBoxes"
       type="checkbox"
-      v-model="configuration.checkboxes"
+      v-model="config.checkboxes"
     >
 
     <label for="padding">padding</label>
     <input
       id="padding"
       type="number"
-      v-model.number="configuration.padding"
+      v-model.number="config.padding"
     >
 
     <label for="editable">editable</label>
     <input
       id="editable"
       type="checkbox"
-      v-model="configuration.editable"
+      v-model="config.editable"
     >
 
     <label for="disabled">disabled</label>
     <input
       id="disabled"
       type="checkbox"
-      v-model="configuration.disabled"
+      v-model="config.disabled"
     >
 
     <label for="keyboardNavigation">keyboardNavigation</label>
     <input
       id="keyboardNavigation"
       type="checkbox"
-      v-model="configuration.keyboardNavigation"
+      v-model="config.keyboardNavigation"
     >
 
     <label for="DragandDrop">DragandDrop</label>
     <input
       id="DragandDrop"
       type="checkbox"
-      v-model="configuration.dragAndDrop"
+      v-model="config.dragAndDrop"
     >
 
     <label for="checkMode">Checkmode auto</label>
@@ -54,7 +54,7 @@
   <Tree
     ref="Tree"
     :nodes="nodes"
-    :config="configuration"
+    :config="config"
     
     @node-opened="log('node-opened')"
     @node-closed="log('node-closed')"
@@ -72,7 +72,19 @@
     @node-dragend="log('node-dragend')"
     @node-over="log('node-over')"
     @node-drop="log('node-drop')"
-  />
+  >
+    <!--template #load-slot="props">
+      <div class="load"></div>
+    </template>
+
+    <template #before-input="props">
+      <span> {{ props.node.text }} </span>
+    </template>
+
+    <template #after-input="props">
+      <span> {{ props.node.text }} </span>
+    </template!-->
+  </Tree>
 
   <p>
     <label for="nbRoots">Number of Roots</label>
@@ -114,8 +126,9 @@ export default {
   },
   data: function() {
     return {
-      configuration: {
+      config: {
         roots: ["id1", "id2", "id3"],
+        leaves: ["id10000"],
         checkboxes: true,
         dragAndDrop: false,
         checkMode: checkMode.manual,
@@ -197,19 +210,38 @@ export default {
     log(s: string): void {
       console.log(s);
     },
+    serverLoading(node: INode): void {
+      if (node.children == null || node.children.length === 0) {
+        node.state.isLoading = true;
+        setTimeout(() => {
+          for (let i = 0; i < Math.round(Math.random() * 4); i++) {
+            const id = `${Date.now()}`;
+            const n: INode = {
+              text: `loaded from server`,
+              children: [],
+              state: {}
+            }
+
+            this.nodes[id] = n;
+            node.children.push(id)
+          }
+          node.state.isLoading = false;
+        }, 3000);
+      }
+    },
     changeMode(): void {
       this.modeBool = !this.modeBool;
-      this.configuration.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
+      this.config.checkMode = this.modeBool ? checkMode.auto : checkMode.manual;
     },
     randomTree(): void {
-      this.configuration.roots = [];
+      this.config.roots = [];
       this.nodes = {};
       this.nbNodes = 0;
 
       for (let i = 0; i < this.nbRoots; i++) {
         let maxDepth = this.maxDepth;
         const n = this.createNode(i + 1, maxDepth);
-        this.configuration.roots.push(n);
+        this.config.roots.push(n);
       }
 
       console.log(`node created: ${this.nbNodes}`);

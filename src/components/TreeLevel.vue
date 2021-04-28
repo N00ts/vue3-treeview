@@ -13,6 +13,13 @@
       :index="index"
       :parent-id="parentId"
     >
+      <template #load-slot="props">
+        <slot
+          name="load-slot"
+          :node="props.node"
+        />
+      </template>
+
       <template #before-input="props">
         <slot
           name="before-input"

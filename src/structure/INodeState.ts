@@ -6,4 +6,5 @@ export interface INodeState {
     dropable?: boolean;
     checked?: boolean;
     indeterminate?: boolean;
+    isLoading?: boolean;
 }
