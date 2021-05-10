@@ -23,7 +23,7 @@ module.exports = {
     '@docs': path.resolve(__dirname, '..'),
     '@src': path.resolve(__dirname, '../../src'),
   },
-}
+} 
 
 function getSidebar() {
     return [

@@ -5,9 +5,7 @@
 | nodes  | Object | {}      | true     | Nodes              |
 | config | Object | {}      | true     | Tree configuration |
 
-``` js
-<basic/>
-```
+<<< @/.vitepress/theme/basic.vue
 
 <basic/>
 

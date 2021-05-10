@@ -17,9 +17,10 @@ import Tree from "vue3-treeview";
 ### Styling
 
 ::: tip
-By default the project comes without any styling.
-To import the default stylesheet
+By default the project comes without any styling. A default stylesheet comes with the bundle 
 :::
+
+To import the default stylesheet:
 
 ``` js
 import "vue3-treeview/dist/vue3-treeview.css";
