@@ -84,7 +84,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
     const clickCheckbox = (): void => {
         if (!cmn.disabled.value) {
             factory.value.click()
-            cmn.root.emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node);
+            cmn.root.emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node.value);
         }
     }
 

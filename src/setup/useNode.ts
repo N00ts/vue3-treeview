@@ -121,7 +121,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         if (!eq(nv, ov) && nv && wrapper.value) {
             nextTick(() => {
                 wrapper.value.focus();
-                cmn.root.emit(nodeEvents.focus, node);
+                cmn.root.emit(nodeEvents.focus, node.value);
             });
         }
     });

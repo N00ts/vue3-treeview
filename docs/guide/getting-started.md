@@ -12,3 +12,19 @@ npm install vue3-treeview
 
 ``` js
 import Tree from "vue3-treeview";
+```
+
+### Styling
+
+::: tip
+By default the project comes without any styling.
+To import the default stylesheet
+:::
+
+``` js
+import "vue3-treeview/dist/vue3-treeview.css";
+```
+
+::: danger
+In the following documentation all examples will use default styling
+:::

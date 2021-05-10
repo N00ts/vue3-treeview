@@ -5,7 +5,11 @@
 | nodes  | Object | {}      | true     | Nodes              |
 | config | Object | {}      | true     | Tree configuration |
 
-<test/>
+``` js
+<basic/>
+```
+
+<basic/>
 
 ## Nodes
 Type: `{ [id]: Node }`  

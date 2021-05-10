@@ -13,10 +13,6 @@ module.exports = {
         {
           text: 'Guide',
           link: "/guide/getting-started"
-        },
-        {
-          text: 'Examples',
-          link: '/examples/',
         }
       ],
       sidebar: {
@@ -39,5 +35,9 @@ function getSidebar() {
         text: 'Properties',
         link: '/guide/properties'
       },
+      {
+        text: 'Events',
+        link: 'guide/events'
+      }
     ]
   }

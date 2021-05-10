@@ -1,9 +1,9 @@
 import DefaultTheme from 'vitepress/theme'
-import test from "./test.vue";
+import test from "./basic.vue";
 
 export default {
   ...DefaultTheme,
   enhanceApp({ app }) {
-    app.component('test', test);
+    app.component('basic', test);
   }
 }
