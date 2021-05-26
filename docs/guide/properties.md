@@ -36,7 +36,7 @@ Default: <em>Empty Object</em>
 Type: `Object`  
 Default: <em>Empty Object</em>
 
-> A node has the following structure
+> A node has the following structure:
 
 | Prop     | Type                 | Default | Required | Description                |
 |----------|----------------------|---------|----------|----------------------------|
