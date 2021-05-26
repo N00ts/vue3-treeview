@@ -1,9 +1,9 @@
 ## Tree
 
-| Prop   | Type   | Default | Required | Description        |
-|--------|--------|---------|----------|--------------------|
-| nodes  | Object | {}      | true     | Nodes              |
-| config | Object | {}      | true     | Tree configuration |
+| Prop   | Type                             | Default | Required | Description        |
+|--------|----------------------------------|---------|----------|--------------------|
+| nodes  | [Object](#nodes)                 | {}      | true     | Nodes              |
+| config | [IConfiguration](#configuration) | {}      | true     | Tree configuration |
 
 <<< @/.vitepress/theme/basic.vue
 
@@ -14,7 +14,6 @@ Type: `{ [id]: Node }`
 Default: <em>Empty Object</em>
 
 > If no node defined nothing will be displayed
-
 ``` js
 {
     id1: {
@@ -39,11 +38,11 @@ Default: <em>Empty Object</em>
 
 > A node has the following structure
 
-| Prop     | Type          | Default | Required | Description                  |
-|----------|---------------|---------|----------|------------------------------|
-| text     | String        | ""      | false    | Text displayed in the node   |
-| children | Array         | []      | false    | Array of children            |
-| state    | Object        | null    | false    | State of the node, see above |
+| Prop     | Type                 | Default | Required | Description                |
+|----------|----------------------|---------|----------|----------------------------|
+| text     | String               | ""      | false    | Text displayed in the node |
+| children | Array                | []      | false    | Array of children          |
+| state    | [INodeState](#state) | null    | false    | State of the node          |
 
 ``` js
 {
@@ -70,6 +69,7 @@ Default: <em>Empty Object</em>
 | dropable      | Boolean | true    | false    | Determine if a node is dropable or not           |
 | checked       | Boolean | false   | false    | Node checkbox state                              |
 | indeterminate | Boolean | false   | false    | Node checkbox indeterminate state                |
+| isLoading     | Boolean | false   | false    | Used for [lazy loading](./lazy.md)               |
 
 ## Configuration
 
@@ -77,25 +77,25 @@ Tree Configuration
 Type: `Object`  
 Default: <em>Empty Object</em>
 
-| Prop               | Type    | Default         | Required | Description                                                                                                                                               |
-|--------------------|---------|-----------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| roots              | Array   | []              | true     | Roots of the tree, this property is mandaroty to build the tree                                                                                           |
-| leaves             | Array   | []              | false    | Leaves of the tree, if empty leaves will be nodes without children.  Leaves does not have any Open / Close icon                                           |
-| padding            | Number  | 25              | false    | Padding for each new level                                                                                                                                |
-| editable           | Boolean | false           | false    | Determine globally if nodes are editable. When false, no node is editable even if node state is editable                                                  |
-| editing            | String  | null            | false    | The id of the current editing node                                                                                                                        |
-| editableClass      | String  | "editable"      | false    | Customize node class when node is editable                                                                                                                |
-| checkboxes         | Boolean | false           | false    | Show or hide checkboxes                                                                                                                                   |
-| checkMode          | String  | "manual"        | false    | Checkmode can be "manual" or "auto".  When auto mode is enabled, it triggers an event to check children                                                   |
-| dragAndDrop        | Boolean | false           | false    | Enable or disable globally drag and drop                                                                                                                  |
-| keyboardNavigation | Boolean | false           | false    | Enable or disable keyboard navigation. enter: edit node esc: stop edit node up: focus previous node down: focus next node space: check / uncheck checkbox |
-| disabled           | Boolean | false           | false    | Disable all tree nodes                                                                                                                                    |
-| disabledClass      | String  | "disabled"      | false    | Customize node class when node is disabled                                                                                                                |
-| openedIcon         | Object  | {}              | false    | Customize icon when node is opened                                                                                                                        |
-| closedIcon         | Object  | {}              | false    | Customize icon when node is closed                                                                                                                        |
-| focusClass         | String  | "focused"       | false    | Customize node class when node is focused                                                                                                                 |
-| checkedClass       | String  | "checked"       | false    | Customize node class when node is checked                                                                                                                 |
-| indeterminateClass | String  | "indeterminate" | false    | Customize node class when node is indeterminate                                                                                                           |
+| Prop               | Type            | Default         | Required | Description                                                                                                                                               |
+|--------------------|-----------------|-----------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| roots              | Array           | []              | true     | Roots of the tree, this property is mandaroty to build the tree                                                                                           |
+| leaves             | Array           | []              | false    | Leaves of the tree, if empty leaves will be nodes without children.  Leaves does not have any Open / Close icon                                           |
+| padding            | Number          | 25              | false    | Padding for each new level                                                                                                                                |
+| editable           | Boolean         | false           | false    | Determine globally if nodes are editable. When false, no node is editable even if node state is editable                                                  |
+| editing            | String          | null            | false    | The id of the current editing node                                                                                                                        |
+| editableClass      | String          | "editable"      | false    | Customize node class when node is editable                                                                                                                |
+| checkboxes         | Boolean         | false           | false    | Show or hide checkboxes                                                                                                                                   |
+| checkMode          | String          | "manual"        | false    | Checkmode can be "manual" or "auto".  When auto mode is enabled, it triggers an event to check children                                                   |
+| dragAndDrop        | Boolean         | false           | false    | Enable or disable globally drag and drop                                                                                                                  |
+| keyboardNavigation | Boolean         | false           | false    | Enable or disable keyboard navigation. enter: edit node esc: stop edit node up: focus previous node down: focus next node space: check / uncheck checkbox |
+| disabled           | Boolean         | false           | false    | Disable all tree nodes                                                                                                                                    |
+| disabledClass      | String          | "disabled"      | false    | Customize node class when node is disabled                                                                                                                |
+| openedIcon         | [IIcon](#icons) | {}              | false    | Customize icon when node is opened                                                                                                                        |
+| closedIcon         | [IIcon](#icons) | {}              | false    | Customize icon when node is closed                                                                                                                        |
+| focusClass         | String          | "focused"       | false    | Customize node class when node is focused                                                                                                                 |
+| checkedClass       | String          | "checked"       | false    | Customize node class when node is checked                                                                                                                 |
+| indeterminateClass | String          | "indeterminate" | false    | Customize node class when node is indeterminate                                                                                                           |
 
 ## Icons
 Type: `Object`  

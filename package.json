@@ -60,7 +60,8 @@
     },
     "rules": {
       "no-unused-vars": "off",
-      "vue/no-ref-as-operand": "off"
+      "vue/no-ref-as-operand": "off",
+      "vue/valid-v-slots": "off"
     }
   },
   "browserslist": [

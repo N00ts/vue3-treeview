@@ -37,7 +37,15 @@ function getSidebar() {
       },
       {
         text: 'Events',
-        link: 'guide/events'
+        link: '/guide/events'
+      },
+      {
+        text: 'Slots',
+        link: '/guide/slots'
+      },
+      {
+        text: 'Lazy loading',
+        link: '/guide/lazy'
       }
     ]
   }
