@@ -88,7 +88,7 @@
 
     <transition name="load">
       <slot
-        v-if="isLoading && !hasChildren"
+        v-if="displayLoading"
         name="loading-slot"
         :node="node"
       />
@@ -96,8 +96,7 @@
 
     <transition name="level">
       <TreeLevel
-        v-if="!isLoading && hasChildren"
-        v-show="opened"
+        v-if="displayLevel"
         :parent-id="id"
         :depth="depth + 1"
         :ref="setLevelRef"

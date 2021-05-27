@@ -94,6 +94,8 @@ export function useCheckBox(cmn: IUseCommon): {} {
         }
     });
 
+    factory.value.rebuild();
+
     return {
         checked,
         hasCheckbox,

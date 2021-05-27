@@ -1,6 +1,5 @@
 import { ComputedRef, ToRefs, computed, Ref } from 'vue';
 import { Vue } from 'vue-class-component';
-import { INode } from "./INode";
 
 export default interface IUseNode {
     id: ComputedRef<string>;
@@ -15,6 +14,8 @@ export default interface IUseNode {
     disabledClass: ComputedRef<string>;
     isLeaf: ComputedRef<boolean>;
     isLoading: ComputedRef<boolean>;
+    displayLoading: ComputedRef<boolean>;
+    displayLevel: ComputedRef<boolean>;
     toggle: (nv: boolean, ov: boolean) => void;
     focus: () => void;
     left: () => void;
