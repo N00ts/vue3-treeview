@@ -53,6 +53,14 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         return hasState.value && node.value.state.isLoading || false;
     });
 
+    const displayLoading = computed(() => {
+        return isLoading.value && !hasChildren.value; 
+    })
+
+    const displayLevel = computed(() => {
+        return !isLoading.value && hasChildren.value && opened.value;
+    });
+
     const style = computed(() => {
         return {
             display: "flex"
@@ -254,6 +262,8 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         disabledClass,
         isLeaf,
         isLoading,
+        displayLoading,
+        displayLevel,
         right,
         left,
         up,
