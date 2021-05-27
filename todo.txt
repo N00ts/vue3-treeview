@@ -10,7 +10,7 @@ FEATURE to implement:
   - emit events               => done
   - Node focusable or not
   - allow dnd with function
-  - ARIA
+  - ARIA                      => in progress
   - exemple material css      => done
   - unit tests
   - documentation             => in progress
