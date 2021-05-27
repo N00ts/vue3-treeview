@@ -130,7 +130,7 @@ export default {
     return {
       config: {
         roots: ["id1", "id2", "id3"],
-        leaves: ["id10000"],
+        // leaves: ["id10000"],
         checkboxes: true,
         dragAndDrop: false,
         checkMode: checkMode.manual,
