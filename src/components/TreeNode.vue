@@ -3,6 +3,7 @@
     class="tree-node"
     v-if="hasNode"
     :ref="setElementRef"
+    :aria-expanded="opened"
     @keydown.enter.stop="enter"
     @keydown.esc.stop="esc"
     @keydown.space.stop="space"
