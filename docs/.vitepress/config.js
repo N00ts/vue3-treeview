@@ -44,8 +44,8 @@ function getSidebar() {
         link: '/guide/slots'
       },
       {
-        text: 'Lazy loading',
-        link: '/guide/lazy'
+        text: 'Async loading',
+        link: '/guide/async'
       }
     ]
   }
