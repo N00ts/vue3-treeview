@@ -4,7 +4,7 @@ FEATURE to implement:
   - keyboard navigation       => done
   - check                     => done
   - disabled                  => done
-  - lazy load                 => add a slot for loading spinner / skeletton
+  - lazy load                 => done
   - autoCheck                 => done
   - customizable effects      => done
   - emit events               => done
