@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import Tree from "@src/components/Tree.vue";
-import { INode } from '../../../src/structure/INode';
+import { INode } from '/@src/structure/INode';
 
 export default {
   components: {
@@ -42,12 +42,12 @@ export default {
     };
   },
   methods: {
-      isCheked(n: INode): boolean {
-          return n.state.checked !== undefined && n.state.checked;
-      },
-      isOpened(n: INode): boolean {
-          return n.state.opened !== undefined && n.state.opened;
-      }
-  }
+    isCheked(n: INode): boolean {
+      return n.state.checked !== undefined && n.state.checked;
+    },
+    isOpened(n: INode): boolean {
+      return n.state.opened !== undefined && n.state.opened;
+    },
+  },
 };
 </script>

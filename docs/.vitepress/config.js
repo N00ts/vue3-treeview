@@ -4,6 +4,9 @@ module.exports = {
     title: 'vue3-treeview',
     description: 'vue3-treeview documentation',
     base: '/vue3-treeview/',
+    head: [
+      ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css' }]
+    ],
     themeConfig: {
       repo: 'N00ts/vue3-treeview',
       docsDir: 'docs',

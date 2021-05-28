@@ -67,4 +67,4 @@ export default {
   },
 };
 </script>
-<style src="./progress.css"/>
+<style src="../style/progress.css"/>

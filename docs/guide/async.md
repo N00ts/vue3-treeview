@@ -7,6 +7,6 @@ In this case you can to use "async loading" and update treeview with data coming
 When using async loading, checkbox mode auto will reload all parents state. If the node coming from the server is unchecked it will uncheck all parents when added
 :::
 
-<<< @/.vitepress/theme/async.vue
+<<< @/.vitepress/theme/components/async.vue
 
 <async/>

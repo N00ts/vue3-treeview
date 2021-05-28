@@ -21,7 +21,7 @@
 Try events yourself (go check the console with F12) 
 :::
 
-<<< @/.vitepress/theme/events.vue
+<<< @/.vitepress/theme/components/events.vue
 
 <events/>
 

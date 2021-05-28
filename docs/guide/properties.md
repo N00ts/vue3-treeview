@@ -5,7 +5,7 @@
 | nodes  | [Object](#nodes)                 | {}      | true     | Nodes              |
 | config | [IConfiguration](#configuration) | {}      | true     | Tree configuration |
 
-<<< @/.vitepress/theme/basic.vue
+<<< @/.vitepress/theme/components/basic.vue
 
 <basic/>
 
@@ -46,7 +46,7 @@ Default: <em>Empty Object</em>
 
 ``` js
 {
-    text: "text exemple",
+    text: "text example",
     children: [ "childrenid1", "childrenid2" ],
     state: {
         opened: true,
@@ -69,7 +69,7 @@ Default: <em>Empty Object</em>
 | dropable      | Boolean | true    | false    | Determine if a node is dropable or not           |
 | checked       | Boolean | false   | false    | Node checkbox state                              |
 | indeterminate | Boolean | false   | false    | Node checkbox indeterminate state                |
-| isLoading     | Boolean | false   | false    | Used for [lazy loading](./lazy.md)               |
+| isLoading     | Boolean | false   | false    | Used for [async loading](./async.md)               |
 
 ## Configuration
 
@@ -125,6 +125,10 @@ For more information you can consult [SVG icon docs](https://developer.mozilla.o
 | d       | String          | null    | false    | Icon drawn coordinates                                             |
 | fill    | String          | null    | false    | Fill color of the svg icon                                         |
 | stroke  | String          | null    | false    | SVG icon stroke property                                           |
+
+<<< @/.vitepress/theme/components/iconShape.vue
+
+<iconShape/>
 
 ### Class
 
