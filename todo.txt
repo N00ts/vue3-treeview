@@ -11,7 +11,7 @@ FEATURE to implement:
   - Node focusable or not
   - allow dnd with function
   - ARIA                      => in progress
-  - exemple material css      => done
+  - example material css      => done
   - unit tests
   - documentation             => in progress
   - typings
