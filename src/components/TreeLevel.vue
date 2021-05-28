@@ -1,7 +1,7 @@
 <template>
   <ul
     class="tree-level"
-    id="id"
+    :id="id"
     :style="style"
   >
     <TreeNode
