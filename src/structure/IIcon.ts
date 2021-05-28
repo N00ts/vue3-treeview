@@ -4,6 +4,7 @@ export default interface IIcon {
     draw?: string;
     name?: string;
     stroke?: string;
+    strokeWidth?: number;
     src?: string;
     alt?: string;
     style?: string | {}; 

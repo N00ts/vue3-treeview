@@ -13,6 +13,7 @@
       :d="icon.draw"
       :fill="icon.fill"
       :stroke="icon.stroke"
+      :stroke-width="icon.strokeWidth"
     />
   </svg>
 
