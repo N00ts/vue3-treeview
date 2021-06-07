@@ -16,6 +16,12 @@ Vue3 treeview is a treeview project made with view 3.
 - Custmizable style
 - Customizable icons
 
+## Installation
+
+```shell
+$ npm install vue3-treeview
+```
+
 ## Play with repo
 
 * Clone this repository
