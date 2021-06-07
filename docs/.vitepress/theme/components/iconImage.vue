@@ -27,11 +27,11 @@ export default {
         roots: ["id1"],
         openedIcon: {
             type: 'img',
-            src: '/minus.png'
+            src: 'https://n00ts.github.io/vue3-treeview/minus.png'
         },
         closedIcon: {
             type: 'img',
-            src: '/add.png'
+            src: 'https://n00ts.github.io/vue3-treeview/add.png'
         }
       },
     };
