@@ -24,4 +24,4 @@ Vue3 treeview is a treeview project made with view 3.
 
 ## License
 
-[MIT](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)
+[MIT](https://github.com/N00ts/vue3-treeview/blob/master/LICENSE)
