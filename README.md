@@ -1,8 +1,26 @@
-> Vue3 treeview is a treeview project made with view 3.
+## vue3-treeview
 
-## Documentation
+Vue3 treeview is a treeview project made with view 3.
 
-Project still under construction but usable, you can check documentation [here](https://n00ts.github.io/vue3-treeview)
+[Documentation](https://n00ts.github.io/vue3-treeview)
+
+- Made with vue3
+- Fully reactive
+- Editable text
+- Events for all actions
+- Node slots
+- Loading slot
+- Keyboard navigation
+- Checkboxes (auto / manual)
+- Drag and drop
+- Custmizable style
+- Customizable icons
+
+## Play with repo
+
+* Clone this repository
+* `npm install`
+* `npm run serve`
 
 ## License
 
