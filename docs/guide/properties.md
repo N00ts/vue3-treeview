@@ -126,9 +126,7 @@ For more information you can consult [SVG icon docs](https://developer.mozilla.o
 | fill    | String          | null    | false    | Fill color of the svg icon                                         |
 | stroke  | String          | null    | false    | SVG icon stroke property                                           |
 
-<<< @/.vitepress/theme/components/iconShape.vue
-
-<iconShape/>
+&#8594; [Example](../examples/iconShape)
 
 ### Class
 
@@ -140,6 +138,8 @@ To se how it work you can check [Front Awsome](https://fontawesome.com/)
 | type  | String          | "class" | false    | type can be "shape", "class", "img" |
 | class | String / Array  | null    | false    | The corresponding svg class         |
 | style | String / Object |         |          |                                     |
+
+&#8594; [Example](../examples/iconClass)
 
 ### img
 
@@ -154,3 +154,5 @@ You can also decide to use an image as Icon.
 | height | Number          | null    | false    | height of the icon                                     |
 | class  | String / Array  | null    | false    | ven if your icon is an image you can add a class to it |
 | style  | String / Object | null    | false    | Inline icon style                                      |
+
+&#8594; [Example](../examples/iconImage)
