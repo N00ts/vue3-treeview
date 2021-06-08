@@ -26,7 +26,7 @@ module.exports = {
       },
       {
         text: "More examples",
-        link: "/examples/iconShape",
+        link: "/examples/dragAndDrop",
       },
     ],
     sidebar: {
@@ -68,16 +68,20 @@ function getSidebar() {
 function getExamplesSidebar() {
   return [
     {
+      text: "Drag and Drop",
+      link: "examples/dragAndDrop"
+    },
+    {
       text: "Icon shape",
-      link: "/examples/iconShape"
+      link: "examples/iconShape"
     },
     {
       text: "Icon class",
-      link: "/examples/iconClass"
+      link: "examples/iconClass"
     },
     {
       text: "Icon Image",
-      link: "/examples/iconImage"
+      link: "examples/iconImage"
     }
   ];
 }

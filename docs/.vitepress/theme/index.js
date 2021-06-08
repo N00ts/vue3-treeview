@@ -6,6 +6,7 @@ import async from "./components/async.vue";
 import iconShape from "./components/iconShape.vue";
 import iconClass from "./components/iconClass.vue";
 import iconImage from "./components/iconImage.vue";
+import dnd from "./components/dragAndDrop.vue"
 
 export default {
   ...DefaultTheme,
@@ -17,5 +18,6 @@ export default {
     app.component('iconShape', iconShape);
     app.component('iconClass', iconClass);
     app.component('iconImage', iconImage);
+    app.component('dnd', dnd);
   }
 }

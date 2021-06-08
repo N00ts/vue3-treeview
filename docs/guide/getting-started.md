@@ -1,6 +1,6 @@
 # Getting Started
 
-> a vue 3 pluggin to display treeview
+a vue 3 pluggin to display treeview
 
 ### Installation
 
