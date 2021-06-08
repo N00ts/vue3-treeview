@@ -1,6 +1,6 @@
 {
   "name": "vue3-treeview",
-  "version": "0.1.9",
+  "version": "0.1.9.1",
   "private": false,
   "library": "vue3-treeview",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue && tsc --emitDeclarationOnly --out dist/types.d.ts",
+    "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue && tsc --emitDeclarationOnly --out dist/vue3-treeview.d.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
   },
@@ -18,7 +18,7 @@
   "module": "dist/vue3-treeview.common.js",
   "unpkg": "dist/vue3-treeview.umd.min.js",
   "style": "dist/vue3-treeview.css",
-  "types": "dist/types.d.ts",
+  "types": "dist/vue3-treeview.d.ts",
   "files": [
     "dist/*"
   ],
