@@ -1,5 +1,5 @@
 import { ref, computed, provide } from 'vue';
-import { INode } from '../structure/INode';
+import INode from '../structure/INode';
 import { createStore, state } from "./store";
 
 export default function useTree(props: any, emit: (event: string, ...args: any[]) => void): {} {

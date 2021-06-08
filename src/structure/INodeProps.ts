@@ -1,5 +1,5 @@
 
-import { INode } from './INode';
+import INode from './INode';
 
 export default interface INodeProps {
     depth: number;

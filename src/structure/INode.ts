@@ -1,6 +1,6 @@
-import { INodeState } from './INodeState';
+import INodeState from './INodeState';
 
-export interface INode {
+export default interface INode {
     id?: string;
     parent?: string;
     text?: string;

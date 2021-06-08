@@ -2,7 +2,7 @@ import INodeProps from "../structure/INodeProps";
 import { state } from './store';
 import { computed, ref } from 'vue';
 import isNil from "lodash-es/isNil";
-import { INode } from '../structure/INode';
+import INode from '../structure/INode';
 import { dragEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 

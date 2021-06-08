@@ -1,4 +1,4 @@
-import { INode } from './INode';
+import INode from './INode';
 
 export default interface IDragContext {
     node: INode;

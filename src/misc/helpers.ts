@@ -1,5 +1,5 @@
 import isNil from "lodash-es/isNil";
-import { INode } from '../structure/INode';
+import INode from '../structure/INode';
 
 export function ensureState(node: INode): void {
     if (isNil(node.state)) {

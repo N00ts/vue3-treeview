@@ -1,6 +1,6 @@
 import IConfiguration from "../structure/IConfiguration";
 import IIcon from "../structure/IIcon";
-import { INodeState } from '../structure/INodeState';
+import INodeState from '../structure/INodeState';
 
 export const defaultSize = 8;
 
