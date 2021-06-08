@@ -1,3 +1,5 @@
+[Screenshot](./public/screenshot.png)
+
 ## vue3-treeview
 
 Vue3 treeview is a treeview project made with view 3.
