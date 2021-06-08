@@ -1,4 +1,4 @@
-[Screenshot](./public/screenshot.png)
+![Screenshot](./public/screenshot.png)
 
 ## vue3-treeview
 
