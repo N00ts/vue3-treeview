@@ -156,7 +156,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
         cmn.root.emit(dragEvents.drop, context.value);
 
-        if (!isSameNode.value && droppable.value && !dragContain.value) {
+        if (!isSameNode.value && !dragContain.value) {
             switch(pos.value) {
                 case DragPosition.over: {
                     insertAt(0);
@@ -167,7 +167,9 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                     break;
                 }
                 case DragPosition.in: {
-                    insertIn();
+                    if (droppable.value) {
+                        insertIn();
+                    }
                 }
             }
         }
