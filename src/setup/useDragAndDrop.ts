@@ -170,8 +170,9 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                     insertIn();
                 }
             }
-            pos.value = null;
         }
+
+        pos.value = null;
     }
 
     const insertAt = (i: 0 | 1) => {
