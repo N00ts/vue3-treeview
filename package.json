@@ -1,6 +1,6 @@
 {
   "name": "vue3-treeview",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "private": false,
   "library": "vue3-treeview",
   "license": "MIT",
@@ -8,12 +8,10 @@
   "author": "Tristan Fontaine <tristanfontaine3000@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue",
+    "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue && tsc --emitDeclarationOnly --out dist/types.d.ts",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs:build": "vitepress build docs"
   },
   "main": "dist/vue3-treeview.common.js",
   "module": "dist/vue3-treeview.common.js",

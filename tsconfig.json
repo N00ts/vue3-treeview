@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
+    "declaration": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -34,6 +35,6 @@
     "src/**/*.vue"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
 }
