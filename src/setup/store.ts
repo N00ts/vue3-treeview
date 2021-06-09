@@ -1,8 +1,8 @@
-import INode from "../structure/INode";
-import IConfiguration from '../structure/IConfiguration';
+import { INode } from "../structure/INode";
+import { IConfiguration } from '../structure/IConfiguration';
 import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
-import ITreeProps from '../structure/ITreeProps';
-import IDragContext from '../structure/IDragContext';
+import { ITreeProps } from '../structure/ITreeProps';
+import { IDragContext } from '../structure/IDragContext';
 
 export interface IState {
     nodes: ComputedRef<{[id: string]: INode}>;

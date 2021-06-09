@@ -1,6 +1,6 @@
 {
   "name": "vue3-treeview",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "private": false,
   "library": "vue3-treeview",
   "license": "MIT",
@@ -9,7 +9,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "build": "rm -rf dist && rollup -c",
+    "build": "vue-cli-service build",
+    "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue && tsc --emitDeclarationOnly",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
   },
@@ -21,13 +22,8 @@
     "dist/*"
   ],
   "dependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.0",
     "core-js": "^3.14.0",
     "lodash-es": "^4.17.21",
-    "rollup": "^2.51.1",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-vue": "^6.0.0",
     "vue": "^3.0.11",
     "vue-class-component": "^8.0.0-0"
   },

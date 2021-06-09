@@ -1,7 +1,7 @@
-import IConfiguration from "./IConfiguration";
-import INode from "./INode";
+import { IConfiguration } from "./IConfiguration";
+import { INode } from "./INode";
 
-export default interface ITreeProps {
+export interface ITreeProps {
     nodes: { [id: string]: INode }; 
     config: IConfiguration;
 }

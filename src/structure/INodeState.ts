@@ -1,4 +1,4 @@
-export default interface INodeState {
+export interface INodeState {
     opened?: boolean;
     disabled?: boolean;
     editable?: boolean;

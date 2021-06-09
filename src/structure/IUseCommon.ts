@@ -1,7 +1,7 @@
 import { ComputedRef } from '@vue/reactivity';
 import { Ref } from 'vue';
-import INode from './INode';
-import IConfiguration from './IConfiguration';
+import { INode } from './INode';
+import { IConfiguration } from './IConfiguration';
 
 export default interface IUseCommon {
     node: Ref<INode>;

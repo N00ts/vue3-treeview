@@ -1,5 +1,5 @@
 import { computed, Ref } from 'vue';
-import INode from '../../structure/INode';
+import { INode } from '../../structure/INode';
 import { state } from '../store';
 import IUseCheck from '../../structure/IUseCheck';
 import isNil from "lodash-es/isNil";

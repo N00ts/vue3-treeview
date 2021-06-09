@@ -37,11 +37,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import useLevel from '../setup/useLevel';
 import {defineAsyncComponent} from "vue"
 
-export default defineComponent({
+export default {
   components: {
     TreeNode: defineAsyncComponent(() => import("./TreeNode.vue"))
   },
@@ -61,5 +60,5 @@ export default defineComponent({
       ...useLevel(props)
     }
   }
-});
+};
 </script>

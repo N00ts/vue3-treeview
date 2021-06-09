@@ -1,11 +1,11 @@
-import IIcon from './IIcon';
+import { IIcon } from './IIcon';
 
 export enum checkMode {
     auto,
     manual
 }
 
-export default interface IConfiguration {
+export interface IConfiguration {
     roots: string[];
     leaves?: string[];
     padding?: number;

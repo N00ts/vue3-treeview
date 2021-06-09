@@ -14,4 +14,4 @@ FEATURE to implement:
   - example material css      => done
   - unit tests
   - documentation             => in progress
-  - typings
+  - typings                   => done

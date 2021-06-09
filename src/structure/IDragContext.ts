@@ -1,6 +1,6 @@
-import INode from './INode';
+import { INode } from './INode';
 
-export default interface IDragContext {
+export interface IDragContext {
     node: INode;
     element: HTMLElement;
     wrapper: HTMLElement;

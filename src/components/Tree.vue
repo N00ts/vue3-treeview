@@ -35,11 +35,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import TreeLevel from './TreeLevel.vue';
 import useTree from '../setup/useTree';
 
-export default defineComponent({
+export default {
   components: {
     TreeLevel
   },
@@ -65,6 +64,6 @@ export default defineComponent({
       this.element = elt;
     }
   }
-});
+};
 </script>
 <style src="../css/material.css"/>

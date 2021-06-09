@@ -1,4 +1,4 @@
-export default interface IIcon {
+export interface IIcon {
     width: number;
     height: number;
     draw?: string;
