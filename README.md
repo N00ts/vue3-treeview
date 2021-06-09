@@ -26,7 +26,7 @@ __Features:__
 ## Installation
 
 ```shell
-$ npm install vue3-treeview
+npm install vue3-treeview
 ```
 
 ## Play with repo
