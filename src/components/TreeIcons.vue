@@ -19,11 +19,12 @@
   />
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import useIcon from "../setup/useIcon";
 import Icon from './Icon.vue';
 import { createDefaultIcon } from "../misc/default";
 
-export default {
+export default defineComponent({
     components: {
         Icon
     },
@@ -43,5 +44,5 @@ export default {
             return createDefaultIcon(null);
         }
     }
-}
+});
 </script>

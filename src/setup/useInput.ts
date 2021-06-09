@@ -1,4 +1,3 @@
-import INodeProps from '../structure/INodeProps';
 import { computed, nextTick, ref, watch } from 'vue';
 import eq from "lodash-es/eq";
 import { nodeEvents } from '../misc/nodeEvents';

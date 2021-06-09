@@ -128,6 +128,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import useInput from "../setup/useInput";
 import TreeIcons from './TreeIcons.vue';
 import { useNode } from "../setup/useNode";
@@ -137,7 +138,7 @@ import { checkboxEvents, dragEvents, nodeEvents } from "../misc/nodeEvents";
 import useCommon from '../setup/useCommon';
 import {defineAsyncComponent} from "vue"
 
-export default {
+export default defineComponent({
   components: {
     TreeLevel: defineAsyncComponent(() => import("./TreeLevel.vue")),
     TreeIcons
@@ -165,7 +166,7 @@ export default {
       type: String
     }
   },
-  setup(props) {
+  setup(props: any) {
     const cmn = useCommon(props);
 
     return {
@@ -201,5 +202,5 @@ export default {
       this.input = e;
     }
   },
-}
+});
 </script>

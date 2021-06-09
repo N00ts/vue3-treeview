@@ -4,6 +4,7 @@
     "module": "esnext",
     "jsx": "preserve",
     "declaration": true,
+    "outDir": "./dist",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -32,7 +33,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue"  
   ],
   "exclude": [
     "node_modules",

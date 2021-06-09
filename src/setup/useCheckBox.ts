@@ -1,5 +1,4 @@
 import { computed, watch, ComputedRef } from 'vue';
-import INodeProps from '../structure/INodeProps';
 import { defaultConfig } from '../misc/default';
 import { checkboxEvents } from '../misc/nodeEvents';
 import auto from '../setup/checkbox/auto';
