@@ -1,0 +1,9 @@
+.level-enter-active,
+.level-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.level-enter-from,
+.level-leave-to {
+  opacity: 0;
+}

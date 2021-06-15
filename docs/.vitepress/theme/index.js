@@ -7,6 +7,7 @@ import iconShape from "./components/iconShape.vue";
 import iconClass from "./components/iconClass.vue";
 import iconImage from "./components/iconImage.vue";
 import dnd from "./components/dragAndDrop.vue"
+import transition from "./components/transition.vue";
 
 export default {
   ...DefaultTheme,
@@ -19,5 +20,6 @@ export default {
     app.component('iconClass', iconClass);
     app.component('iconImage', iconImage);
     app.component('dnd', dnd);
+    app.component('trn', transition);
   }
 }

@@ -62,6 +62,10 @@ function getSidebar() {
       text: "Async loading",
       link: "/guide/async",
     },
+    {
+      text: "Transitions",
+      link: '/guide/transitions'
+    }
   ];
 }
 

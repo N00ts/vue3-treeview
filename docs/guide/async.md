@@ -9,4 +9,6 @@ When using async loading, checkbox mode auto will reload all parents state. If t
 
 <<< @/.vitepress/theme/components/async.vue
 
+<<< @/.vitepress/theme/style/progress.css
+
 <async/>
