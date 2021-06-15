@@ -54,7 +54,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     });
 
     const displayLoading = computed(() => {
-        return isLoading.value && !hasChildren.value; 
+        return isLoading.value && !hasChildren.value && opened.value; 
     })
 
     const displayLevel = computed(() => {

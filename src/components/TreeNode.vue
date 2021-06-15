@@ -87,13 +87,11 @@
       />
     </div>
 
-    <transition name="load">
-      <slot
-        v-if="displayLoading"
-        name="loading-slot"
-        :node="node"
-      />
-    </transition>
+    <slot
+      v-if="displayLoading"
+      name="loading-slot"
+      :node="node"
+    />
 
     <transition name="level">
       <TreeLevel
