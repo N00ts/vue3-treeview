@@ -2,7 +2,7 @@
 
 ![Screenshot](./public/screenshot.png)
 
-Vue3 treeview is a treeview project made with view 3.
+Vue3 treeview is a treeview project.
 
 [Documentation](https://n00ts.github.io/vue3-treeview)
 
