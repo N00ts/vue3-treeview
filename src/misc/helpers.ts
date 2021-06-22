@@ -7,3 +7,4 @@ export function ensureState(node: INode): void {
         node.state.checked = false;
     }
 }
+    

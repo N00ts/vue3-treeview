@@ -10,6 +10,7 @@
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build",
+    "test": "jest",
     "bundle": "vue-cli-service build --target lib --name vue3-treeview ./src/components/Tree.vue && tsc --emitDeclarationOnly",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
@@ -28,6 +29,7 @@
     "vue-class-component": "^8.0.0-0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.19",
     "@types/lodash": "^4.14.170",
     "@types/lodash-es": "^4.17.4",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -35,9 +37,11 @@
     "@vue/cli-plugin-babel": "^4.5.12",
     "@vue/cli-plugin-eslint": "^4.5.12",
     "@vue/cli-plugin-typescript": "^4.5.12",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "^4.5.12",
     "@vue/compiler-sfc": "^3.0.11",
     "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.10.0",
