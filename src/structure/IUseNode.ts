@@ -1,9 +1,8 @@
-import { ComputedRef, ToRefs, computed, Ref } from 'vue';
-import { Vue } from 'vue-class-component';
+import { ComputedRef, ToRefs, computed, Ref, Component } from 'vue';
 
 export default interface IUseNode {
     id: ComputedRef<string>;
-    level: Ref<Vue>;
+    level: Ref<Component>;
     style: ComputedRef<Record<string, any>>;
     opened: ComputedRef<boolean>;
     hasNode: ComputedRef<boolean>;

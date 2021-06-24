@@ -8,14 +8,13 @@ import isArray from "lodash-es/isArray";
 import { computed, ref, watch, nextTick } from 'vue';
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
-import { Vue } from 'vue-class-component';
 
 export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const node = cmn.node;
     const config = cmn.config;
     const wrapper = cmn.wrapper;
     const editing = cmn.editing;
-    const level = ref<Vue>(null);
+    const level = ref(null);
 
     const id = computed(() => {
         return hasNode.value && node.value.id;
