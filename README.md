@@ -27,7 +27,7 @@ __Features:__
 
 ```shell
 npm install vue3-treeview
-yarn add vue3 vue3-treeview
+yarn add vue3-treeview
 ```
 
 ## Play with repo
