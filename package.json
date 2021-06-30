@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "vue": "^3.0.11"
+    "vue": "^3.1.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
@@ -44,7 +44,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.10.0",
     "typescript": "^3.9.9",
-    "vitepress": "^0.13.0"
+    "vitepress": "^0.15.5"
   },
   "eslintConfig": {
     "root": true,
@@ -77,5 +77,16 @@
     "vue3",
     "javascript"
   ],
-  "repository": "https://github.com/N00ts/vue3-treeview.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/N00ts/vue3-treeview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/N00ts/vue3-treeview/issues"
+  },
+  "homepage": "https://github.com/N00ts/vue3-treeview#readme",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  }
 }
