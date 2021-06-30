@@ -27,13 +27,14 @@ __Features:__
 
 ```shell
 npm install vue3-treeview
+yarn add vue3 vue3-treeview
 ```
 
 ## Play with repo
 
 * Clone this repository
-* `npm install`
-* `npm run serve`
+* `yarn install`
+* `yarn serve`
 
 ## License
 
