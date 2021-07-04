@@ -1,6 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils';
 import TreeLevel from "../../src/components/TreeLevel.vue";
-import { createStore } from '../../src/setup/store';
+import { createStore, state } from '../../src/setup/store';
+import { defaultConfig } from '../../src/misc/default';
 
 describe("test tree level", () => {
     let props = {
@@ -10,8 +11,14 @@ describe("test tree level", () => {
 
     let level = null;
 
+    let wrapper = null;
+
     const nodes = {
         id1: {
+            text: "test",
+            children: ["id11"]
+        },
+        id11: {
             text: "test"
         }
     }
@@ -21,7 +28,7 @@ describe("test tree level", () => {
     };
 
     beforeEach(() => {
-        const wrapper = mount({
+        wrapper = mount({
             template: "<div></div>",
             props: ["nodes", "config"]
         }, {
@@ -44,19 +51,64 @@ describe("test tree level", () => {
 
     it("Expect to have a level", () => {
         expect(level.vm.level).toBeInstanceOf(Array);
-        expect(level.vm.level[0].id).toBe("id1");
-        expect(level.vm.level[0].parent).toBeNull();
-        expect(level.vm.level[0].text).toBe("test");
-    })
+        expect(level.vm.level[0]).toMatchObject(nodes["id1"]);
+    });
 
     it("Expect to have no padding", () => {
         expect(level.vm.padding).toBe(0);
-    })
+    });
 
     it("Expect to have default style", () => {
         expect(level.vm.style).toMatchObject({
             "list-style": "none",
             "padding-left": "0px"
         });
-    })
+    });
+
+    it("Expect to create level with parent", () => {
+        props.parentId = "id1";
+        level = shallowMount(TreeLevel, {
+            props
+        })
+        expect(level.vm.level[0]).toMatchObject({
+            id: "id11",
+            parent: "id1",
+            text: "test"
+        });
+    });
+
+    it("Expect level to be empty", () => {
+        props.parentId = null;
+        props.depth = 1;
+        level = shallowMount(TreeLevel, {
+            props
+        })
+        expect(level.vm.level).toMatchObject([]);
+    });
+
+    it("Expect to have default padding", () => {
+        props.depth = 1;
+        level = shallowMount(TreeLevel, {
+            props
+        })
+        expect(level.vm.padding).toBe(defaultConfig.padding);
+    });
+
+    it("Expect to have config padding", () => {
+        props.depth = 1;
+        level = shallowMount(TreeLevel, {
+            props
+        })
+        state.config.value.padding = 15;
+        expect(level.vm.padding).toBe(15);
+    });
+
+    it("Expect padding to be 0", () => {
+        props.depth = 1;
+        level = shallowMount(TreeLevel, {
+            props
+        })
+        state.config.value.padding = -100;
+        expect(level.vm.padding).toBe(0);
+    });
 });
