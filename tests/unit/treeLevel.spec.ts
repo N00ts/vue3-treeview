@@ -2,6 +2,8 @@ import { shallowMount, mount } from '@vue/test-utils';
 import TreeLevel from "../../src/components/TreeLevel.vue";
 import { createStore, state } from '../../src/setup/store';
 import { defaultConfig } from '../../src/misc/default';
+import { reactive } from 'vue';
+import useLevel from '../../src/setup/useLevel';
 
 describe("test tree level", () => {
     let props = {
@@ -21,7 +23,7 @@ describe("test tree level", () => {
         id11: {
             text: "test"
         }
-    }
+    };
 
     const config = {
         roots: ["id1"]
@@ -110,5 +112,69 @@ describe("test tree level", () => {
         })
         state.config.value.padding = -100;
         expect(level.vm.padding).toBe(0);
+    });
+});
+
+describe("test useLevel", () => {
+    let props = null;
+
+    let useTest = null;
+
+    const nodes = {
+        id1: {
+            text: "test",
+            children: ["id11"]
+        },
+        id11: {
+            text: "test"
+        }
+    };
+
+    const config = {
+        roots: ["id1"]
+    };
+
+    let storeProps = reactive({
+        nodes,
+        config
+    });
+
+    beforeEach(() => {
+        createStore(storeProps);
+        props = reactive({
+            depth: 0,
+            parentId: null
+        });
+        useTest = useLevel(props);
+    });
+
+    it("Expect to have id", () => {
+        expect(useTest.id.value).toBeDefined();
+    });
+
+    it("Expect to have a level", () => {
+        expect(useTest.level.value).toBeInstanceOf(Array);
+        expect(useTest.level.value[0]).toMatchObject(nodes["id1"]);
+    });
+
+    it("Expect to have no padding", () => {
+        expect(useTest.padding.value).toBe(0);
+    });
+
+    it("Expect to have default style", () => {
+        expect(useTest.style.value).toMatchObject({
+            "list-style": "none",
+            "padding-left": "0px"
+        });
+    });
+
+    it("Expect to create level with parent 2", () => {
+        props.parentId = "id1";
+        props.depth = 1;
+        expect(useTest.level.value[0]).toMatchObject({
+            id: "id11",
+            parent: "id1",
+            text: "test"
+        });
     });
 });
