@@ -10,7 +10,8 @@ module.exports = {
     'vue'
   ],
   transform: {
-    '^.+\\.vue$': 'vue-jest'
+    '^.+\\.vue$': 'vue-jest',
+    '\\.(js|ts|jsx|tsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
       "[/\\\\]node_modules[/\\\\](?!lodash-es/).+\\.js$"
