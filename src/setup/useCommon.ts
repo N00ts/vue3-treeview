@@ -5,6 +5,7 @@ import { state } from './store';
 import IUseCommon from '../structure/IUseCommon';
 import { defaultConfig } from '../misc/default';
 import { nodeEvents } from '../misc/nodeEvents';
+import { ensureState } from '../misc/helpers';
 
 export default function useCommon(props: INodeProps): IUseCommon {
     const { node } = toRefs(props);
@@ -17,10 +18,7 @@ export default function useCommon(props: INodeProps): IUseCommon {
         emit: inject<(event: string, ...args: any[]) => void>("emitter")
     };
 
-    // ensure state exist
-    if (isNil(node.value.state)) {
-        node.value.state = {};
-    }
+    ensureState(node.value);
 
     const hasNode = computed(() => {
         return !isNil(node);
