@@ -1,4 +1,4 @@
-import { nextTick, ref } from "vue";
+import { nextTick, ref, Ref } from 'vue';
 import useInput from "../../src/setup/useInput";
 import { nodeEvents } from '../../src/misc/nodeEvents';
 
@@ -57,14 +57,14 @@ describe("test useInput", () => {
         expect(useTest.editableClass.value).toBe("editableClass");
     });
 
-    it("Epect to focus input element", () => {
+    it("Epect to focus input element", async () => {
         const input = document.createElement("input");
         const spy = jest.spyOn(input, "focus");
         useTest.input.value = input;
         fakeCmn.editing.value = true;
-        nextTick(() => {
+        nextTick(() => nextTick(() => {
             expect(spy).toBeCalled();
-        });
+        }));
     });
 
     it("Expect to focus input", () => {

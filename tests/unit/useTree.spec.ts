@@ -1,6 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
-import { reactive, isRef, provide } from 'vue';
-import Tree from "../../src/components/Tree.vue";
+import { reactive, isRef } from 'vue';
 import { state } from '../../src/setup/store';
 import useTree from "../../src/setup/useTree";
 
@@ -10,6 +8,10 @@ describe("test useTree", () => {
     let props = null;
 
     const fakeEmit = (evt: String, ...args: any[]) => {};
+
+    const v = require("vue");
+
+    const spy = jest.spyOn(v, "provide").mockImplementation(() => () => {});
 
     beforeEach(() => {
         props = reactive({
@@ -24,6 +26,10 @@ describe("test useTree", () => {
         });
 
         useTest = useTree(props, fakeEmit);
+    });
+
+    it("Expect to call provide", () => {
+        expect(spy).toBeCalledWith("emitter", fakeEmit);
     });
 
     it("Expect to create element ref", () => {
