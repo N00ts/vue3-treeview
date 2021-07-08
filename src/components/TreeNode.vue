@@ -75,7 +75,7 @@
         <span 
           v-else
           class="node-text"
-          @dblclick="focusInputs"
+          @dblclick="focusInput"
         >
           {{ text }}
         </span>

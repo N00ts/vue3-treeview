@@ -32,7 +32,7 @@ export default function useInput(cmn: IUseCommon): {} {
         }
     });
 
-    const focusInputs = (() => {
+    const focusInput = (() => {
         if (editable.value && !cmn.disabled.value) {
             config.value.editing = node.value.id;
             cmn.root.emit(nodeEvents.edit, node.value);
@@ -48,7 +48,7 @@ export default function useInput(cmn: IUseCommon): {} {
 
     const enter = (() => {
         if (editable.value && !cmn.disabled.value && config.value.keyboardNavigation) {
-            focusInputs();
+            focusInput();
         }
     });
 
@@ -58,7 +58,7 @@ export default function useInput(cmn: IUseCommon): {} {
         editing,
         editable,
         editableClass,
-        focusInputs,
+        focusInput,
         esc,
         enter
     };
