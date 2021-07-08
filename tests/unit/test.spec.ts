@@ -13,10 +13,11 @@ function f(r: any): any {
 }
 
 test("test reactivity", () => { 
-    const t = reactive({
-        a: 2
-    });
+    const a = ref(2);
+    const t = {
+        a
+    };
     const func = f(t);
-    t.a = 4;
+    t.a.value = 4;
     console.log(func.multiply.value);
 })
