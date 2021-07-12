@@ -73,8 +73,4 @@ describe("test use icon", () => {
         props.isLeaf = true;
         expect(useFake.useIcons.value).toBeFalsy();
     });
-
-    it("Expect to break tests", () => {
-        expect(1).toBe(2);
-    });
 });
