@@ -88,8 +88,8 @@ export function useCheckBox(cmn: IUseCommon): {} {
     }
 
     const space = (() => {
-        if (!cmn.editing.value && !cmn.disabled.value && config.value.keyboardNavigation) {
-            factory.value.click()
+        if (!cmn.editing.value && config.value.keyboardNavigation) {
+            clickCheckbox();
         }
     });
 

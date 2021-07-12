@@ -9,7 +9,7 @@ export default function manual(node: Ref<INode>): IUseCheck {
     });
 
     const indeterminate = computed(() => {
-        return node.value.state.indeterminate;
+        return node.value.state.indeterminate || false;
     })
 
     const noneChecked = computed(() => {
