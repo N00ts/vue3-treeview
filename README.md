@@ -1,6 +1,6 @@
 ## vue3-treeview
 
-![build](https://github.com/N00ts/vue3-treeview/actions/workflows/build.yml//badge.svg) ![tests](https://github.com/N00ts/vue3-treeview/actions/workflows/tests.yml//badge.svg)
+![build](https://github.com/N00ts/vue3-treeview/actions/workflows/build.yml//badge.svg) ![tests](https://github.com/N00ts/vue3-treeview/actions/workflows/tests.yml//badge.svg) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 ![Screenshot](./public/screenshot.png)
 
