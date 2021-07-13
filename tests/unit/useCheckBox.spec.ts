@@ -36,7 +36,7 @@ describe("use checkbox tests", () => {
     })
 
     it("Expect not to have checkbox", () => {
-        expect(useTest.hasCheckbox.value).toBeFalsy();
+        expect(useTest.hasCheckbox.value).toBeTruthy();
     });
 
     it("Exoect not to be undeterminate", () => {
