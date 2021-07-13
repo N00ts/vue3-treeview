@@ -77,7 +77,8 @@ describe("test useCommon", () => {
         state.config.value.editing = "tata";
         const e = {
             currentTarget: document.createElement("div"),
-            relatedTarget: document.createElement("div")
+            relatedTarget: document.createElement("div"),
+            type: "blur"
         }
         useTest.blur(e);
         expect(state.config.value.editing).toBeNull();

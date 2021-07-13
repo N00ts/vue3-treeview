@@ -21,7 +21,8 @@ describe("use checkbox tests", () => {
                 checkMode: checkMode.manual,
                 keyboardNavigation: true,
                 checkedClass: null,
-                indeterminateClass: null
+                indeterminateClass: null,
+                checkboxes: true
             }),
             root: {
                 emit: jest.fn()
