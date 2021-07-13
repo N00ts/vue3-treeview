@@ -46,12 +46,14 @@ export default function useCommon(props: INodeProps): IUseCommon {
     })
 
     const blur = ((e: MouseEvent) => {
-        const current = e.currentTarget as HTMLElement;
-        const related = e.relatedTarget as HTMLElement;
-
-        if (!current.contains(related)) {
-            config.value.editing = null;
-            root.emit(nodeEvents.blur, e, node.value);
+        if (e.type === "blur") {
+            const current = e.currentTarget as HTMLElement;
+            const related = e.relatedTarget as HTMLElement;
+    
+            if (!current.contains(related)) {
+                config.value.editing = null;
+                root.emit(nodeEvents.blur, e, node.value);
+            }
         }
     });
 
