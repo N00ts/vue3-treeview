@@ -8,6 +8,7 @@ import isArray from "lodash-es/isArray";
 import { computed, ref, watch, nextTick } from 'vue';
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
+import { defaultDisabledClass, defaultFocusClass } from '../misc/default';
 
 export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const node = cmn.node;
@@ -15,6 +16,8 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const wrapper = cmn.wrapper;
     const editing = cmn.editing;
     const level = ref(null);
+    const depth = ref(props.depth);
+    const index = ref(props.index);
 
     const id = computed(() => {
         return hasNode.value && node.value.id;
@@ -66,20 +69,16 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         };
     });
 
-    const disabled = computed(() => {
-        return config.value.disabled || node.value.state.disabled;
-    });
-
     const disabledClass = computed(() => {
-        if (!disabled.value) {
+        if (!cmn.disabled.value) {
             return null;
         }
 
-        return config.value.disabledClass ? config.value.disabledClass : "disabled";
+        return config.value.disabledClass ? config.value.disabledClass : defaultDisabledClass;
     });
 
     const hideIcons = computed(() => {
-        for (const id of config.value.roots) {
+        for (const id of roots.value) {
             const node = state.nodes.value[id];
 
             if (node.children && node.children.length > 0) {
@@ -87,7 +86,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
             }
         }
 
-        return false;
+        return true;
     });
 
     const isLeaf = computed(() => {
@@ -97,7 +96,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
             return Number.isFinite(idx) && idx >= 0;
         }
 
-        return !isArray(node.value.children) || node.value.children.length === 0;
+        return isNil(node.value.children) || !isArray(node.value.children) || node.value.children.length === 0;
     });
 
     const isFocused = computed(() => {
@@ -105,7 +104,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     });
 
     const tabIndex = computed(() => {
-        if (props.depth === 0 && props.index === 0 && !isFocused.value) {
+        if (depth.value === 0 && index.value === 0 && !isFocused.value) {
             return 0; 
         }
 
@@ -117,7 +116,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
             return null;
         } 
 
-        return config.value.focusClass ? config.value.focusClass : "focused";
+        return config.value.focusClass ? config.value.focusClass : defaultFocusClass;
     })
 
     watch(opened, (nv: boolean) => {
@@ -169,7 +168,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         if (n.children && n.children.length > 0) {
             const idx = n.children.indexOf(node.value.id);
             const prev = n.children[idx - 1];
-
+            
             if (!isNil(prev)) {
                 return lastChild(prev);
             }
@@ -217,9 +216,8 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     });
 
     const nextRoot = ((id: string) => {
-        const roots = config.value.roots;
-        const idx = roots.indexOf(id);
-        return roots[idx + 1] || null;
+        const idx = roots.value.indexOf(id);
+        return roots.value[idx + 1] || null;
     })
 
     const next = ((p: INode, id: string): string => {
