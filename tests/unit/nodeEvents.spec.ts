@@ -27,4 +27,4 @@ test("Check drag Events", () => {
         over: "nodeOver",
         drop: "nodeDrop"
     });
-})
+});

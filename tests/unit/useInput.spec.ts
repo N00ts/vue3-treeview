@@ -5,9 +5,9 @@ import { nodeEvents } from '../../src/misc/nodeEvents';
 describe("test useInput", () => {
     let fakeCmn = null;
 
-    let useTest = null
+    let useTest = null;
 
-    let wrapper = ref(document.createElement("div"));
+    const wrapper = ref(document.createElement("div"));
 
     beforeEach(() => {
         fakeCmn = {

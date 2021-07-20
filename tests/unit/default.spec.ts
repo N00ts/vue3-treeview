@@ -38,7 +38,7 @@ test("Check default config", () => {
             width: 8,
         },
     });
-})
+});
 
 test("Check default state", () => {
     expect(defaultState).toMatchObject({
@@ -48,5 +48,5 @@ test("Check default state", () => {
         dropable: false,
         checked: false,
         indeterminate: false        
-    })
-})
+    });
+});

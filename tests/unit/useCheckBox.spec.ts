@@ -33,7 +33,7 @@ describe("use checkbox tests", () => {
 
     it("Expect not to be checked", () => {
         expect(useTest.checked.value).toBeFalsy();
-    })
+    });
 
     it("Expect not to have checkbox", () => {
         expect(useTest.hasCheckbox.value).toBeTruthy();

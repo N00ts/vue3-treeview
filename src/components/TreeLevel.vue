@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import useLevel from '../setup/useLevel';
-import {defineAsyncComponent} from "vue"
+import {defineAsyncComponent} from "vue";
 
 export default {
   components: {
@@ -58,7 +58,7 @@ export default {
   setup(props: any) {
     return {
       ...useLevel(props)
-    }
+    };
   }
 };
 </script>

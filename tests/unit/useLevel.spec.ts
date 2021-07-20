@@ -22,7 +22,7 @@ describe("test useLevel", () => {
         roots: ["id1"]
     };
 
-    let storeProps = reactive({
+    const storeProps = reactive({
         nodes,
         config
     });

@@ -21,7 +21,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
 
     const id = computed(() => {
         return hasNode.value && node.value.id;
-    })
+    });
 
     const hasNode = computed(() => {
         return !isNil(node);
@@ -33,7 +33,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
 
     const roots = computed(() => {
         return config.value.roots || [];
-    })
+    });
 
     const children = computed(() => {
         return isNil(node.value.children) ? [] : node.value.children;
@@ -57,7 +57,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
 
     const displayLoading = computed(() => {
         return isLoading.value && !hasChildren.value && opened.value; 
-    })
+    });
 
     const displayLevel = computed(() => {
         return !isLoading.value && hasChildren.value && opened.value;
@@ -109,7 +109,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         }
 
         return isFocused.value ? 0 : -1;
-    })
+    });
 
     const focusClass = computed(() =>  {
         if (!isFocused.value) {
@@ -117,7 +117,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         } 
 
         return config.value.focusClass ? config.value.focusClass : defaultFocusClass;
-    })
+    });
 
     watch(opened, (nv: boolean) => {
         nv ? cmn.root.emit(nodeEvents.opened, node.value) : cmn.root.emit(nodeEvents.closed, node.value);
@@ -205,7 +205,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         }
 
         return n.id;
-    })
+    });
 
     const down = (() => {
         const next = nextVisible(node.value.id);
@@ -218,7 +218,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const nextRoot = ((id: string) => {
         const idx = roots.value.indexOf(id);
         return roots.value[idx + 1] || null;
-    })
+    });
 
     const next = ((p: INode, id: string): string => {
         const idx = p.children.indexOf(id);
@@ -267,5 +267,5 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         down,
         toggle,
         focus
-    }
+    };
 }

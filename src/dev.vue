@@ -143,7 +143,7 @@ export default {
       maxDepth: 0,
       maxChild: 0,
       nbNodes: 0
-    }
+    };
   },
   mounted() {
     this.nodes = {
@@ -222,11 +222,11 @@ export default {
               text: `loaded from server`,
               children: [],
               state: {}
-            }
+            };
 
             this.nodes[id] = n;
             node.children = [];
-            node.children.push(id)
+            node.children.push(id);
           }
           node.state.isLoading = false;
         }, 3000);
@@ -266,7 +266,7 @@ export default {
         text: `text${id}`,
         children: [],
         state: this.randomState()
-      }
+      };
 
       this.nodes[id] = n;
       this.nbNodes++;
@@ -292,5 +292,5 @@ export default {
       return Math.random() < mod;
     }
   }
-}
+};
 </script> 

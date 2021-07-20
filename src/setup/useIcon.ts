@@ -28,8 +28,8 @@ export default function useIcon(props: Record<string, unknown>): {} {
         return {
             width: `${defaultSize}px`,
             height: `${defaultSize}px`
-        }
-    })
+        };
+    });
 
     return {
         hasIcons,
@@ -37,5 +37,5 @@ export default function useIcon(props: Record<string, unknown>): {} {
         closedIcon,
         useIcons,
         fakeNodeStyle
-    }
+    };
 }

@@ -57,7 +57,7 @@ export default {
   setup(props, { emit }) {
     return {
       ...useTree(props, emit)
-    }
+    };
   },
   methods: {
     setElementRef(elt: HTMLElement): void {

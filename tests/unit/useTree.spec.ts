@@ -7,7 +7,7 @@ describe("test useTree", () => {
 
     let props = null;
 
-    const fakeEmit = (evt: String, ...args: any[]) => {};
+    const fakeEmit = (evt: string, ...args: any[]) => {};
 
     const v = require("vue");
 
@@ -50,7 +50,7 @@ describe("test useTree", () => {
 
     it("Expect state to be created", () => {
         expect(state).toBeDefined();
-    })
+    });
 
     it("Expect to blur" , () => {
         state.focused.value = "test";
@@ -65,7 +65,7 @@ describe("test useTree", () => {
         state.focused.value = "test";
         useTest.element.value = document.createElement("div");
         const target =  document.createElement("div");
-        useTest.element.value.appendChild(target)
+        useTest.element.value.appendChild(target);
         useTest.blur({
             relatedTarget: target
         });

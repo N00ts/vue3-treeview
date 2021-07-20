@@ -5,4 +5,4 @@ module.exports = {
       '@babel/preset-typescript',
   ],
   plugins: ["dynamic-import-node"]
-}
+};

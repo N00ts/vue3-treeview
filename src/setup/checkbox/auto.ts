@@ -18,7 +18,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
 
     const children = computed(() => {
         return node.value.children;
-    })
+    });
 
     const hasChildren = computed(() => {
         return !isNil(children.value) && children.value.length > 0 || false;
@@ -35,13 +35,13 @@ export default function auto(node: Ref<INode>): IUseCheck {
             const cdn = nodes.value[c];
             
             if (!isNil(cdn)) {
-                ensureState(cdn)
+                ensureState(cdn);
                 res.push(cdn.state);
             }
         }
 
         return res;
-    })
+    });
 
     const checked = computed(() => {
         return node.value.state.checked;
@@ -57,7 +57,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
 
     const noneChecked = computed(() => {
         return states.value.every((x) => !x.checked);
-    })
+    });
 
     const someChecked = computed(() => {
         return !allChecked.value && !noneChecked.value;
@@ -94,7 +94,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
         }
 
         setIndeterminate(true);
-        check(false)
+        check(false);
     });
 
     const rebuild = (() => {

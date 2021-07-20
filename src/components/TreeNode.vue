@@ -133,7 +133,7 @@ import { useCheckBox } from "../setup/useCheckBox";
 import useDragAndDrop from '../setup/useDragAndDrop';
 import { checkboxEvents, dragEvents, nodeEvents } from "../misc/nodeEvents";
 import useCommon from '../setup/useCommon';
-import {defineAsyncComponent} from "vue"
+import {defineAsyncComponent} from "vue";
 
 export default {
   components: {
@@ -182,7 +182,7 @@ export default {
         this.checkedClass,
         this.editableClass,
         this.dragClass  
-      ]
+      ];
     }
   },
   methods: {

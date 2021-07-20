@@ -43,7 +43,7 @@ export default function useCommon(props: INodeProps): IUseCommon {
 
     const editing = computed(() => {
         return editable.value && (config.value.editing === node.value.id);
-    })
+    });
 
     const blur = ((e: MouseEvent) => {
         if (e.type === "blur") {

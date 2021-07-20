@@ -56,7 +56,7 @@ describe("test auto checkbox", () => {
 
     it("Expect not all to be checked" , () => {
         expect(mode.allChecked.value).toBeFalsy();
-    })
+    });
 
     it("Expect to no have some indeterminate", () => {
         expect(mode.someIndeterminate.value).toBeFalsy();
@@ -82,7 +82,7 @@ describe("test auto checkbox", () => {
         mode.rebuild();
         expect(nodes.c1.state.checked).toBeTruthy();
         expect(nodes.c2.state.checked).toBeTruthy();
-    })
+    });
 
     it("Expect not to update state", () => {
         node.value.children = [];

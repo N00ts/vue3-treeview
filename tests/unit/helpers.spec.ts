@@ -12,7 +12,7 @@ test("Expect not to initalize state", () => {
         state: {
             checked: true
         }
-    }
+    };
     ensureState(n);
     expect(n.state).toMatchObject(n.state);
-})
+});

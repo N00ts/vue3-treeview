@@ -4,14 +4,14 @@ import useIcon from '../../src/setup/useIcon';
 import { defaultConfig } from '../../src/misc/default';
 
 describe("test use icon", () => {
-    let config = {
+    const config = {
         openedIcon: null,
         closedIcon: null
     };
 
-    let nodes = {};
+    const nodes = {};
 
-    let storeProps = reactive({
+    const storeProps = reactive({
         nodes,
         config
     });
@@ -23,7 +23,7 @@ describe("test use icon", () => {
     beforeEach(() => {
         props = reactive({
             isLeaf: ref(false)
-        })
+        });
         createStore(storeProps as any);
         useFake = useIcon(props);
     });

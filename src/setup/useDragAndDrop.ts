@@ -5,6 +5,7 @@ import isNil from "lodash-es/isNil";
 import { INode } from '../structure/INode';
 import { dragEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
+import { defaultDragClass, defaultDropClass, defaultOverClass, defaultInClass, defaultUnderClass } from '../misc/default';
 
 enum DragPosition {
     over,
@@ -75,17 +76,18 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 wrapper: wrapper.value,
                 parentId: parentId.value
             }
-        }
-    })
+        };
+    });
 
     const dragClass = computed(() => {
         return [
-            !droppable.value ? "undroppable" : null,
-            pos.value === DragPosition.over ? "node-over" : null,
-            pos.value === DragPosition.in ? "node-in" : null,
-            pos.value === DragPosition.under ? "node-under" : null
+            draggable.value ? defaultDragClass : null,
+            droppable.value ? defaultDropClass : null,
+            pos.value === DragPosition.over ? defaultOverClass : null,
+            pos.value === DragPosition.in ? defaultInClass : null,
+            pos.value === DragPosition.under ? defaultUnderClass : null
         ];
-    })
+    });
 
     const getParent = ((id: string) => {
         return !isNil(id) ? nodes.value[id] : null;
@@ -93,7 +95,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const getLevel = ((node: INode) => {
         return !isNil(node) ? node.children : config.value.roots;
-    })
+    });
 
     const dragstart = (evt: DragEvent): void => {
         if (draggable.value) {
@@ -109,16 +111,16 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const dragend = (evt: DragEvent): void => {
         cmn.root.emit(dragEvents.end, context.value);
-    }
+    };
 
     const dragenter = (evt: DragEvent): void => {
         cmn.root.emit(dragEvents.enter, context.value);
-    }
+    };
 
     const dragleave = (evt: DragEvent): void => {
         pos.value = null;
         cmn.root.emit(dragEvents.Leave, context.value);
-    }
+    };
 
     const dragover = (evt: DragEvent): void => {
         if (!isSameNode.value && isDragging.value && !dragContain.value) {
@@ -150,7 +152,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 }
             }
         }
-    }
+    };
 
     const drop = (evt: DragEvent): void => {
 
@@ -175,7 +177,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
         }
 
         pos.value = null;
-    }
+    };
 
     const insertAt = (i: 0 | 1) => {
         if (isDragging.value) {
@@ -187,7 +189,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
             const idx = targetLvl.value.indexOf(targetId);
             targetLvl.value.splice(idx + i, 0, dragId);
         }
-    }
+    };
 
     const insertIn = () => {
         if (isDragging.value) {
@@ -204,17 +206,18 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     
             node.value.children.unshift(dragId);
         }
-    }
+    };
 
     return {
         element,
         dragClass,
         draggable,
+        droppable,
         dragstart,
         dragend,
         dragenter,
         dragleave,
         dragover,
         drop
-    }
+    };
 }

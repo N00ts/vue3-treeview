@@ -17,7 +17,7 @@ function createState(): IState {
         config: null,
         dragged: ref(null),
         focused: ref(null)
-    }
+    };
 }
 
 export let state: IState = null;
@@ -27,11 +27,11 @@ export function createStore(props: ITreeProps): void {
 
     const computedNodes = computed(() => {
         return nodes.value;
-    })
+    });
 
     const computedConfig = computed(() => {
         return config.value;
-    })
+    });
 
     state = createState();
     state.nodes = computedNodes;

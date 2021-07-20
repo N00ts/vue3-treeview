@@ -42,5 +42,5 @@ test("Expect to create store", () => {
         element: null,
         wrapper: null,
         parentId: null
-    })
+    });
 });

@@ -15,7 +15,7 @@ describe("test use node", () => {
 
     let node = null;
 
-    let nodes = null
+    let nodes = null;
 
     let node2 = null;
 
@@ -59,7 +59,7 @@ describe("test use node", () => {
             text: "id21",
             parent: "id2",
             state: {}
-        }
+        };
         config = ref({
             roots: ["id1", "id2"]
         });
@@ -89,7 +89,7 @@ describe("test use node", () => {
         props = {
             depth: ref(0),
             index: ref(0)
-        }
+        };
         useTest = useNode(fakeCmn, props);
     });
 
@@ -119,7 +119,7 @@ describe("test use node", () => {
 
     it("Expect to have default disabled class", () => {
         fakeCmn.disabled.value = true;
-        expect(useTest.disabledClass.value).toBe(defaultDisabledClass)
+        expect(useTest.disabledClass.value).toBe(defaultDisabledClass);
     });
 
     it("Expect to have config disalbed class", () => {
@@ -145,7 +145,7 @@ describe("test use node", () => {
     it("Expect to be leaf", () => {
         fakeCmn.node.value.children = [];
         expect(useTest.isLeaf.value).toBeTruthy();
-    })
+    });
 
     it("Expect to be leaf by config", () => {
         fakeCmn.config.value.leaves = ["id1"];
@@ -279,7 +279,7 @@ describe("test use node", () => {
         state.nodes.value.id2.state.opened = true;
         useTest.down();
         expect(state.focused.value).toBe("id21");
-    })
+    });
 
     it("Expect to stay on first root on down", () => {
         state.focused.value = "id2";

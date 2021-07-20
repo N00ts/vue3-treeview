@@ -13,7 +13,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
 
     const mode = computed(() => {
         return config.value.checkMode === checkMode.auto ? checkMode.auto : checkMode.manual;
-    })
+    });
 
     const factory = computed(() =>  {
         return mode.value === checkMode.auto ? 
@@ -25,7 +25,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
         if (!eq(nv, ov)) {
             factory.value.rebuild();
         }
-    })
+    });
 
     const checked = computed(() => {
         return factory.value.checked.value;
@@ -33,7 +33,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
 
     const indeterminate = computed(() => {
         return factory.value.indeterminate.value;
-    })
+    });
 
     const hasCheckbox = computed(() => {
         return config.value.checkboxes || defaultConfig.checkboxes;        
@@ -44,13 +44,13 @@ export function useCheckBox(cmn: IUseCommon): {} {
             factory.value.checked.value ? config.value.checkedClass ? config.value.checkedClass : "checked" : null,
             factory.value.indeterminate.value ? config.value.indeterminateClass ? config.value.indeterminateClass : "indeterminate" : null
         ];
-    })
+    });
 
     watch(checked, (nv: boolean, ov: boolean) => {
         if (!indeterminate.value) {
             factory.value.recurseDown(nv);
         }
-    })
+    });
 
     const allChecked = computed(() => {
         return factory.value.allChecked.value;    
@@ -58,7 +58,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
 
     const noneChecked = computed(() => {
         return factory.value.noneChecked.value;
-    })
+    });
 
     const someChecked = computed(() => {
         return factory.value.someChecked.value;
@@ -82,10 +82,10 @@ export function useCheckBox(cmn: IUseCommon): {} {
 
     const clickCheckbox = (): void => {
         if (!cmn.disabled.value) {
-            factory.value.click()
+            factory.value.click();
             cmn.root.emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node.value);
         }
-    }
+    };
 
     const space = (() => {
         if (!cmn.editing.value && config.value.checkboxes && config.value.keyboardNavigation) {

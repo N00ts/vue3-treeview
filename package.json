@@ -31,7 +31,7 @@
     "@types/jest": "^24.0.19",
     "@types/lodash": "^4.14.170",
     "@types/lodash-es": "^4.17.4",
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "^4.5.12",
     "@vue/cli-plugin-eslint": "^4.5.12",
@@ -63,8 +63,7 @@
     },
     "rules": {
       "no-unused-vars": "off",
-      "vue/no-ref-as-operand": "off",
-      "vue/valid-v-slots": "off"
+      "vue/no-ref-as-operand": "off"
     }
   },
   "browserslist": [

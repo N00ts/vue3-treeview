@@ -43,7 +43,7 @@ export default function useLevel(props: {parentId: string; depth: number}): {} {
         nodes.value[id].parent = parent.value;
         a.push(nodes.value[id]);
       }
-    })
+    });
 
     const id = computed(() => {
         return new Date().valueOf();

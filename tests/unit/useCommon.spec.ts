@@ -13,7 +13,7 @@ describe("test useCommon", () => {
         editing: null
     };
 
-    let storeProps = reactive({
+    const storeProps = reactive({
         nodes: {},
         config
     });
@@ -34,7 +34,7 @@ describe("test useCommon", () => {
 
     it("Expect to have state", () => {
         expect(props.node.state).toBeDefined();
-    })
+    });
     
     it("Expect to have node", () => {
         expect(useTest.hasNode.value).toBeTruthy();
@@ -79,7 +79,7 @@ describe("test useCommon", () => {
             currentTarget: document.createElement("div"),
             relatedTarget: document.createElement("div"),
             type: "blur"
-        }
+        };
         useTest.blur(e);
         expect(state.config.value.editing).toBeNull();
     });

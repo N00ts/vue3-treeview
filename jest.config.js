@@ -27,4 +27,4 @@ module.exports = {
     "!**/node_modules/**",
   ],
   coverageReporters: ["json", "lcov", "text", 'html'],
-}
+};
