@@ -23,7 +23,7 @@ test("Check drag Events", () => {
         start: "nodeDragstart",
         end: "nodeDragend",
         enter: "nodeDragenter",
-        Leave: "nodeDragleave",
+        leave: "nodeDragleave",
         over: "nodeOver",
         drop: "nodeDrop"
     });
