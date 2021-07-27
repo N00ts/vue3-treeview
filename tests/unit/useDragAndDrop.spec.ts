@@ -28,6 +28,12 @@ describe("test use Drag and Drop", () => {
 
     let storeProps = null;
 
+    let fakeDragged = null;
+
+    let fakeTarget = null;
+
+    let fakeContext = null;
+
     beforeEach(() => {
         node = {
             text: "id1",
@@ -84,6 +90,22 @@ describe("test use Drag and Drop", () => {
                 emit: jest.fn()
             }
         };
+        fakeDragged = {
+            element: null,
+            node: null,
+            parentId: null,
+            wrapper: null
+        };
+        fakeTarget = {
+            element: null,
+            node: 'id1',
+            parentId: null,
+            wrapper: wrapper.value
+        };
+        fakeContext = {
+            dragged: fakeDragged,
+            target: fakeTarget
+        };        
         props = {
             parentId: ref(null)
         };
@@ -121,41 +143,28 @@ describe("test use Drag and Drop", () => {
         const spy = jest.spyOn(fakeCmn.root, "emit");
         fakeCmn.node.value.state.draggable = true;
         useTest.dragstart();
-        const ctx = {
-            node,
-            element: null,
-            wrapper: wrapper.value,
-            parentId: null
-        };
-        expect(state.dragged.value).toMatchObject(ctx);
-        expect(spy).toBeCalledWith(dragEvents.start, {
-            dragged: ctx,
-            target: {
-                node: "id1",
-                element: null,
-                wrapper: wrapper.value,
-                parentId: null
-            }
-        });
+        fakeDragged.node = node;
+        fakeDragged.wrapper = wrapper.value;
+        expect(state.dragged.value).toMatchObject(fakeDragged);
+        expect(spy).toBeCalledWith(dragEvents.start, fakeContext);
     });
 
     it("Expect to emit event on drag end when nothing started", () => {
         config.value.dragAndDrop = ref(true);
         const spy = jest.spyOn(fakeCmn.root, "emit");
         useTest.dragend();
-        expect(spy).toBeCalledWith(dragEvents.end, {
-            dragged: {
-                element: null,
-                node: null,
-                parentId: null,
-                wrapper: null
-            },
-            target: {
-                element: null,
-                node: 'id1',
-                parentId: null,
-                wrapper: wrapper.value
-            }
-        })
+        expect(spy).toBeCalledWith(dragEvents.end, fakeContext);
+    });
+
+    it("Expect to emit on drag enter", () => {
+        const spy = jest.spyOn(fakeCmn.root, "emit");
+        useTest.dragenter();
+        expect(spy).toBeCalledWith(dragEvents.enter, fakeContext);
+    });
+
+    it("Expect to emit on drag leave", () => {
+        const spy = jest.spyOn(fakeCmn.root, "emit");
+        useTest.dragleave();
+        expect(spy).toBeCalledWith(dragEvents.leave, fakeContext);
     });
 });

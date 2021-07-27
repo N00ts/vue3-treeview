@@ -119,7 +119,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const dragleave = (evt: DragEvent): void => {
         pos.value = null;
-        cmn.root.emit(dragEvents.Leave, context.value);
+        cmn.root.emit(dragEvents.leave, context.value);
     };
 
     const dragover = (evt: DragEvent): void => {

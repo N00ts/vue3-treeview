@@ -16,7 +16,7 @@ export const dragEvents = {
     start: "nodeDragstart",
     end: "nodeDragend",
     enter: "nodeDragenter",
-    Leave: "nodeDragleave",
+    leave: "nodeDragleave",
     over: "nodeOver",
     drop: "nodeDrop"
 };
