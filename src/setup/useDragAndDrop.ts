@@ -7,7 +7,7 @@ import { dragEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 import { defaultDragClass, defaultDropClass, defaultOverClass, defaultInClass, defaultUnderClass } from '../misc/default';
 
-enum DragPosition {
+export enum DragPosition {
     over,
     in,
     under
@@ -32,7 +32,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     });
 
     const isDragging = computed(() => {
-        return !isNil(dragged.value.node); 
+        return !isNil(dragged.value); 
     });
 
     const isSameNode = computed(() => {
@@ -209,6 +209,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     };
 
     return {
+        pos,
         element,
         dragClass,
         draggable,

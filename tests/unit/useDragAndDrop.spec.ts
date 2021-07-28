@@ -1,7 +1,8 @@
-import { reactive, ref } from "vue";
+import { reactive, ref, nextTick, isReactive } from 'vue';
 import { createStore, state } from "../../src/setup/store";
 import useDragAndDrop from '../../src/setup/useDragAndDrop';
 import { dragEvents } from '../../src/misc/nodeEvents';
+import { DragPosition } from '../../src/setup/useDragAndDrop';
 
 describe("test use Drag and Drop", () => {
     let fakeCmn = null;
@@ -166,5 +167,93 @@ describe("test use Drag and Drop", () => {
         const spy = jest.spyOn(fakeCmn.root, "emit");
         useTest.dragleave();
         expect(spy).toBeCalledWith(dragEvents.leave, fakeContext);
+    });
+
+    it("Expect to be same node", () => {
+        state.dragged.value = fakeDragged;
+        fakeDragged.node = node;
+        useTest.dragover();
+    });
+
+    it("Expect to drag node 2 in node 1", () => {
+        node2.state.draggable = true;
+        state.dragged.value = fakeDragged;
+        fakeDragged.node = node2;
+        wrapper.value.getBoundingClientRect = jest.fn(() => {
+            return {
+                bottom: 0, 
+                height: 40, 
+                left: 0, 
+                right: 0, 
+                top: 0, 
+                width: 0
+            };
+        });
+        useTest.dragover({ pageY: 20 });
+        expect(useTest.pos.value).toBe(DragPosition.in); 
+    });
+
+    it("Expect to drag node 2 over node 1", () => {
+        node2.state.draggable = true;
+        state.dragged.value = fakeDragged;
+        fakeDragged.node = node2;
+        wrapper.value.getBoundingClientRect = jest.fn(() => {
+            return {
+                bottom: 0, 
+                height: 40, 
+                left: 0, 
+                right: 0, 
+                top: 0, 
+                width: 0
+            };
+        });
+        useTest.dragover({ pageY: 1 });
+        expect(useTest.pos.value).toBe(DragPosition.over); 
+    });
+
+    it("Expect to drag child node 3 under node 1", () => {
+        c3.state.draggable = true;
+        state.dragged.value = fakeDragged;
+        fakeDragged.node = c3;
+        wrapper.value.getBoundingClientRect = jest.fn(() => {
+            return {
+                bottom: 0, 
+                height: 40, 
+                left: 0, 
+                right: 0, 
+                top: 0, 
+                width: 0
+            };
+        });
+        useTest.dragover({ pageY: 35 });
+        expect(useTest.pos.value).toBe(DragPosition.under);
+    });
+
+    it("Expect to insert child node 2 over node 1", () => {
+        c3.state.draggable = true;
+        state.dragged.value = fakeDragged;
+        fakeDragged.parentId = "id2";
+        props.parentId.value = null;
+        fakeDragged.node = c3;
+        useTest.pos.value = DragPosition.over;
+        useTest.drop();
+        expect(config.value.roots).toMatchObject([
+            "id21", "id1", "id2"
+        ])
+        expect(node2.children).toMatchObject([]);
+    });
+
+    it("Expect to insert child node 2 under node 1", () => {
+        c3.state.draggable = true;
+        state.dragged.value = fakeDragged;
+        fakeDragged.parentId = "id2";
+        props.parentId.value = null;
+        fakeDragged.node = c3;
+        useTest.pos.value = DragPosition.under;
+        useTest.drop();
+        expect(config.value.roots).toMatchObject([
+            "id1", "id21", "id2"
+        ])
+        expect(node2.children).toMatchObject([]);
     });
 });
