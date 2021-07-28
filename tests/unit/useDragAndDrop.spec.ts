@@ -233,8 +233,8 @@ describe("test use Drag and Drop", () => {
         c3.state.draggable = true;
         state.dragged.value = fakeDragged;
         fakeDragged.parentId = "id2";
-        props.parentId.value = null;
         fakeDragged.node = c3;
+        props.parentId.value = null;
         useTest.pos.value = DragPosition.over;
         useTest.drop();
         expect(config.value.roots).toMatchObject([
@@ -247,12 +247,27 @@ describe("test use Drag and Drop", () => {
         c3.state.draggable = true;
         state.dragged.value = fakeDragged;
         fakeDragged.parentId = "id2";
-        props.parentId.value = null;
         fakeDragged.node = c3;
+        props.parentId.value = null;
         useTest.pos.value = DragPosition.under;
         useTest.drop();
         expect(config.value.roots).toMatchObject([
             "id1", "id21", "id2"
+        ])
+        expect(node2.children).toMatchObject([]);
+    });
+
+    it("Expect to insert child node 2 in node 1", () => {
+        c3.state.draggable = true;
+        state.dragged.value = fakeDragged;
+        fakeDragged.parentId = "id2";
+        fakeDragged.node = c3;
+        config.value.dragAndDrop = true;
+        props.parentId.value = null;
+        useTest.pos.value = DragPosition.in;
+        useTest.drop();
+        expect(node.children).toMatchObject([
+            "id21", "id11", "id12"
         ])
         expect(node2.children).toMatchObject([]);
     });
