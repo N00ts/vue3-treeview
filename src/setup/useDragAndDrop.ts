@@ -111,6 +111,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const dragend = (evt: DragEvent): void => {
         cmn.root.emit(dragEvents.end, context.value);
+        dragged.value = null;
     };
 
     const dragenter = (evt: DragEvent): void => {
@@ -118,8 +119,8 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     };
 
     const dragleave = (evt: DragEvent): void => {
-        pos.value = null;
         cmn.root.emit(dragEvents.leave, context.value);
+        pos.value = null;
     };
 
     const dragover = (evt: DragEvent): void => {
@@ -169,9 +170,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                     break;
                 }
                 case DragPosition.in: {
-                    if (droppable.value) {
-                        insertIn();
-                    }
+                    insertIn();
                 }
             }
         }
@@ -192,7 +191,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     };
 
     const insertIn = () => {
-        if (isDragging.value) {
+        if (isDragging.value && droppable.value) {
             const dragId = dragged.value.node.id;
 
             if (draggedLvl.value) {
