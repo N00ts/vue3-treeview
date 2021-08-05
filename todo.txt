@@ -13,6 +13,6 @@ FEATURE to implement:
   - typings                   => done
   - documentation             => in progress
   - ARIA                      => in progress
-  - Mobile events
+  - Mobile touch events
   - Node focusable or not
   - allow dnd with function
