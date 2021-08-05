@@ -8,10 +8,11 @@ FEATURE to implement:
   - autoCheck                 => done
   - customizable effects      => done
   - emit events               => done
+  - example material css      => done
+  - unit tests                => done
+  - typings                   => done
+  - documentation             => in progress
+  - ARIA                      => in progress
+  - Mobile events
   - Node focusable or not
   - allow dnd with function
-  - ARIA                      => in progress
-  - example material css      => done
-  - unit tests
-  - documentation             => in progress
-  - typings                   => done
