@@ -46,7 +46,7 @@
     "eslint-plugin-vue": "^7.10.0",
     "istanbul-badges-readme": "^1.4.0",
     "typescript": "^3.9.9",
-    "vitepress": "^0.15.5",
+    "vitepress": "^0.15.6",
     "vue-jest": "^5.0.0-alpha.10"
   },
   "eslintConfig": {
