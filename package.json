@@ -1,6 +1,6 @@
 {
   "name": "vue3-treeview",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "private": false,
   "library": "vue3-treeview",
   "license": "MIT",
@@ -12,6 +12,9 @@
     "build": "vite build",
     "types": "tsc --emitDeclarationOnly",
     "bundle": "yarn run build && yarn run types",
+    "lint": "eslint ./src --ext .vue,.js,.ts",
+    "lint-fix": "eslint --fix ./src --ext .vue,.js,.ts",
+    "all": "yarn run test && yarn run lint && yarn run bundle",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
   },
@@ -41,7 +44,6 @@
     "@vue/compiler-sfc": "^3.0.11",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
-    "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.10.0",
     "istanbul-badges-readme": "^1.4.0",
