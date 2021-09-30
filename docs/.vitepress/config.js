@@ -4,16 +4,6 @@ module.exports = {
   title: "vue3-treeview",
   description: "vue3-treeview documentation",
   base: "/vue3-treeview/",
-  head: [
-    [
-      "link",
-      {
-        rel: "stylesheet",
-        href:
-          "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css",
-      },
-    ],
-  ],
   themeConfig: {
     repo: "N00ts/vue3-treeview",
     docsDir: "docs",
@@ -23,20 +13,14 @@ module.exports = {
       {
         text: "Guide",
         link: "/guide/getting-started",
-      },
-      {
-        text: "More examples",
-        link: "/examples/dragAndDrop",
-      },
+      }
     ],
     sidebar: {
-      "/guide/": getSidebar(),
-      "/examples/": getExamplesSidebar(),
+      "/guide/": getSidebar()
     },
   },
   alias: {
-    "@docs": path.resolve(__dirname, ".."),
-    "@src": path.resolve(__dirname, "../../src"),
+    "@docs": path.resolve(__dirname, "..")
   },
 };
 
@@ -65,27 +49,6 @@ function getSidebar() {
     {
       text: "Transitions",
       link: '/guide/transitions'
-    }
-  ];
-}
-
-function getExamplesSidebar() {
-  return [
-    {
-      text: "Drag and Drop",
-      link: "examples/dragAndDrop"
-    },
-    {
-      text: "Icon shape",
-      link: "examples/iconShape"
-    },
-    {
-      text: "Icon class",
-      link: "examples/iconClass"
-    },
-    {
-      text: "Icon Image",
-      link: "examples/iconImage"
     }
   ];
 }

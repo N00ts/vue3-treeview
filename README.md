@@ -13,6 +13,7 @@ __Features:__
 - Made with vue3
 - Fully reactive
 - Typings
+- Normalized data (not deeply nested)
 - Full composition API
 - Lazy load
 - Editable text

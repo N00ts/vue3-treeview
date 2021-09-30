@@ -21,9 +21,12 @@
 Try events yourself (go check the console with F12) 
 :::
 
-<<< @/.vitepress/theme/components/events.vue
-
-<events/>
+<iframe src="https://codesandbox.io/embed/events-7st2s?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="Events"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 ## Context
 Drag context, is composed of dragged element and target element which are both "IDragContext"

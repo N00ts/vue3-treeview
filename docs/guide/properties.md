@@ -5,9 +5,12 @@
 | nodes  | [Object](#nodes)                 | {}      | true     | Nodes              |
 | config | [IConfiguration](#configuration) | {}      | true     | Tree configuration |
 
-<<< @/.vitepress/theme/components/basic.vue
-
-<basic/>
+<iframe src="https://codesandbox.io/embed/basic-1g2jt?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="Basic"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 ## Nodes
 Type: `{ [id]: Node }`  
@@ -126,7 +129,12 @@ For more information you can consult [SVG icon docs](https://developer.mozilla.o
 | fill    | String          | null    | false    | Fill color of the svg icon                                         |
 | stroke  | String          | null    | false    | SVG icon stroke property                                           |
 
-&#8594; [Example](../examples/iconShape)
+<iframe src="https://codesandbox.io/embed/icon-shape-685od?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="Icon shape"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 ### Class
 
@@ -139,7 +147,12 @@ To se how it work you can check [Front Awsome](https://fontawesome.com/)
 | class | String / Array  | null    | false    | The corresponding svg class         |
 | style | String / Object |         |          |                                     |
 
-&#8594; [Example](../examples/iconClass)
+<iframe src="https://codesandbox.io/embed/icon-class-kst2h?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="Icon class"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 ### img
 
@@ -155,4 +168,9 @@ You can also decide to use an image as Icon.
 | class  | String / Array  | null    | false    | ven if your icon is an image you can add a class to it |
 | style  | String / Object | null    | false    | Inline icon style                                      |
 
-&#8594; [Example](../examples/iconImage)
+<iframe src="https://codesandbox.io/embed/icon-image-3zwlp?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="Icon image"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>

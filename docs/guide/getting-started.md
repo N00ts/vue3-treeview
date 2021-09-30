@@ -27,5 +27,5 @@ In the following documentation all examples will use default styling
 To import the default stylesheet:
 
 ``` js
-import "vue3-treeview/dist/vue3-treeview.css";
+import "vue3-treeview/dist/style.css";
 ```
