@@ -1,8 +1,8 @@
-import { reactive, ref, nextTick, isReactive } from 'vue';
-import { createStore, state } from "../../src/setup/store";
+import { reactive, ref } from 'vue';
 import useDragAndDrop from '../../src/setup/useDragAndDrop';
 import { dragEvents } from '../../src/misc/nodeEvents';
 import { DragPosition } from '../../src/setup/useDragAndDrop';
+import { createState, states } from '../../src/setup/store';
 
 describe("test use Drag and Drop", () => {
     let fakeCmn = null;
@@ -34,6 +34,8 @@ describe("test use Drag and Drop", () => {
     let fakeTarget = null;
 
     let fakeContext = null;
+
+    let state = null;
 
     beforeEach(() => {
         node = {
@@ -80,7 +82,8 @@ describe("test use Drag and Drop", () => {
             nodes,
             config
         });
-        createStore(storeProps);
+        const id = createState(storeProps);
+        state = states.get(id);
         wrapper = ref(document.createElement("div"));
         fakeCmn = {
             node: ref(node),
@@ -89,7 +92,8 @@ describe("test use Drag and Drop", () => {
             disabled: ref(false),
             root: {
                 emit: jest.fn()
-            }
+            },
+            state
         };
         fakeDragged = {
             element: null,
@@ -111,10 +115,6 @@ describe("test use Drag and Drop", () => {
             parentId: ref(null)
         };
         useTest = useDragAndDrop(fakeCmn, props);
-    });
-
-    it("test", () => {
-        console.log("toto");
     });
 
     it("Expect not to be draggable", () => {

@@ -143,7 +143,7 @@ export default {
   emits: [
     ...Object.values(nodeEvents),
     ...Object.values(checkboxEvents),
-    ...Object.values(dragEvents)    
+    ...Object.values(dragEvents)
   ],
   props: {
     depth: {

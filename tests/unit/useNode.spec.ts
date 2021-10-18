@@ -1,6 +1,5 @@
 import { reactive, ref, isRef, nextTick } from 'vue';
 import { useNode } from '../../src/setup/useNode';
-import { createStore, state } from '../../src/setup/store';
 import { defaultDisabledClass, defaultFocusClass } from "../../src/misc/default";
 import { nodeEvents } from '../../src/misc/nodeEvents';
 
@@ -28,6 +27,14 @@ describe("test use node", () => {
     let config = null;
 
     let storeProps = null;
+
+    let state = null;
+
+    let v = require("vue");
+
+    v.onMounted = jest.fn();
+
+    v.onUnmounted = jest.fn();
 
     beforeEach(() => {
         node = {
@@ -74,17 +81,24 @@ describe("test use node", () => {
             nodes,
             config
         });
-        createStore(storeProps);
         wrapper = ref(document.createElement("div"));
+        state = {
+            nodes: ref(nodes),
+            config: ref(config),
+            focusable: ref(null),
+            focusFunc: new Map<string, Function>()
+        };
         fakeCmn = {
             node: ref(node),
             config,
             wrapper,
             editing: ref(false),
             disabled: ref(false),
+            focused: ref(false),
             root: {
                 emit: jest.fn()
-            }
+            },
+            state
         };
         props = {
             depth: ref(0),
@@ -164,16 +178,24 @@ describe("test use node", () => {
 
     it("Expect tabindex to be 0 and to be focused", () => {
         fakeCmn.node.value.id = "test";
-        state.focused.value = "test";
-        expect(useTest.tabIndex.value).toBe(0);
-        expect(useTest.focusClass.value).toBe(defaultFocusClass);
+        useTest.focus();
+        nextTick(() => {
+            nextTick(() => {
+                expect(useTest.tabIndex.value).toBe(0);
+                expect(useTest.focusClass.value).toBe(defaultFocusClass);
+            })
+        })
     });
 
     it("Expect to have config focus class", () => {
         fakeCmn.node.value.id = "test";
         fakeCmn.config.value.focusClass = "focusClass";
-        state.focused.value = "test";
-        expect(useTest.focusClass.value).toBe("focusClass");
+        useTest.focus();
+        nextTick(() => {
+            nextTick(() => {
+                expect(useTest.focusClass.value).toBe("focusClass");
+            })
+        });
     });
 
     it("Expect focusClass to be null", () => {
@@ -199,9 +221,9 @@ describe("test use node", () => {
         const focusSpy = jest.spyOn(wrapper.value, "focus");
         fakeCmn.node.value.id = "id";
         useTest.focus();
-        expect(state.focused.value).toBe("id");
         nextTick(() => {
             nextTick(() => {
+                expect(fakeCmn.focused.value).toBe("id");
                 expect(focusSpy).toBeCalled();
                 expect(spy).toBeCalledWith(nodeEvents.focus, fakeCmn.node.value);
             });
@@ -243,80 +265,78 @@ describe("test use node", () => {
         expect(useTest.opened.value).toBeFalsy();
     });
 
-    it("Expect to go to next root on down", () => {
+    it("Expect to exec function on down", () => {
         fakeCmn.config.value.keyboardNavigation = true;
+        const f = jest.fn();
+        fakeCmn.state.focusFunc.set("id2", f);
         useTest.down();
-        expect(state.focused.value).toBe("id2");
+        expect(f).toHaveBeenCalled();
+    });
+
+    it("Expect to exec function on up", () => {
+        const f = jest.fn();
+        fakeCmn.state.focusFunc.set("id1", f);
+        fakeCmn.config.value.keyboardNavigation = true;
+        fakeCmn.node.value = c1;
+        fakeCmn.node.value.state.opened = true;
+        useTest.up();
+        expect(f).toHaveBeenCalled();
+    });
+
+    it("Expect to go to next root on down", () => {
+        const next = useTest.nextVisible("id1");
+        expect(next).toBe("id2");
     });
 
     it("Expect to go next child on down", () => {
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value.state.opened = true;
-        useTest.down();
-        expect(state.focused.value).toBe("id11");
+        const next = useTest.nextVisible("id1");
+        expect(next).toBe("id11");
     });
 
     it("Expect to go next root on last node", () => {
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value = c2;
         fakeCmn.node.value.state.opened = true;
-        useTest.down();
-        expect(state.focused.value).toBe("id2");
+        const next = useTest.nextVisible("id12");
+        expect(next).toBe("id2");
     });
 
     it("Expect to go to next children on down", () => {
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value = c1;
         fakeCmn.node.value.state.opened = true;
-        useTest.down();
-        expect(state.focused.value).toBe("id12");
+        const next = useTest.nextVisible("id11");
+        expect(next).toBe("id12");
     });
 
     it("Expect to stay on last child on down", () => {
-        state.focused.value = "id21";
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value = c3;
         state.nodes.value.id2.state.opened = true;
-        useTest.down();
-        expect(state.focused.value).toBe("id21");
+        const next = useTest.nextVisible("id2");
+        expect(next).toBe("id21");
     });
 
-    it("Expect to stay on first root on down", () => {
-        state.focused.value = "id2";
-        fakeCmn.node.value = node2;
-        fakeCmn.config.value.keyboardNavigation = true;
-        useTest.down();
-        expect(state.focused.value).toBe("id2");
+    it("Expect to focus nothing when first root", () => {
+        const prev = useTest.prevVisible("id1");
+        expect(prev).toBe(null);
     });
 
     it("Expect to go first root on up", () => {
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value = c1;
         fakeCmn.node.value.state.opened = true;
-        useTest.up();
-        expect(state.focused.value).toBe("id1");
+        const prev = useTest.prevVisible("id11");
+        expect(prev).toBe("id1");
     });
 
     it("Expect to go first root on up", () => {
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value = node2;
-        useTest.up();
-        expect(state.focused.value).toBe("id1");
+        const prev = useTest.prevVisible("id2");
+        expect(prev).toBe("id1");
     });
 
     it("Expect to go first child on up", () => {
-        fakeCmn.config.value.keyboardNavigation = true;
         fakeCmn.node.value = c2;
         fakeCmn.node.value.state.opened = true;
-        useTest.up();
-        expect(state.focused.value).toBe("id11");
-    });
-
-    it("Expect to stay on first root on up", () => {
-        state.focused.value = "id1";
-        fakeCmn.config.value.keyboardNavigation = true;
-        fakeCmn.node.value.state.opened = true;
-        useTest.up();
-        expect(state.focused.value).toBe("id1");
+        const prev = useTest.prevVisible("id12");
+        expect(prev).toBe("id11");
     });
 });

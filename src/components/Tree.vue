@@ -7,7 +7,6 @@
     <TreeLevel 
       :depth="0"
       :parent-id="null"
-      @node-blur="blur"
       v-bind="$attrs"
     >
       <template #loading-slot="props">

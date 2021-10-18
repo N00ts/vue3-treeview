@@ -1,11 +1,12 @@
-import { state } from "./store";
-import { computed, ref } from "vue";
+import { computed, inject, onBeforeUpdate, onMounted, onRenderTriggered, ref } from "vue";
 import isNil from "lodash-es/isNil";
 import toInteger from "lodash-es/toInteger";
 import { defaultConfig } from '../misc/default';
 import { INode } from "../structure/INode";
+import { IState } from "./store";
 
 export default function useLevel(props: {parentId: string; depth: number}): {} {
+    const state = inject<IState>("state")
     const config = state.config;
     const nodes = state.nodes;
     const depth = ref(props.depth);
@@ -74,6 +75,6 @@ export default function useLevel(props: {parentId: string; depth: number}): {} {
         id,
         level,
         padding,
-        style,
+        style
     };
 }

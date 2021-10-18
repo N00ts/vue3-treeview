@@ -1,5 +1,5 @@
-import { ref, isReactive, isRef, isReadonly } from 'vue';
-import { createStore, state } from '../../src/setup/store';
+import { isRef, isReadonly } from 'vue';
+import { createState, states } from '../../src/setup/store';
 import { mount } from '@vue/test-utils'; 
 
 test("Expect to create store", () => {
@@ -23,7 +23,9 @@ test("Expect to create store", () => {
         }
     });
 
-    createStore(wrapper.props() as any);
+    const id = createState(wrapper.props() as any);
+
+    const state = states.get(id);
 
     expect(isRef(state.nodes)).toBe(true);
     expect(isReadonly(state.nodes)).toBe(true);
@@ -33,8 +35,8 @@ test("Expect to create store", () => {
     expect(isReadonly(state.config)).toBe(true);
     expect(state.config.value).toMatchObject({roots:["id1"]});
 
-    expect(isRef(state.focused)).toBe(true);
-    expect(state.focused.value).toBeNull();
+    expect(isRef(state.focusable)).toBe(true);
+    expect(state.focusable.value).toBeNull();
 
     expect(isRef(state.dragged)).toBe(true);
     expect(state.dragged.value).toMatchObject({

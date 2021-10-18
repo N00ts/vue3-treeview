@@ -15,6 +15,9 @@ describe("use checkbox tests", () => {
                     checked: false
                 }
             }),
+            state: {
+                nodes: ref({})
+            },
             disabled: ref(false),
             editing: ref(false),
             config: ref({

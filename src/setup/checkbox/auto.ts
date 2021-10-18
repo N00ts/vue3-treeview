@@ -1,13 +1,10 @@
 import { computed, Ref } from 'vue';
 import { INode } from '../../structure/INode';
-import { state } from '../store';
 import IUseCheck from '../../structure/IUseCheck';
 import isNil from "lodash-es/isNil";
 import { ensureState } from '../../misc/helpers';
 
-export default function auto(node: Ref<INode>): IUseCheck {
-    const nodes = state.nodes;
-
+export default function auto(node: Ref<INode>, nodes: Ref<{ [id: string]: INode }>): IUseCheck {
     const check = ((v: boolean) => {
         node.value.state.checked = v;
     });
@@ -33,7 +30,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
 
         for (const c of children.value) {
             const cdn = nodes.value[c];
-            
+
             if (!isNil(cdn)) {
                 ensureState(cdn);
                 res.push(cdn.state);
@@ -52,7 +49,7 @@ export default function auto(node: Ref<INode>): IUseCheck {
     });
 
     const allChecked = computed(() => {
-        return states.value.every((x) => x.checked);    
+        return states.value.every((x) => x.checked);
     });
 
     const noneChecked = computed(() => {
