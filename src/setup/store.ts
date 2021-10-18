@@ -3,44 +3,36 @@ import { IConfiguration } from '../structure/IConfiguration';
 import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
 import { ITreeProps } from '../structure/ITreeProps';
 import { IDragContext } from '../structure/IDragContext';
+import { uniqueId } from "lodash";
 
 export interface IState {
-    nodes: ComputedRef<{[id: string]: INode}>;
+    id: string;
+    nodes: ComputedRef<{ [id: string]: INode }>;
     config: ComputedRef<IConfiguration>;
     dragged: Ref<IDragContext>;
-    focused: Ref<string>;
+    focusable: Ref<string>;
+    focusFunc: Map<string, Function>,
 }
 
-function createState(): IState {
-    return {
-        nodes: null,
-        config: null,
-        dragged: ref(null),
-        focused: ref(null)
-    };
-}
+export const states: Map<string, IState> = new Map();
 
-export let state: IState = null;
-
-export function createStore(props: ITreeProps): void {
+export function createState(props: ITreeProps): string {
     const { nodes, config } = toRefs(props);
 
-    const computedNodes = computed(() => {
-        return nodes.value;
-    });
+    const state: IState = {
+        id: uniqueId(),
+        nodes: computed(() => nodes.value),
+        config: computed(() => config.value),
+        focusable: ref(null),
+        focusFunc: new Map<string, Function>(),
+        dragged: ref({
+            node: null,
+            element: null,
+            wrapper: null,
+            parentId: null
+        }),
+    };
+    states.set(state.id, state);
 
-    const computedConfig = computed(() => {
-        return config.value;
-    });
-
-    state = createState();
-    state.nodes = computedNodes;
-    state.config = computedConfig;
-    state.focused = ref(null);
-    state.dragged = ref({
-        node: null,
-        element: null,
-        wrapper: null,
-        parentId: null
-    });
+    return state.id;
 }

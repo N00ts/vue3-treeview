@@ -1,7 +1,7 @@
 import { reactive, ref } from "vue";
-import { createStore } from '../../src/setup/store';
 import useIcon from '../../src/setup/useIcon';
 import { defaultConfig } from '../../src/misc/default';
+import { createState, states } from '../../src/setup/store';
 
 describe("test use icon", () => {
     const config = {
@@ -20,11 +20,17 @@ describe("test use icon", () => {
 
     let useFake = null;
 
+    let state = null;
+
+    let v = require("vue");
+
+    v.inject = jest.fn(() => state);
+
     beforeEach(() => {
         props = reactive({
             isLeaf: ref(false)
         });
-        createStore(storeProps as any);
+        state = states.get(createState(storeProps as any));
         useFake = useIcon(props);
     });
 

@@ -1,5 +1,5 @@
-import { createStore, state } from '../../src/setup/store';
-import { reactive, ref, inject } from "vue";
+import { reactive, ref, inject } from 'vue';
+import { createState, states } from '../../src/setup/store';
 import useCommon from '../../src/setup/useCommon';
 
 describe("test useCommon", () => {
@@ -20,7 +20,13 @@ describe("test useCommon", () => {
 
     const v = require("vue");
 
-    jest.spyOn(v, "inject").mockImplementation(() => () => {});
+    let state = null;
+
+    v.inject = jest.fn((s) => {
+        return s === "emitter" ? jest.fn() : {
+            config: ref(config)
+        }
+    });
 
     beforeEach(() => {
         props = reactive({
@@ -28,7 +34,8 @@ describe("test useCommon", () => {
                 id: "test"
             })
         });
-        createStore(storeProps);
+        const id = createState(storeProps);
+        state = states.get(id);
         useTest = useCommon(props);
     });
 

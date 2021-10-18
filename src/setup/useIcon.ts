@@ -1,11 +1,13 @@
-import { state } from './store';
-import { computed, toRefs } from 'vue';
+import { computed, inject, toRefs } from 'vue';
 import { defaultConfig, defaultSize } from '../misc/default';
 import isNil from 'lodash-es/isNil';
+import { IState } from './store';
 
 export default function useIcon(props: Record<string, unknown>): {} {
     const { isLeaf } = toRefs(props); 
-        
+    
+    const state = inject<IState>("state")
+
     const config = state.config;
 
     const openedIcon = computed(() => {

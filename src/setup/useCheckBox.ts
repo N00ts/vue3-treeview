@@ -10,6 +10,7 @@ import IUseCommon from '../structure/IUseCommon';
 export function useCheckBox(cmn: IUseCommon): {} {
     const node = cmn.node;
     const config = cmn.config;
+    const nodes = cmn.state.nodes;
 
     const mode = computed(() => {
         return config.value.checkMode === checkMode.auto ? checkMode.auto : checkMode.manual;
@@ -17,7 +18,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
 
     const factory = computed(() =>  {
         return mode.value === checkMode.auto ? 
-        auto(node) :
+        auto(node, nodes) :
         manual(node);
     });
 

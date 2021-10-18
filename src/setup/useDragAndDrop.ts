@@ -1,5 +1,4 @@
 import { INodeProps } from "../structure/INodeProps";
-import { state } from './store';
 import { computed, ref } from 'vue';
 import isNil from "lodash-es/isNil";
 import { INode } from '../structure/INode';
@@ -15,6 +14,7 @@ export enum DragPosition {
 
 export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     const node = cmn.node;
+    const state = cmn.state;
     const parentId = ref(props.parentId);
     const config = cmn.config;
     const nodes = state.nodes;
@@ -32,7 +32,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     });
 
     const isDragging = computed(() => {
-        return !isNil(dragged.value); 
+        return !isNil(dragged.value) && !isNil(dragged.value.node); 
     });
 
     const isSameNode = computed(() => {
@@ -45,7 +45,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const draggedParent = computed(() => {
         return !isDragging.value || !dragged.value.parentId ? null : getParent(dragged.value.parentId);
-    });
+    }); 
 
     const draggedLvl = computed(() => {
         return getLevel(draggedParent.value);

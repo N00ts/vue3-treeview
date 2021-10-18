@@ -1,7 +1,7 @@
-import { createStore, state } from '../../src/setup/store';
 import { defaultConfig } from '../../src/misc/default';
 import { reactive, ref } from 'vue';
 import useLevel from '../../src/setup/useLevel';
+import { createState, states } from '../../src/setup/store';
 
 describe("test useLevel", () => {
     let props = null;
@@ -27,8 +27,15 @@ describe("test useLevel", () => {
         config
     });
 
+    let state = null
+
+    let v = require("vue");
+
+    v.inject = jest.fn(() => state);
+
     beforeEach(() => {
-        createStore(storeProps);
+        const id = createState(storeProps);
+        state = states.get(id);
         props = {
             depth: ref(0),
             parentId: ref(null)

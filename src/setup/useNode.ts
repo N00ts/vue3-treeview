@@ -1,16 +1,15 @@
-import { state } from "../setup/store";
 import { INode } from "../structure/INode";
 import { INodeProps } from "../structure/INodeProps";
 import IUseNode from "../structure/IUseNode";
 import isNil from "lodash-es/isNil";
-import eq from "lodash-es/eq";
 import isArray from "lodash-es/isArray";
-import { computed, ref, watch, nextTick } from 'vue';
+import { computed, ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 import { defaultDisabledClass, defaultFocusClass } from '../misc/default';
 
-export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
+export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode { 
+    const state = cmn.state;
     const node = cmn.node;
     const config = cmn.config;
     const wrapper = cmn.wrapper;
@@ -18,7 +17,6 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const level = ref(null);
     const depth = ref(props.depth);
     const index = ref(props.index);
-
     const id = computed(() => {
         return hasNode.value && node.value.id;
     });
@@ -99,22 +97,22 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         return isNil(node.value.children) || !isArray(node.value.children) || node.value.children.length === 0;
     });
 
-    const isFocused = computed(() => {
-        return state.focused.value === node.value.id;
+    const isFocusable = computed(() => {
+        return state.focusable.value === node.value.id;
     });
 
     const tabIndex = computed(() => {
-        if (depth.value === 0 && index.value === 0 && !isFocused.value) {
+        if (depth.value === 0 && index.value === 0 && isNil(state.focusable.value)) {
             return 0; 
         }
 
-        return isFocused.value ? 0 : -1;
+        return isFocusable.value ? 0 : -1;
     });
 
     const focusClass = computed(() =>  {
-        if (!isFocused.value) {
+        if (!cmn.focused.value) {
             return null;
-        } 
+        }
 
         return config.value.focusClass ? config.value.focusClass : defaultFocusClass;
     });
@@ -123,24 +121,20 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         nv ? cmn.root.emit(nodeEvents.opened, node.value) : cmn.root.emit(nodeEvents.closed, node.value);
     });
 
-    watch(isFocused, (nv: boolean, ov: boolean) => {
-        if (!eq(nv, ov) && nv && wrapper.value) {
-            nextTick(() => {
-                wrapper.value.focus();
-                cmn.root.emit(nodeEvents.focus, node.value);
-            });
-        }
-    });
-
     const focus = (() => {
-        state.focused.value = node.value.id;
+        state.focusable.value = node.value.id;
+
+        nextTick(() => {
+            wrapper.value.focus();
+            cmn.focused.value = true;
+            cmn.root.emit(nodeEvents.focus, node.value);
+        });
     });
 
     const toggle = (() => {
         node.value.state.opened = !node.value.state.opened;
         cmn.root.emit(nodeEvents.toggle, node.value);
     });
-
 
     const right = (() => {
         if (!editing.value && config.value.keyboardNavigation) {
@@ -154,13 +148,19 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         }
     });
 
-    const up = (() => {
-        const prev = prevVisible(node.value.id);
+    const move = ((getFunc: (s: string) => string) => {
+        const id = getFunc(node.value.id);
 
-        if (prev &&  config.value.keyboardNavigation) {
-            state.focused.value = prev;
+        if (!isNil(id) && config.value.keyboardNavigation) {
+            const f = state.focusFunc.get(id);
+
+            if(f) {
+                f();
+            }
         }
     });
+
+    const up = () => move(prevVisible);
 
     const prev = ((id: string): string => { 
         const n = state.nodes.value[id];
@@ -207,13 +207,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         return n.id;
     });
 
-    const down = (() => {
-        const next = nextVisible(node.value.id);
-
-        if (next && config.value.keyboardNavigation) {
-            state.focused.value = next;
-        }
-    });
+    const down = () => move(nextVisible);
 
     const nextRoot = ((id: string) => {
         const idx = roots.value.indexOf(id);
@@ -246,6 +240,14 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         return p ? next(p, id) : nextRoot(id);
     });
 
+    onMounted(() => {
+        state.focusFunc.set(node.value.id, focus);
+    });
+
+    onUnmounted(() => {
+        state.focusFunc.delete(node.value.id);
+    });
+
     return {
         id,
         level,
@@ -266,6 +268,8 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
         up,
         down,
         toggle,
-        focus
+        focus,
+        prevVisible,
+        nextVisible
     };
 }

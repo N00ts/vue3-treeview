@@ -21,4 +21,6 @@ export default interface IUseNode {
     right: () => void;
     up: () => void;
     down: () => void;
+    prevVisible: (id: string) => string;
+    nextVisible: (id: string) => string;
 }
