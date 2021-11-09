@@ -223,7 +223,7 @@ describe("test use node", () => {
         useTest.focus();
         nextTick(() => {
             nextTick(() => {
-                expect(fakeCmn.focused.value).toBe("id");
+                expect(fakeCmn.focused.value).toBeTruthy();
                 expect(focusSpy).toBeCalled();
                 expect(spy).toBeCalledWith(nodeEvents.focus, fakeCmn.node.value);
             });
@@ -238,7 +238,7 @@ describe("test use node", () => {
         nextTick(() => {
             expect(spy).toBeCalledWith(nodeEvents.opened, fakeCmn.node.value);
             useTest.toggle();
-            expect(fakeCmn.node.value.state.opened).toBeTruthy();
+            expect(fakeCmn.node.value.state.opened).toBeFalsy();
             expect(spy).toBeCalledWith(nodeEvents.toggle, fakeCmn.node.value);
             nextTick(() => {
                 expect(spy).toBeCalledWith(nodeEvents.closed, fakeCmn.node.value);
