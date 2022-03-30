@@ -47,12 +47,6 @@ export function useCheckBox(cmn: IUseCommon): {} {
         ];
     });
 
-    watch(checked, (nv: boolean, ov: boolean) => {
-        if (!indeterminate.value) {
-            factory.value.recurseDown(nv);
-        }
-    });
-
     const allChecked = computed(() => {
         return factory.value.allChecked.value;    
     });
@@ -84,6 +78,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
     const clickCheckbox = (): void => {
         if (!cmn.disabled.value) {
             factory.value.click();
+            factory.value.recurseDown(node.value, node.value.state.checked);
             cmn.root.emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node.value);
         }
     };

@@ -1,4 +1,5 @@
 import { ComputedRef } from "vue";
+import { INode } from '../../dist/structure/INode';
 
 export default interface IUseCheck {
     indeterminate: ComputedRef<boolean>;
@@ -10,5 +11,5 @@ export default interface IUseCheck {
     click: () => void;
     rebuild: () => void;
     updateState: () => void;
-    recurseDown: (v: boolean) => void;
+    recurseDown: (node: INode, v: boolean) => void;
 }

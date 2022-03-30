@@ -29,11 +29,11 @@ export default function auto(node: Ref<INode>, nodes: Ref<{ [id: string]: INode 
         const res = [];
 
         for (const c of children.value) {
-            const cdn = nodes.value[c];
+            const child = nodes.value[c];
 
-            if (!isNil(cdn)) {
-                ensureState(cdn);
-                res.push(cdn.state);
+            if (!isNil(child)) {
+                ensureState(child);
+                res.push(child.state);
             }
         }
 
@@ -64,11 +64,17 @@ export default function auto(node: Ref<INode>, nodes: Ref<{ [id: string]: INode 
         return states.value.some((x) => x.indeterminate);
     });
 
-    const recurseDown = ((v: boolean) => {
-        if (!isNil(v)) {
-            for (const s of states.value) {
-                s.indeterminate = false;
-                s.checked = v;
+    const recurseDown = ((node: INode, v: boolean) => {
+        if (!isNil(v) && !isNil(node.children)) {
+            for (const id of node.children) {
+                const child = nodes.value[id];
+                
+                if (!isNil(child)) {
+                    ensureState(child);
+                    child.state.indeterminate = false;
+                    child.state.checked = v;
+                    recurseDown(child, v);
+                }
             }
         }
     });
@@ -96,7 +102,7 @@ export default function auto(node: Ref<INode>, nodes: Ref<{ [id: string]: INode 
 
     const rebuild = (() => {
         ensureState(node.value);
-        recurseDown(checked.value);
+        recurseDown(node.value, checked.value);
         updateState();
     });
 
