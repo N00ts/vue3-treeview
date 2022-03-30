@@ -11,5 +11,5 @@ export default interface IUseCheck {
     click: () => void;
     rebuild: () => void;
     updateState: () => void;
-    recurseDown: (node: INode, v: boolean) => void;
+    recurseDown: (node: INode) => void;
 }

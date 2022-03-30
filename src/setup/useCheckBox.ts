@@ -1,4 +1,4 @@
-import { computed, watch, ComputedRef } from 'vue';
+import { computed, watch, ComputedRef, onMounted, onUpdated } from 'vue';
 import { defaultConfig } from '../misc/default';
 import { checkboxEvents } from '../misc/nodeEvents';
 import auto from '../setup/checkbox/auto';
@@ -78,7 +78,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
     const clickCheckbox = (): void => {
         if (!cmn.disabled.value) {
             factory.value.click();
-            factory.value.recurseDown(node.value, node.value.state.checked);
+            factory.value.recurseDown(node.value);
             cmn.root.emit(checked.value ? checkboxEvents.checked : checkboxEvents.unchecked, node.value);
         }
     };
@@ -88,8 +88,6 @@ export function useCheckBox(cmn: IUseCommon): {} {
             clickCheckbox();
         }
     });
-
-    factory.value.rebuild();
 
     return {
         checked,
