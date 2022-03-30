@@ -1,5 +1,5 @@
 import { ComputedRef } from "vue";
-import { INode } from '../../dist/structure/INode';
+import { INode } from "./INode";
 
 export default interface IUseCheck {
     indeterminate: ComputedRef<boolean>;
