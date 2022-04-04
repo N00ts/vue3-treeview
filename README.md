@@ -37,7 +37,7 @@ yarn add vue3-treeview
 
 * Clone this repository
 * `yarn install`
-* `yarn serve`
+* `yarn dev`
 
 ## License
 
