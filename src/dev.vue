@@ -124,6 +124,7 @@
     <li
       v-for="item in extItems"
       :key="item.title"
+      draggable="true"
       @dragstart="startDragExt($event, item)"
     >
       {{ item.title }}
