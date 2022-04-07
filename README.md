@@ -23,7 +23,7 @@ __Features:__
 - Keyboard navigation
 - Checkboxes (auto / manual)
 - Drag and drop
-- Custmizable style
+- Customizable style
 - Customizable icons
 
 ## Installation

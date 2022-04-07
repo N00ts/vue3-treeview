@@ -97,6 +97,17 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
         return !isNil(node) ? node.children : config.value.roots;
     });
 
+    const getExternalPayload = (evt: DragEvent) : string | object | null => {
+        if (!evt.dataTransfer) return null;
+        const jsonPayload = evt.dataTransfer.getData("application/json");
+        if (jsonPayload)  return JSON.parse(jsonPayload);
+        return evt.dataTransfer.getData("text/plain");
+    };
+
+    const isExternalSrc = (evt: DragEvent) : boolean => {
+        return evt.dataTransfer?.items?.length > 0;
+    };
+
     const dragstart = (evt: DragEvent): void => {
         if (draggable.value) {
             dragged.value = {
@@ -116,11 +127,13 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const dragenter = (evt: DragEvent): void => {
         cmn.root.emit(dragEvents.enter, context.value);
+        if (isExternalSrc(evt)) cmn.root.emit(dragEvents.enterExt, {...context.value, evt});
     };
 
     const dragleave = (evt: DragEvent): void => {
         cmn.root.emit(dragEvents.leave, context.value);
         pos.value = null;
+        if (isExternalSrc(evt)) cmn.root.emit(dragEvents.leaveExt, {...context.value, evt});
     };
 
     const dragover = (evt: DragEvent): void => {
@@ -153,6 +166,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 }
             }
         }
+        if (isExternalSrc(evt)) cmn.root.emit(dragEvents.overExt, {...context.value, evt});
     };
 
     const drop = (evt: DragEvent): void => {
@@ -176,6 +190,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
         }
 
         pos.value = null;
+        if (isExternalSrc(evt)) cmn.root.emit(dragEvents.dropExt, {...context.value, evt, payload: getExternalPayload(evt)});
     };
 
     const insertAt = (i: 0 | 1) => {

@@ -18,5 +18,11 @@ export const dragEvents = {
     enter: "nodeDragenter",
     leave: "nodeDragleave",
     over: "nodeOver",
-    drop: "nodeDrop"
+    drop: "nodeDrop",
+
+    // Events from external source
+    enterExt: "nodeDragenterExt",
+    leaveExt: "nodeDragleaveExt",
+    overExt: "nodeOverExt",
+    dropExt: "nodeDropExt"
 };
