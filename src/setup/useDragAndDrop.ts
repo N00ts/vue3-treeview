@@ -116,21 +116,29 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 wrapper: wrapper.value,
                 parentId: parentId.value
             };
-            cmn.root.emit(dragEvents.start, context.value);
+            cmn.root.emit(dragEvents.start, {...context.value, ...eventContext(evt)});
         }
     };
 
+    const eventContext = (evt: DragEvent) => {
+        return {
+            evt,
+            external: isExternalSrc(evt),
+            dataTransfer: getDataTransfer(evt)
+        }
+    }
+
     const dragend = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.end, context.value);
+        cmn.root.emit(dragEvents.end, {...context.value, ...eventContext(evt)});
         dragged.value = null;
     };
 
     const dragenter = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.enter, {...context.value, external: isExternalSrc(evt), evt});
+        cmn.root.emit(dragEvents.enter, {...context.value, ...eventContext(evt)});
     };
 
     const dragleave = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.leave, {...context.value, external: isExternalSrc(evt), evt});
+        cmn.root.emit(dragEvents.leave, {...context.value, ...eventContext(evt)});
         pos.value = null;
     };
 
@@ -139,7 +147,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
             const external = isExternalSrc(evt);
             if (!isDragging.value && !external) return;
 
-            cmn.root.emit(dragEvents.over, {...context.value, external, evt});
+            cmn.root.emit(dragEvents.over, {...context.value, ...eventContext(evt)});
 
             if (!external && wrapper.value) {
                 const factor = .3;
@@ -170,7 +178,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     };
 
     const drop = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.drop, {...context.value, external: isExternalSrc(evt), evt, dataTransfer: getDataTransfer(evt)});
+        cmn.root.emit(dragEvents.drop, {...context.value, ...eventContext(evt)});
 
         if (!isSameNode.value && !dragContain.value) {
             switch(pos.value) {
