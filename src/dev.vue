@@ -72,11 +72,6 @@
     @node-dragend="log('node-dragend')"
     @node-over="log('node-over')"
     @node-drop="log('node-drop')"
-
-    @node-drop-ext="log('drop-ext')"
-    @node-over-ext="log('over-ext')"
-    @node-dragenter-ext="log('dragenter-ext')"
-    @node-dragleave-ext="log('dragleave-ext')"
   >
     <!--template #loading-slot>
       <div class="load">
