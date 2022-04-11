@@ -98,14 +98,14 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     });
 
     const getDataTransfer = (evt: DragEvent) : string | object | null => {
-        if (!evt.dataTransfer) return null;
+        if (!evt || !evt.dataTransfer) return null;
         const jsonPayload = evt.dataTransfer.getData("application/json");
         if (jsonPayload)  return JSON.parse(jsonPayload);
         return evt.dataTransfer.getData("text/plain");
     };
 
     const isExternalSrc = (evt: DragEvent) : boolean => {
-        return evt.dataTransfer?.items?.length > 0;
+        return evt?.dataTransfer?.items?.length > 0;
     };
 
     const dragstart = (evt: DragEvent): void => {
