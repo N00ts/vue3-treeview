@@ -32,7 +32,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     });
 
     const isDragging = computed(() => {
-        return !isNil(dragged.value) && !isNil(dragged.value.node); 
+        return !isNil(dragged.value) && !isNil(dragged.value.node);
     });
 
     const isSameNode = computed(() => {
@@ -45,14 +45,14 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
 
     const draggedParent = computed(() => {
         return !isDragging.value || !dragged.value.parentId ? null : getParent(dragged.value.parentId);
-    }); 
+    });
 
     const draggedLvl = computed(() => {
         return getLevel(draggedParent.value);
     });
 
     const targetParent = computed(() => {
-        return !isNil(parentId.value) ? getParent(parentId.value) : null; 
+        return !isNil(parentId.value) ? getParent(parentId.value) : null;
     });
 
     const targetLvl = computed(() => {
@@ -97,6 +97,17 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
         return !isNil(node) ? node.children : config.value.roots;
     });
 
+    const getDataTransfer = (evt: DragEvent) : string | object | null => {
+        if (!evt || !evt.dataTransfer) return null;
+        const jsonPayload = evt.dataTransfer.getData("application/json");
+        if (jsonPayload)  return JSON.parse(jsonPayload);
+        return evt.dataTransfer.getData("text/plain");
+    };
+
+    const isExternalSrc = (evt: DragEvent) : boolean => {
+        return evt?.dataTransfer?.items?.length > 0;
+    };
+
     const dragstart = (evt: DragEvent): void => {
         if (draggable.value) {
             dragged.value = {
@@ -105,29 +116,40 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 wrapper: wrapper.value,
                 parentId: parentId.value
             };
-            cmn.root.emit(dragEvents.start, context.value);
+            cmn.root.emit(dragEvents.start, {...context.value, ...eventContext(evt)});
         }
     };
 
+    const eventContext = (evt: DragEvent) => {
+        return {
+            evt,
+            external: isExternalSrc(evt),
+            dataTransfer: getDataTransfer(evt)
+        }
+    }
+
     const dragend = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.end, context.value);
+        cmn.root.emit(dragEvents.end, {...context.value, ...eventContext(evt)});
         dragged.value = null;
     };
 
     const dragenter = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.enter, context.value);
+        cmn.root.emit(dragEvents.enter, {...context.value, ...eventContext(evt)});
     };
 
     const dragleave = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.leave, context.value);
+        cmn.root.emit(dragEvents.leave, {...context.value, ...eventContext(evt)});
         pos.value = null;
     };
 
     const dragover = (evt: DragEvent): void => {
-        if (!isSameNode.value && isDragging.value && !dragContain.value) {
-            cmn.root.emit(dragEvents.over, context.value);
+        if (!isSameNode.value && !dragContain.value) {
+            const external = isExternalSrc(evt);
+            if (!isDragging.value && !external) return;
 
-            if (wrapper.value) {
+            cmn.root.emit(dragEvents.over, {...context.value, ...eventContext(evt)});
+
+            if (!external && wrapper.value) {
                 const factor = .3;
                 const y = evt.pageY;
                 const r = wrapper.value.getBoundingClientRect();
@@ -136,16 +158,16 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                     midPoint - r.height * factor,
                     midPoint + r.height * factor
                 ];
-    
+
                 const idx = draggedLvl.value.indexOf(node.value.id);
                 const idxDrag = draggedLvl.value.indexOf(dragged.value.node.id);
-    
-                if (y < midRange[0] && 
-                    (!isSameParent.value || 
+
+                if (y < midRange[0] &&
+                    (!isSameParent.value ||
                         (isSameParent.value && idx !== idxDrag + 1))) {
                     pos.value = DragPosition.over;
-                } else if (y > midRange[1] && 
-                    (!isSameParent.value || 
+                } else if (y > midRange[1] &&
+                    (!isSameParent.value ||
                         (isSameParent.value && idx !== idxDrag - 1))) {
                     pos.value = DragPosition.under;
                 } else {
@@ -156,8 +178,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     };
 
     const drop = (evt: DragEvent): void => {
-
-        cmn.root.emit(dragEvents.drop, context.value);
+        cmn.root.emit(dragEvents.drop, {...context.value, ...eventContext(evt)});
 
         if (!isSameNode.value && !dragContain.value) {
             switch(pos.value) {
@@ -174,7 +195,6 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 }
             }
         }
-
         pos.value = null;
     };
 
@@ -183,7 +203,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
             const dragId = dragged.value.node.id;
             const dragIdx = draggedLvl.value.indexOf(dragId);
             draggedLvl.value.splice(dragIdx, 1);
-    
+
             const targetId = node.value.id;
             const idx = targetLvl.value.indexOf(targetId);
             targetLvl.value.splice(idx + i, 0, dragId);
@@ -198,11 +218,11 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 const idx = draggedLvl.value.indexOf(dragId);
                 draggedLvl.value.splice(idx, 1);
             }
-    
+
             if (!node.value.children) {
                 node.value.children = [];
             }
-    
+
             node.value.children.unshift(dragId);
         }
     };

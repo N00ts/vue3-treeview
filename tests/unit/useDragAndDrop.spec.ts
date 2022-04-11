@@ -108,8 +108,11 @@ describe("test use Drag and Drop", () => {
             wrapper: wrapper.value
         };
         fakeContext = {
+            dataTransfer: null,
             dragged: fakeDragged,
-            target: fakeTarget
+            target: fakeTarget,
+            evt: undefined,
+            external: false
         };        
         props = {
             parentId: ref(null)

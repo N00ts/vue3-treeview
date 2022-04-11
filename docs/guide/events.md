@@ -31,10 +31,13 @@ Try events yourself (go check the console with F12)
 ## Context
 Drag context, is composed of dragged element and target element which are both "IDragContext"
 
-| Variable | Type                          | Description     |
-|----------|-------------------------------|-----------------|
-| dragged  | [IDragContext](#idragcontext) | Dragged context |
-| target   | [IDragContext](#idragcontext) | Target context  |
+| Variable     | Type                          | Description                        |
+|--------------|-------------------------------|------------------------------------|
+| dragged      | [IDragContext](#idragcontext) | Dragged context                    |
+| target       | [IDragContext](#idragcontext) | Target context                     |
+| evt          | DragEvent                     | Drag Event                         |
+| external     | Boolean                       | Determine if the node is external  |
+| dataTransfer | Object | String | null        | Event dataTransfer content         |
 
 ::: warning
 In function of the drag event, target may be null
