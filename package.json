@@ -10,7 +10,7 @@
     "test": "jest",
     "dev": "vite",
     "build": "vite build",
-    "types": "tsc --emitDeclarationOnly",
+    "types": "vue-tsc --declaration --emitDeclarationOnly",
     "bundle": "yarn run build && yarn run types",
     "lint": "eslint ./src --ext .vue,.js,.ts",
     "lint-fix": "eslint --fix ./src --ext .vue,.js,.ts",
@@ -50,7 +50,8 @@
     "typescript": "^3.9.9",
     "vite": "^2.6.1",
     "vitepress": "^0.15.6",
-    "vue-jest": "^5.0.0-alpha.10"
+    "vue-jest": "^5.0.0-alpha.10",
+    "vue-tsc": "^0.37.3"
   },
   "eslintConfig": {
     "root": true,
