@@ -34,8 +34,11 @@
 </template>
 
 <script lang="ts">
+import { IConfiguration } from "/@src/structure/IConfiguration";
+import { INode } from "/@src/structure/INode";
 import TreeLevel from './TreeLevel.vue';
 import useTree from '../setup/useTree';
+import { PropType } from 'vue';
 
 export default {
   components: {
@@ -44,13 +47,11 @@ export default {
   props: {
     nodes: {
       required: true,
-      type: Object,
-      default: () => {}
+      type: Object as PropType<Record<string, INode>>
     },
     config: {
       required: true,
-      type: Object,
-      default: () => {}
+      type: Object as PropType<IConfiguration>
     }
   },
   setup(props, { emit }) {

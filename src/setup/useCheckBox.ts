@@ -42,6 +42,7 @@ export function useCheckBox(cmn: IUseCommon): {} {
 
     const checkedClass = computed(() => {
         return [
+            "checkbox-wrapper",
             factory.value.checked.value ? config.value.checkedClass ? config.value.checkedClass : "checked" : null,
             factory.value.indeterminate.value ? config.value.indeterminateClass ? config.value.indeterminateClass : "indeterminate" : null
         ];

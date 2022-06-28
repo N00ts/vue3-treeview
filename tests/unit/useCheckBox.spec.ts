@@ -48,6 +48,7 @@ describe("use checkbox tests", () => {
 
     it("Expect to have no check class", () => {
         expect(useTest.checkedClass.value).toMatchObject([
+            "checkbox-wrapper",
             null,
             null
         ]);
@@ -71,6 +72,7 @@ describe("use checkbox tests", () => {
         fakeCmn.node.value.state.checked = true;
         fakeCmn.node.value.state.indeterminate = true;
         expect(useTest.checkedClass.value).toMatchObject([
+            "checkbox-wrapper",
             "checked",
             "indeterminate"
         ]);
@@ -82,6 +84,7 @@ describe("use checkbox tests", () => {
         fakeCmn.node.value.state.checked = true;
         fakeCmn.node.value.state.indeterminate = true;       
         expect(useTest.checkedClass.value).toMatchObject([
+            "checkbox-wrapper",
             "checkedClass",
             "indeterminateClass"
         ]);

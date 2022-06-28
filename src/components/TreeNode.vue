@@ -12,8 +12,7 @@
     @keydown.up.stop="up"
     @keydown.down.stop="down"
   >
-    <div  
-      class="node-wrapper"
+    <div
       :class="nodeClass"
       :style="style"
       :ref="setWrapperRef"
@@ -40,7 +39,6 @@
       </div>
 
       <div
-        class="checkbox-wrapper"
         v-if="hasCheckbox"
         :class="checkedClass"
         @click.stop="clickCheckbox"
@@ -53,7 +51,7 @@
           :disabled="disabled"
           :indeterminate.prop="indeterminate"
         >
-      </div>  
+      </div>
 
       <slot
         name="before-input"
@@ -72,7 +70,7 @@
           @blur="blur"
         >
 
-        <span 
+        <span
           v-else
           class="node-text"
           @dblclick="focusInput"
@@ -177,11 +175,12 @@ export default {
   computed: {
     nodeClass(): string[] {
       return [
+        "node-wrapper",
         this.focusClass,
         this.disabledClass,
         this.checkedClass,
         this.editableClass,
-        this.dragClass  
+        this.dragClass
       ];
     }
   },
