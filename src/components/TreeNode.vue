@@ -12,13 +12,14 @@
     @keydown.up.stop="up"
     @keydown.down.stop="down"
   >
-    <div  
+    <div
       class="node-wrapper"
       :class="nodeClass"
       :style="style"
       :ref="setWrapperRef"
       :draggable="draggable"
       :tabindex="tabIndex"
+      :data-node-id="node.id"
       @blur="blur"
       @click.stop="focus"
       @dragstart.stop="dragstart"
