@@ -19,7 +19,7 @@
       :ref="setWrapperRef"
       :draggable="draggable"
       :tabindex="tabIndex"
-      :data-node-id="node.id"
+      :id="node.id"
       @blur="blur"
       @click.stop="focus"
       @dragstart.stop="dragstart"
