@@ -178,8 +178,6 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     };
 
     const drop = (evt: DragEvent): void => {
-        cmn.root.emit(dragEvents.drop, {...context.value, ...eventContext(evt)});
-
         if (!isSameNode.value && !dragContain.value) {
             switch(pos.value) {
                 case DragPosition.over: {
@@ -195,6 +193,9 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
                 }
             }
         }
+
+        cmn.root.emit(dragEvents.drop, {...context.value, ...eventContext(evt)});
+
         pos.value = null;
     };
 
@@ -217,10 +218,6 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
             if (draggedLvl.value) {
                 const idx = draggedLvl.value.indexOf(dragId);
                 draggedLvl.value.splice(idx, 1);
-            }
-
-            if (!node.value.children) {
-                node.value.children = [];
             }
 
             node.value.children.unshift(dragId);
