@@ -3,7 +3,7 @@ import { IConfiguration } from '../structure/IConfiguration';
 import { toRefs, computed, ComputedRef, Ref, ref } from 'vue';
 import { ITreeProps } from '../structure/ITreeProps';
 import { IDragContext } from '../structure/IDragContext';
-import { uniqueId } from "lodash";
+import uniqueId from "lodash.uniqueid";
 
 export interface IState {
     id: string;

@@ -1,4 +1,4 @@
-import isNil from "lodash-es/isNil";
+import isNil from "lodash.isnil";
 import { INode } from '../structure/INode';
 
 export function ensureState(node: INode): void {

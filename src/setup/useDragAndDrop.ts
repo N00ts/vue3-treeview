@@ -1,6 +1,6 @@
 import { INodeProps } from "../structure/INodeProps";
 import { computed, ref } from 'vue';
-import isNil from "lodash-es/isNil";
+import isNil from "lodash.isnil";
 import { INode } from '../structure/INode';
 import { dragEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';

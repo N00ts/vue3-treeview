@@ -1,6 +1,6 @@
 import { computed, inject, onBeforeUpdate, onMounted, onRenderTriggered, ref } from "vue";
-import isNil from "lodash-es/isNil";
-import toInteger from "lodash-es/toInteger";
+import isNil from "lodash.isnil";
+import toInteger from "lodash.tointeger";
 import { defaultConfig } from '../misc/default';
 import { INode } from "../structure/INode";
 import { IState } from "./store";

@@ -1,6 +1,6 @@
 import { computed, inject, toRefs } from 'vue';
 import { defaultConfig, defaultSize } from '../misc/default';
-import isNil from 'lodash-es/isNil';
+import isNil from 'lodash.isnil';
 import { IState } from './store';
 
 export default function useIcon(props: Record<string, unknown>): {} {

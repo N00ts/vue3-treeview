@@ -2,7 +2,7 @@ import { computed, watch, ComputedRef, onMounted, onUpdated } from 'vue';
 import { defaultConfig } from '../misc/default';
 import { checkboxEvents } from '../misc/nodeEvents';
 import auto from '../setup/checkbox/auto';
-import eq from "lodash-es/eq";
+import eq from "lodash.eq";
 import manual from '../setup/checkbox/manual';
 import { checkMode } from '../structure/IConfiguration';
 import IUseCommon from '../structure/IUseCommon';

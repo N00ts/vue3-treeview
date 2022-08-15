@@ -1,5 +1,5 @@
 import { computed, nextTick, ref, watch } from 'vue';
-import eq from "lodash-es/eq";
+import eq from "lodash.eq";
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
 

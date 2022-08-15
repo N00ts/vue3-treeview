@@ -1,8 +1,7 @@
 import { INode } from "../structure/INode";
 import { INodeProps } from "../structure/INodeProps";
 import IUseNode from "../structure/IUseNode";
-import isNil from "lodash-es/isNil";
-import isArray from "lodash-es/isArray";
+import isNil from "lodash.isnil";
 import { computed, ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
 import { nodeEvents } from '../misc/nodeEvents';
 import IUseCommon from '../structure/IUseCommon';
@@ -93,7 +92,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     });
 
     const isLeaf = computed(() => {
-        if (isArray(config.value.leaves)) {
+        if (config.value.leaves instanceof Array) {
             const arr: string[] = config.value.leaves;
             const idx = arr.indexOf(id.value);
             return Number.isFinite(idx) && idx >= 0;

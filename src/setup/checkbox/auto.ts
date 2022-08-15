@@ -1,7 +1,7 @@
 import { computed, Ref } from 'vue';
 import { INode } from '../../structure/INode';
 import IUseCheck from '../../structure/IUseCheck';
-import isNil from "lodash-es/isNil";
+import isNil from "lodash.isnil";
 import { ensureState } from '../../misc/helpers';
 
 export default function auto(node: Ref<INode>, nodes: Ref<{ [id: string]: INode }>): IUseCheck {

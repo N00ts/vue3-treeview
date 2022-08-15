@@ -1,5 +1,5 @@
 import { INodeProps } from "../structure/INodeProps";
-import isNil from "lodash-es/isNil";
+import isNil from "lodash.isnil";
 import { computed, toRefs, ref, inject } from 'vue';
 import IUseCommon from '../structure/IUseCommon';
 import { defaultConfig } from '../misc/default';
