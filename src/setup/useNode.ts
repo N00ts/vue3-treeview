@@ -17,6 +17,11 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
     const level = ref(null);
     const depth = ref(props.depth);
     const index = ref(props.index);
+
+    if (!node.value.children) {
+        node.value.children = ref([]).value;
+    }
+
     const id = computed(() => {
         return hasNode.value && node.value.id;
     });
@@ -94,7 +99,7 @@ export function useNode(cmn: IUseCommon, props: INodeProps): IUseNode {
             return Number.isFinite(idx) && idx >= 0;
         }
 
-        return isNil(node.value.children) || !isArray(node.value.children) || node.value.children.length === 0;
+        return !hasChildren.value;
     });
 
     const isFocusable = computed(() => {
