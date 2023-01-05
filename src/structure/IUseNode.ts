@@ -1,4 +1,5 @@
-import { ComputedRef, ToRefs, computed, Ref, Component } from 'vue';
+import { ComputedRef, computed, Component } from 'vue';
+import { toRef, Ref } from "@vue/reactivity";
 
 export default interface IUseNode {
     id: ComputedRef<string>;

@@ -1,5 +1,4 @@
-import { ComputedRef } from '@vue/reactivity';
-import { Ref } from 'vue';
+import { ComputedRef, Ref } from '@vue/reactivity';
 import { INode } from './INode';
 import { IConfiguration } from './IConfiguration';
 import { IState } from '../setup/store';
