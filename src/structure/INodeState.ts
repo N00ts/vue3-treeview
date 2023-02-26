@@ -3,7 +3,7 @@ export interface INodeState {
     disabled?: boolean;
     editable?: boolean;
     draggable?: boolean;
-    dropable?: boolean;
+    droppable?: boolean;
     checked?: boolean;
     indeterminate?: boolean;
     isLoading?: boolean;
