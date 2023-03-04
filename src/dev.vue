@@ -83,6 +83,10 @@
       <span> {{ props.node.text }} </span>
     </template>
 
+    <template #input="props">
+      <span> {{ props.node.text }} </span>
+    </template>
+
     <template #after-input="props">
       <span> {{ props.node.text }} </span>
     </template!-->
