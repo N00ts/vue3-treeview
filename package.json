@@ -1,6 +1,6 @@
 {
-  "name": "vue3-treeview",
-  "version": "0.4.1",
+  "name": "@employee87/vue3-treeview",
+  "version": "0.4.9",
   "private": false,
   "library": "vue3-treeview",
   "license": "MIT",

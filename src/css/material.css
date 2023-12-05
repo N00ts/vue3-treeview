@@ -33,7 +33,11 @@
 }
 
 .input-wrapper {
-    margin-left: 0.75em;
+    /*margin-left: 0.75em;*/
+    flex:1;
+}
+.input-wrapper > div {
+    flex:1;
 }
 
 .icon-wrapper svg {
@@ -126,13 +130,14 @@
 }
 
 .input-wrapper {
-    font-size: 14px;
-    position: relative;
-    color: #000000;
     display: flex;
     align-items: center;
 }
-
+.node-text {
+    font-size: 14px;
+    position: relative;
+    color: #000000;
+}
 .node-input, .node-text  {
     font-family: 'Roboto', sans-serif;
 }
@@ -145,6 +150,7 @@
     padding-top: 5px;
 }
 
+/*
 .input-wrapper input{
       padding: 4px 0 4px 0;
       display: block;
@@ -165,3 +171,4 @@
     border-bottom-width: 3px;
     border-bottom-color: #3f51b5;
 }
+*/

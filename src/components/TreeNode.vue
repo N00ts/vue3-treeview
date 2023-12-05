@@ -72,13 +72,18 @@
           @blur="blur"
         >
 
-        <span 
-          v-else
-          class="node-text"
-          @dblclick="focusInput"
-        >
-          {{ text }}
-        </span>
+        <div v-else @dblclick="focusInput">
+          <slot
+            name="input"
+            :node="node"     
+          >
+            <span 
+              class="node-text"
+            >
+              {{ text }}
+            </span>
+          </slot>
+        </div>
       </div>
 
       <slot
@@ -110,6 +115,13 @@
         <template #before-input="props">
           <slot
             name="before-input"
+            :node="props.node"
+          />
+        </template>
+
+        <template #input="props">
+          <slot
+            name="input"
             :node="props.node"
           />
         </template>
