@@ -72,18 +72,18 @@
           @blur="blur"
         >
 
-        <span 
-          v-else
-          class="node-text"
-          @dblclick="focusInput"
-        >
+        <div v-else @dblclick="focusInput">
           <slot
             name="input"
-            :node="node"
+            :node="node"     
           >
-            {{ text }}
+            <span 
+              class="node-text"
+            >
+              {{ text }}
+            </span>
           </slot>
-        </span>
+        </div>
       </div>
 
       <slot
