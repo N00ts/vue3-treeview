@@ -126,13 +126,14 @@
 }
 
 .input-wrapper {
-    font-size: 14px;
-    position: relative;
-    color: #000000;
     display: flex;
     align-items: center;
 }
-
+.node-text {
+    font-size: 14px;
+    position: relative;
+    color: #000000;
+}
 .node-input, .node-text  {
     font-family: 'Roboto', sans-serif;
 }
