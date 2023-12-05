@@ -34,6 +34,10 @@
 
 .input-wrapper {
     /*margin-left: 0.75em;*/
+    flex:1;
+}
+.input-wrapper > div {
+    flex:1;
 }
 
 .icon-wrapper svg {
