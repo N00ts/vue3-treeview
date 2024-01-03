@@ -1,6 +1,6 @@
 {
   "name": "vue3-treeview",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": false,
   "library": "vue3-treeview",
   "license": "MIT",
@@ -30,13 +30,13 @@
     "lodash.isnil": "^4.0.0",
     "lodash.tointeger": "^4.0.4",
     "lodash.uniqueid": "^4.0.1",
-    "vue": "^3.1.2"
+    "vue": "^3.4.4"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.14.5",
     "@types/jest": "^24.0.19",
-    "@typescript-eslint/eslint-plugin": "^4.28.4",
-    "@typescript-eslint/parser": "^2.33.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
     "@vue/cli-plugin-babel": "^4.5.12",
     "@vue/cli-plugin-eslint": "^4.5.12",
     "@vue/cli-plugin-typescript": "^4.5.12",
@@ -45,10 +45,10 @@
     "@vue/compiler-sfc": "^3.0.11",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
-    "eslint": "^6.7.2",
+    "eslint": "^8.56.0",
     "eslint-plugin-vue": "^7.10.0",
     "istanbul-badges-readme": "^1.4.0",
-    "typescript": "^3.9.9",
+    "typescript": "^5.3.3",
     "vite": "^2.6.1",
     "vitepress": "^0.15.6",
     "vue-jest": "^5.0.0-alpha.10"
