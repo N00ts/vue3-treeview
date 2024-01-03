@@ -45,7 +45,7 @@ test("Check default state", () => {
         opened: false,
         disabled: false,
         draggable: false,
-        dropable: false,
+        droppable: false,
         checked: false,
         indeterminate: false        
     });

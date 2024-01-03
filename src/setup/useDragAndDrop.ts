@@ -28,7 +28,7 @@ export default function useDragAndDrop(cmn: IUseCommon, props: INodeProps): {} {
     });
 
     const droppable = computed(() => {
-        return config.value.dragAndDrop && node.value.state.dropable !== false;
+        return config.value.dragAndDrop && node.value.state.droppable !== false;
     });
 
     const isDragging = computed(() => {
