@@ -26,6 +26,13 @@
         />
       </template>
 
+      <template #input="props">
+        <slot
+            name="input"
+            :node="props.node"
+        />
+      </template>
+
       <template #after-input="props">
         <slot
           name="after-input"

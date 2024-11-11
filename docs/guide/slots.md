@@ -2,6 +2,7 @@
 
 The treeview has two slots:
 - before-input
+- input
 - after-input
 - [loading-slot](./async.md)
 
